@@ -64,21 +64,7 @@ const Enroll = () => {
               </div>
             ))}
           </div>
-
-          {/* CTA Button */}
-          <div className="mt-12">
-            <Button
-              classes="flex group bg-[#FFC107] hover:bg-[#FFD700] text-black font-semibold text-lg px-10 py-5 rounded-full flex items-center gap-3 transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl"
-              link="/apply"
-              text={
-                <>
-                  Apply Now – It’s Free{" "}
-                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </>
-              }
-            />
-          </div>
-
+ 
           {/* Trust Line */}
           <p className="mt-8 text-gray-400 text-sm tracking-wide">
             Limited slots available for the new intake • Starts soon
