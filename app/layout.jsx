@@ -2,15 +2,15 @@ import '@/assets/styles/globals.css'
 import Navbar from '@/components/Navbar'
 
 export const metadata = {
-    title: 'ITSSC',
+    title: 'Aptech Ibadan',
     description: 'Become An IT Pro',
-    keywords: 'IT, Training, ITSS, T24, Infinity, WebDevelopment'
+    keywords: 'IT, Training, Aptech,ITSS, T24, Infinity, WebDevelopment'
 }
 
 const MainLayout = ({children}) => {
   return (
    <html lang='en'>
-    <body>
+    <body className="bg-page-bg">
         <Navbar />
         <div>{children}</div>
     </body>
