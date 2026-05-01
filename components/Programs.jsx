@@ -1,30 +1,68 @@
-import Link from "next/link"
-import { FaArrowRight } from "react-icons/fa"
-import { COURSE } from "@/const"
-
-export const Course = ({courseTitle}) => {
-    return (
-        <div className="bg-white px-4 py-6 shadow-md rounded-xl text-blue-950 font-bold font-nav text-center transition ease-in-out delay-150 hover:-translate-y-1 hover-scale-150 duration-300">
-                {courseTitle}
-        </div>
-    )
-}
+const programs = [
+  {
+    title: "ACCP",
+    subtitle: "Software Development",
+    items: [
+      "Front-End Development",
+      "Back-End Development",
+      "Full Stack Engineering",
+      "Mobile App Development",
+      "Database Systems"
+    ]
+  },
+  {
+    title: "ACNS",
+    subtitle: "Networking & Cybersecurity",
+    items: [
+      "Network Engineering",
+      "Cybersecurity & Ethical Hacking",
+      "Cloud Administration",
+      "Windows & Linux Systems"
+    ]
+  },
+  {
+    title: "AMSP",
+    subtitle: "Multimedia & Design",
+    items: [
+      "UI/UX Design",
+      "3D Animation",
+      "Motion Graphics",
+      "Game Development",
+      "Graphics Design"
+    ]
+  }
+];
 
 const Programs = () => {
   return (
-    <section className="md:h-full pb-10">
-    <div className="container-xl md: container lg:container m-auto">
-        <h1 className="text-2xl font-bold tracking-widest font-nav my-12 text-center text-blue-950 md:text-4xl">
-            Featured Courses
-        </h1>
-        <div className="grid grid-cols-2 items-center justify-around gap-10 p-8 mt-8 md:grid-cols-4 lg:grid-cols-7" >
-            {COURSE.map((course, index) => (
-                <Course  key={index} courseTitle={course}/>
-            ))}
-        </div>
-        <Link href="/program" className="px-6 flex items-center justify-center gap-4 text-blue-900"><FaArrowRight className="w-8 h-8 text-blue-900 ring-1 ring-blue-900 p-1 rounded-full ring-offset-2" /> View more</Link>
-    </div>
-</section>
-  )
-}
-export default Programs
+    <section className="bg-white py-16 px-6 md:px-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+        Flagship Career Programs
+      </h2>
+
+      <div className="grid md:grid-cols-3 gap-8">
+        {programs.map((prog, index) => (
+          <div
+            key={index}
+            className="p-6 rounded-2xl shadow-lg border hover:shadow-2xl transition"
+          >
+            <h3 className="text-2xl font-bold text-[#020B2D]">
+              {prog.title}
+            </h3>
+            <p className="text-[#FFC107] font-semibold mb-4">
+              {prog.subtitle}
+            </p>
+
+            <ul className="text-gray-600 space-y-2 text-sm">
+              {prog.items.map((item, i) => (
+                <li key={i}>• {item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default Programs;
