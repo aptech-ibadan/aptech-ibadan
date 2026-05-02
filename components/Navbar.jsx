@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Programs", href: "/programs" },     // Changed "Program" to "Programs"
+    { name: "Programs", href: "/program" },     // Changed "Program" to "Programs"
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Careers", href: "/career" },

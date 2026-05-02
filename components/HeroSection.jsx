@@ -50,7 +50,7 @@ const Hero = () => {
                 />
                 <Button
                   classes="border-2 border-white px-8 py-4 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 text-center"
-                  link="/programs"
+                  link="/program"
                   text="Explore Courses"
                 />
               </div>
