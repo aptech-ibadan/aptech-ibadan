@@ -1,84 +1,121 @@
-'use client'
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import {FaBars} from 'react-icons/fa'
-
-
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import AptechLogo from '@/assets/APTECHLOGO.png'
 
 const Navbar = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const pathname = usePathname();
 
-    const [mobileMenu, setMobileMenu] = useState(false)
-    const path = usePathname()
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Programs", href: "/program" },     // Changed "Program" to "Programs"
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+    { name: "Careers", href: "/career" },
+  ];
 
   return (
-    <div className="relative bg-white border-b border-blue-200 shadow-md">
-        <div className="mx-auto max-w-7xl px-2 sm:px-2 lg:px-8">
-            <div className="flex h-20 items-center justify-between">
-                {/* hamburger */}
-                <div className="absolute left-0 flex items-center md:hidden">
-                    <FaBars 
-                        className="text-black text-4xl shadow-md p-2 rounded-full hover:ring-1 focus:ring-blue-800"
-                        onClick={() => setMobileMenu((prev) => !prev)}
-                    />
-                </div>
-                {/* Logo */}
-                <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-                    <Link className="flex flex-shrink-0 items-center" href='/'>
-                        <Image 
-                            src='/images/itssc2.png'
-                            alt='itssc'
-                            className="object-cover h-24 w-24 mt-4 md:h-32 md:w-32"
-                            width={0}
-                            height={0}
-                            size='100vw'
-                            priority={true}
-                            unoptimized
-                        />
-                    </Link>
-                </div>
-                {/* Navigation */}
-                <div className="hidden md:block md:ml-6">
-                    <div className="flex items-center space-x-6">
-                        <Link href='/' className={` ${path === '/' ? 'border-solid border-b-2 border-blue-900' : ''} text-blue-900 font-nav font-bold hover:text-blue-300`}>Home</Link>
-                        <Link href='/program' className={` ${path === '/program' ? 'border-solid border-b-2 border-blue-900' : ''} text-blue-900 font-nav font-bold hover:text-blue-300`}>Program</Link>
-                        <Link href='/about' className={` ${path === '/about' ? 'border-solid border-b-2 border-blue-900' : ''} text-blue-900 font-nav font-bold hover:text-blue-300`}>About Us</Link>
-                        <Link href='/contact' className={` ${path === '/contact' ? 'border-solid border-b-2 border-blue-900' : ''} text-blue-900 font-nav font-bold hover:text-blue-300`}>Contact Us</Link>
-                        <Link href='/career' className={` ${path === '/career' ? 'border-solid border-b-2 border-blue-900' : ''} text-blue-900 font-nav font-bold hover:text-blue-300`}>Career</Link>
-                        <Link href='/apply' className="py-2 px-6 bg-blue-900 text-white font-nav rounded-full transition duration-500 ease-in-out hover:scale-75">Apply</Link>   
-                    </div>
-                </div>
-            </div>
+    <nav className="sticky top-0 z-50 bg-[#020B2D]/95 backdrop-blur-xl border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-20">
 
-            {/* mobile menu */}
-            {mobileMenu && (
-                <div id="mobile-menu">
-                <div className="flex flex-col space-y-1 px-2 pb-3">
-                    <Link href='/' className="text-black font-nav font-bold hover:bg-gray-400 px-3 py-2">
-                        Home
-                    </Link>
-                    <Link href='/program' className="text-black font-nav font-bold hover:bg-gray-400 px-3 py-2">
-                        Programs
-                    </Link>
-                    <Link href='/about' className="text-black font-nav font-bold hover:bg-gray-400 px-3 py-2">
-                        About Us
-                    </Link>
-                    <Link href='/contact' className="text-black font-nav font-bold hover:bg-gray-400 px-3 py-2">
-                        Contact Us
-                    </Link>
-                    <Link href='/career' className="text-black font-nav font-bold hover:bg-gray-400 px-3 py-2">
-                        Career
-                    </Link>
-                    <Link href='/apply' className="py-2 px-6 bg-black text-white font-nav rounded-full w-[100px] transition duration-500 ease-in-out hover:scale-75">
-                        Apply
-                    </Link>
-                </div>
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative">
+              <Image
+                src={AptechLogo}
+                alt="Aptech Logo"
+                width={52}
+                height={52}
+                className="object-contain transition-transform group-hover:scale-110 duration-300"
+                priority
+              />
             </div>
-            )}
+            <div className="hidden sm:block">
+              <span className="text-white font-bold text-2xl tracking-tighter">APTECH</span>
+              <p className="text-[#FFC107] text-[10px] -mt-1 tracking-[2px] font-medium">IBADAN</p>
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`relative text-sm font-medium tracking-wide transition-all duration-300 pb-1
+                  ${pathname === link.href 
+                    ? "text-white" 
+                    : "text-gray-400 hover:text-white"
+                  }`}
+              >
+                {link.name}
+                {pathname === link.href && (
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#FFC107] rounded-full" />
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Desktop CTA Button */}
+          <div className="hidden md:block">
+            <Link
+              href="/apply"
+              className="bg-[#FFC107] hover:bg-[#FFD700] text-black font-semibold px-8 py-3 rounded-full 
+                         transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-[#FFC107]/30 flex items-center gap-2"
+            >
+              Apply Now
+              <span className="text-lg">→</span>
+            </Link>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className="md:hidden text-white text-3xl p-2 focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenu ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
-    </div>
-  )
-}
-export default Navbar
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileMenu && (
+        <div className="md:hidden bg-[#020B2D] border-t border-white/10 py-6">
+          <div className="flex flex-col px-6 space-y-6 text-lg">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenu(false)}
+                className={`font-medium transition-colors ${
+                  pathname === link.href ? "text-[#FFC107]" : "text-gray-300 hover:text-white"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            <div className="pt-4 border-t border-white/10">
+              <Link
+                href="/apply"
+                onClick={() => setMobileMenu(false)}
+                className="block w-full text-center bg-[#FFC107] text-black font-semibold py-4 rounded-full hover:bg-[#FFD700] transition-all"
+              >
+                Apply Now
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;

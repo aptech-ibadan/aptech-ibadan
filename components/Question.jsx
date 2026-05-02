@@ -1,67 +1,86 @@
-import { FaFacebook, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa"
-import Link from "next/link"
+import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import Link from "next/link";
 
 const Question = () => {
   return (
-    <section className="h-full bg-gray-50 mb-8 ">
-        <div className="container-xl lg:container m-auto">
-            <h1 className="text-2xl font-bold tracking-widest font-nav my-12 text-center text-blue-950 md:text-4xl">
-                Talk To Us
-            </h1>
-            <div className="grid grid-cols-1 items-center justify-around gap-8 p-8 mt-8 md:grid-cols-2" >
-                <div className="md:block">
-                    <form>
-                        <div className="mb-4">
-                            <input 
-                                type="text"
-                                name="name"
-                                className="border rounded w-full py-2 px-3 mb-2"
-                                placeholder="Name"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <input 
-                                type="email"
-                                name="email"
-                                className="border rounded w-full py-2 px-3 mb-2"
-                                placeholder="Email"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <textarea 
-                                name="message"
-                                className="border rounded w-full py-2 px-3 mb-2"
-                                placeholder="Message"
-                                rows="4"
-                                required
-                            ></textarea>
-                        </div>
-                        <div className="mb-4">
-                            <button className="border rounded-full w-full py-3 px-3 mb-2 bg-blue-900 text-white focus:outline-none hover:bg-gray-500">
-                                Send
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div className="px-4 py-2 flex flex-col items-center justify-center md:block">
-                    <h1 className="text-xl font-bold tracking-widest font-nav my-2 text-center text-blue-950 md:text-2xl">
-                        Ask for Career Advice
-                    </h1>
-                    <p className="p-2 tracking-wider text-center md:text-left text-blue-950 mb-6">
-                        We love hearing from you! Whether you have a question, feedback, or need assistance, we're here to help. Your thoughts and inquiries are important to us, and we strive to provide the best support possible.
-                    </p>
-                    <div className="flex items-center space-x-4 px-4">
-                        <Link href='#'><FaFacebook className="w-8 h-8 text-blue-900 ring-1 ring-blue-900 p-1 rounded-full ring-offset-2"  /></Link>
-                        <Link href='#'><FaInstagram className="w-8 h-8 text-blue-900 ring-1 ring-blue-900 p-1 rounded-full ring-offset-2"  /></Link>
-                        <Link href='#'><FaLinkedinIn className="w-8 h-8 text-blue-900 ring-1 ring-blue-900 p-1 rounded-full ring-offset-2"  /></Link>
-                        <Link href='#'><FaTwitter className="w-8 h-8 text-blue-900 ring-1 ring-blue-900 p-1 rounded-full ring-offset-2"  /></Link>
-                    </div>
-                </div>
-            </div>
+    <section className="bg-[#020B2D] py-16 px-6 md:px-16">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl">
+
+        {/* 🔥 LEFT - WHITE FORM SIDE */}
+        <div className="bg-white p-8 md:p-10">
+          <h2 className="text-2xl font-bold text-[#020B2D] mb-6">
+            Get Free Career Guidance
+          </h2>
+
+          <form className="space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107]"
+              required
+            />
+
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107]"
+              required
+            />
+
+            <textarea
+              placeholder="What program are you interested in?"
+              rows="4"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107]"
+              required
+            ></textarea>
+
+            <button className="w-full bg-[#020B2D] text-white font-semibold py-3 rounded-full hover:bg-black transition">
+              Submit Request
+            </button>
+          </form>
         </div>
+
+        {/* 🔥 RIGHT - DARK CONTENT SIDE */}
+        <div className="bg-[#020B2D] text-white p-8 md:p-10 flex flex-col justify-center">
+          <p className="text-[#FFC107] uppercase tracking-widest text-sm mb-4">
+            Talk To Us
+          </p>
+
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+            Not Sure Where to Start? <br />
+            <span className="text-[#FFC107]">We’ll Guide You.</span>
+          </h1>
+
+          <p className="text-gray-300 mb-6">
+            Speak with our advisors to choose the right career path in tech. 
+            Get clarity on Software Development, Cybersecurity, and Multimedia programs.
+          </p>
+
+          {/* Quick CTA */}
+          <button className="bg-[#FFC107] text-black px-6 py-2 rounded-full text-sm w-fit mb-6">
+            Chat on WhatsApp
+          </button>
+
+          {/* Socials */}
+          <div className="flex gap-4">
+            <Link href="#">
+              <FaFacebook className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
+            </Link>
+            <Link href="#">
+              <FaInstagram className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
+            </Link>
+            <Link href="#">
+              <FaLinkedinIn className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
+            </Link>
+            <Link href="#">
+              <FaTwitter className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
+            </Link>
+          </div>
+        </div>
+
+      </div>
     </section>
-  )
-}
-export default Question
+  );
+};
+
+export default Question;
