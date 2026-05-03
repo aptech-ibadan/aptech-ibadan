@@ -24,14 +24,14 @@ const CtaSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
-              classes="bg-[#FFC107] text-black px-8 py-4 rounded-full font-semibold hover:scale-105 hover:bg-[#FFD700] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
-              link="/contact"
-              text={<><Headphones size={18} /> Talk to Advisor</>}
+              classes="bg-[#FFC107] flex text-black px-8 py-4 rounded-full font-semibold hover:scale-105 hover:bg-[#FFD700] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+              link="href='tel:+234123456789'"
+              text={<div className="flex gap-2"><Headphones size={18} /> Talk to Advisor</div>}
             />
             <Button
               classes="border-2 border-white px-8 py-4 rounded-full hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 flex items-center gap-2"
-              link="/apply"
-              text={<><Calendar size={18} /> Schedule a Callback</>}
+              link=""
+              text={<div className="flex gap-2"><Calendar size={18} /> Schedule a Callback</div>}
             />
           </div>
 

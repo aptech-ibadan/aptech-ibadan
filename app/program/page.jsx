@@ -24,7 +24,7 @@ const ProgramsPage = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <ProgramsHero />
       <CareerCourses openModal={openModal} />
       <SmartProfessionalCourses openModal={openModal} />

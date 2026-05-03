@@ -91,7 +91,7 @@ const CourseModal = ({ course, onClose }) => {
                   What You'll Learn
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-3">
-                  {course.keyFeatures.map((feature, idx) => (
+                  {course?.keyFeatures?.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-2">
                       <CheckCircle size={18} className="text-[#FFC107] mt-0.5 flex-shrink-0" />
                       <span className="text-gray-700 text-sm">{feature}</span>
@@ -162,7 +162,7 @@ const CourseModal = ({ course, onClose }) => {
                     Course Gallery
                   </h3>
                   <div className="grid grid-cols-3 gap-2">
-                    {course.gallery.map((img, idx) => (
+                    {course?.gallery?.map((img, idx) => (
                       <div key={idx} className="relative aspect-square rounded-lg overflow-hidden">
                         <Image
                           src={img}

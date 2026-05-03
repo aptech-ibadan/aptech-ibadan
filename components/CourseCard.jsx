@@ -54,16 +54,16 @@ const CourseCard = ({ course, onClick, variant = "default" }) => {
           {course.shortDescription}
         </p>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex flex-col items-start gap-4 justify-between mt-4">
           <div className="flex items-center gap-3">
             <div className={`flex items-center gap-1 text-sm ${
               isHighlight ? "text-[#020B2D]/60" : "text-gray-500"
             }`}>
               <Award size={14} />
-              <span>{course.certification}</span>
+              <span className="text-[10px]">{course.certification}</span>
             </div>
           </div>
-          <button className={`flex items-center gap-2 text-sm font-semibold transition-all group-hover:gap-3
+          <button className={`flex items-center text-nowrap gap-2 text-sm font-semibold transition-all group-hover:gap-3
             ${isHighlight ? "text-[#020B2D]" : "text-[#FFC107]"}`}>
             View Details <ArrowRight size={16} />
           </button>

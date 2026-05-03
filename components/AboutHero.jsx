@@ -19,8 +19,9 @@ const AboutHero = () => {
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#020B2D] via-[#020B2D]/95 to-[#020B2D]/70" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-20">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12  py-20">
+          {/* Left Aligned Content */}
+          <div className="max-w-3xl">
             <p className="text-[#FFC107] uppercase tracking-widest text-sm font-semibold mb-4">
               About Aptech Agodi
             </p>
@@ -33,7 +34,7 @@ const AboutHero = () => {
               </span>
             </h1>
 
-            <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto">
+            <p className="text-gray-300 text-lg md:text-xl">
               Welcome to Aptech Agodi, a leading center for technology education and digital skills development. 
               We are dedicated to equipping students, professionals, and business owners with practical, 
               industry-relevant knowledge.
