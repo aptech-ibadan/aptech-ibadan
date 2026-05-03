@@ -4,9 +4,9 @@ const campuses = [
   {
     id: 1,
     name: "Aptech Agodi",
-    address: "Westone Building, Beside Governor’s Office, Agodi, Ibadan",
+    address: "Westone Building, beside Governor’s Office, Agodi, Ibadan",
     phone: "07070491555",
-    mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.123456789!2d3.XXXXXX!3d7.XXXXXX!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjAnMjIuMiJOIDPCsDIzJzQ1LjZFIQ!5e0!3m2!1sen!2sng!4v1740000000000", // ← Replace with real embed link
+    mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42409.095596642524!2d3.8743114471435587!3d7.406026438412933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1039930067851fff%3A0x8ea29ec1f2186eb8!2sWest%20One!5e1!3m2!1sen!2sng!4v1777719155074!5m2!1sen!2sng", // ← Replace with real embed link
     color: "from-blue-600 to-indigo-600",
   },
   {

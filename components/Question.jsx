@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Question = () => {
   return (
-    <section className="bg-[#020B2D] py-16 px-6 md:px-16">
+    <section className="bg-white h-[60vh] mt-[8%] px-6 md:px-16">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl">
 
         {/* 🔥 LEFT - WHITE FORM SIDE */}
