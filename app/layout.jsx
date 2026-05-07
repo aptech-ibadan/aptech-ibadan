@@ -1,5 +1,7 @@
 import "@/assets/styles/globals.css";
 import Navbar from "@/components/Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata = {
   title: "Aptech Ibadan",
@@ -13,6 +15,11 @@ const MainLayout = ({ children }) => {
       <body className="bg-page-bg">
         <Navbar />
         <div>{children}</div>
+         <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          theme="colored"
+        />
       </body>
     </html>
   );

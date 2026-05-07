@@ -5,6 +5,7 @@ import AboutMissionVision from "@/components/AboutMissionVision";
 import AboutStats from "@/components/AboutStats";
 import AboutCTA from "@/components/AboutCTA";
 import Footer from "@/components/Footer";
+import Testimonials from "@/components/Tastimonials";
 
 const AboutPage = () => {
   return (
@@ -14,6 +15,7 @@ const AboutPage = () => {
       <AboutValues />
       <AboutMissionVision />
       <AboutStats />
+      <Testimonials />
       <AboutCTA />
       <Footer />
     </div>

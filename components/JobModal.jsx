@@ -1,10 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import { 
-  X, MapPin, Clock, Briefcase, DollarSign, 
-  CheckCircle, Star, Mail, Phone, Calendar,
-  Award, Users, TrendingUp
+import {
+  X,
+  MapPin,
+  Clock,
+  Briefcase,
+  DollarSign,
+  CheckCircle,
+  Star,
+  Mail,
+  Phone,
+  Calendar,
+  Award,
+  Users,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/const";
 
@@ -99,7 +109,10 @@ const JobModal = ({ job, onClose }) => {
                 <ul className="space-y-2">
                   {job.responsibilities.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle size={18} className="text-[#FFC107] mt-0.5 flex-shrink-0" />
+                      <CheckCircle
+                        size={18}
+                        className="text-[#FFC107] mt-0.5 flex-shrink-0"
+                      />
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -115,7 +128,10 @@ const JobModal = ({ job, onClose }) => {
                 <ul className="space-y-2">
                   {job.requirements.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <Star size={18} className="text-[#FFC107] mt-0.5 flex-shrink-0" />
+                      <Star
+                        size={18}
+                        className="text-[#FFC107] mt-0.5 flex-shrink-0"
+                      />
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
@@ -132,7 +148,10 @@ const JobModal = ({ job, onClose }) => {
                   <ul className="space-y-2">
                     {job.preferred.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <Award size={18} className="text-[#FFC107] mt-0.5 flex-shrink-0" />
+                        <Award
+                          size={18}
+                          className="text-[#FFC107] mt-0.5 flex-shrink-0"
+                        />
                         <span className="text-gray-700">{item}</span>
                       </li>
                     ))}
@@ -145,15 +164,17 @@ const JobModal = ({ job, onClose }) => {
             <div className="space-y-6">
               {/* Quick Apply Card */}
               <div className="bg-gradient-to-r from-[#020B2D] to-[#010725] rounded-2xl p-6 text-center">
-                <h4 className="text-white font-bold text-xl mb-3">Ready to Apply?</h4>
+                <h4 className="text-white font-bold text-xl mb-3">
+                  Ready to Apply?
+                </h4>
                 <p className="text-gray-300 text-sm mb-6">
                   Join our team and make an impact in tech education
                 </p>
-                <Button
+                {/* <Button
                   classes="bg-[#FFC107] text-black w-full py-3 rounded-xl font-bold hover:scale-105 transition-all duration-300"
-                  link="/apply?type=career"
+                  link="/contact?type=career"
                   text="Apply Now →"
-                />
+                /> */}
                 <p className="text-gray-400 text-xs mt-3">
                   Applications reviewed within 5-7 business days
                 </p>
@@ -168,15 +189,21 @@ const JobModal = ({ job, onClose }) => {
                 <ul className="space-y-3">
                   <li className="flex items-start gap-2 text-sm">
                     <TrendingUp size={14} className="text-[#FFC107] mt-0.5" />
-                    <span className="text-gray-600">Growth & learning opportunities</span>
+                    <span className="text-gray-600">
+                      Growth & learning opportunities
+                    </span>
                   </li>
                   <li className="flex items-start gap-2 text-sm">
                     <Users size={14} className="text-[#FFC107] mt-0.5" />
-                    <span className="text-gray-600">Collaborative team environment</span>
+                    <span className="text-gray-600">
+                      Collaborative team environment
+                    </span>
                   </li>
                   <li className="flex items-start gap-2 text-sm">
                     <Award size={14} className="text-[#FFC107] mt-0.5" />
-                    <span className="text-gray-600">Competitive compensation</span>
+                    <span className="text-gray-600">
+                      Competitive compensation
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -190,14 +217,20 @@ const JobModal = ({ job, onClose }) => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Mail size={14} className="text-[#FFC107]" />
-                    <a href="mailto:careers@aptech-ibadan.com" className="text-gray-600 hover:text-[#FFC107]">
-                      careers@aptech-ibadan.com
+                    <a
+                      href="mailto:info@aptechibadan.ng"
+                      className="text-gray-600 hover:text-[#FFC107]"
+                    >
+                      info@aptechibadan.ng
                     </a>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Phone size={14} className="text-[#FFC107]" />
-                    <a href="tel:+2348071234567" className="text-gray-600 hover:text-[#FFC107]">
-                      +234 807 123 4567
+                    <a
+                      href="tel:+2348064634830"
+                      className="text-gray-600 hover:text-[#FFC107]"
+                    >
+                      +234 806 463 4830
                     </a>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
@@ -214,4 +247,4 @@ const JobModal = ({ job, onClose }) => {
   );
 };
 
-export default JobModal
+export default JobModal;

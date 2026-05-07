@@ -15,7 +15,7 @@ const SuccessMessage = ({ message, onClose, duration = 3000 }) => {
 
   return (
     <div
-      className={`fixed z-20 top-5 right-5 flex items-center gap-3 p-4 bg-green-100 border border-green-400 text-green-800 rounded-2xl shadow-lg max-w-sm transition-transform duration-500 ease-in-out ${
+      className={`fixed z-[23445] top-5 right-5 flex items-center gap-3 p-4 bg-green-100 border border-green-400 text-green-800 rounded-2xl shadow-lg max-w-sm transition-transform duration-500 ease-in-out ${
         visible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"
       }`}
     >

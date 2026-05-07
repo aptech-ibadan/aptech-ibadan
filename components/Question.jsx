@@ -1,84 +1,259 @@
-import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+"use client";
+import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
+import { useState, useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import SuccessMessage from "./SuccessMessage";
+import { useRouter } from "next/navigation";
+
+/* ── Floating particle (reuse same pattern as Hero) ── */
+const Particle = ({ x, y, size, duration, delay, color }) => (
+  <motion.div
+    className="absolute rounded-full pointer-events-none"
+    style={{ left: `${x}%`, top: `${y}%`, width: size, height: size, background: color }}
+    animate={{ y: [0, -20, 0], opacity: [0, 0.5, 0] }}
+    transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
+  />
+);
+
+const PARTICLES = Array.from({ length: 12 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 3 + 2,
+  duration: Math.random() * 5 + 4,
+  delay: Math.random() * 4,
+  color: i % 2 === 0 ? "rgba(255,193,7,0.4)" : "rgba(255,255,255,0.1)",
+}));
+
+/* ── Animated input wrapper ── */
+const AnimatedField = ({ delay, children }) => (
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {children}
+  </motion.div>
+);
 
 const Question = () => {
+  const [success, setSuccess] = useState(null);
+  const [focused, setFocused] = useState(null);
+  const rightRef = useRef(null);
+  const rightInView = useInView(rightRef, { once: true, margin: "-60px" });
+const router = useRouter();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSuccess("Thank you for your request. We will get back to you soon.");
+  };
+
+  const handleButtonClick = () => {
+    router.push("https://wa.me/2347085482087");
+  };
+  const socialLinks = [
+    { Icon: FaFacebook, href: "#", label: "Facebook" },
+    { Icon: FaInstagram, href: "#", label: "Instagram" },
+    { Icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
+    { Icon: FaTwitter, href: "#", label: "Twitter" },
+  ];
+
+  /* stagger container */
+  const rightContainer = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+  };
+  const fadeUp = {
+    hidden: { opacity: 0, y: 28 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  };
+
   return (
-    <section className="bg-white h-[60vh] mt-[8%] px-6 md:px-16">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl">
+    <section className="bg-white md:h-[60vh] mt-[8%] px-6 md:px-16 py-6 md:py-0">
+      <AnimatePresence>
+        {success && (
+          <motion.div
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.4 }}
+          >
+            <SuccessMessage message={success} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* 🔥 LEFT - WHITE FORM SIDE */}
+      <motion.div
+        initial={{ opacity: 0, y: 50, scale: 0.97 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-6xl mx-auto grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl"
+      >
+        {/* ── LEFT — FORM SIDE ── */}
         <div className="bg-white p-8 md:p-10">
-          <h2 className="text-2xl font-bold text-[#020B2D] mb-6">
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="text-2xl font-bold text-[#020B2D] mb-6"
+          >
             Get Free Career Guidance
-          </h2>
+          </motion.h2>
 
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107]"
-              required
-            />
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <AnimatedField delay={0.2}>
+              <motion.input
+                type="text"
+                placeholder="Full Name"
+                onFocus={() => setFocused("name")}
+                onBlur={() => setFocused(null)}
+                animate={{ borderColor: focused === "name" ? "#FFC107" : "#D1D5DB" }}
+                transition={{ duration: 0.25 }}
+                className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107] transition-shadow"
+                required
+              />
+            </AnimatedField>
 
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107]"
-              required
-            />
+            <AnimatedField delay={0.28}>
+              <motion.input
+                type="email"
+                placeholder="Email Address"
+                onFocus={() => setFocused("email")}
+                onBlur={() => setFocused(null)}
+                animate={{ borderColor: focused === "email" ? "#FFC107" : "#D1D5DB" }}
+                transition={{ duration: 0.25 }}
+                className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107] transition-shadow"
+                required
+              />
+            </AnimatedField>
 
-            <textarea
-              placeholder="What program are you interested in?"
-              rows="4"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107]"
-              required
-            ></textarea>
+            <AnimatedField delay={0.36}>
+              <motion.textarea
+                placeholder="What program are you interested in?"
+                rows="4"
+                onFocus={() => setFocused("msg")}
+                onBlur={() => setFocused(null)}
+                animate={{ borderColor: focused === "msg" ? "#FFC107" : "#D1D5DB" }}
+                transition={{ duration: 0.25 }}
+                className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107] transition-shadow resize-none"
+                required
+              />
+            </AnimatedField>
 
-            <button className="w-full bg-[#020B2D] text-white font-semibold py-3 rounded-full hover:bg-black transition">
-              Submit Request
-            </button>
+            <AnimatedField delay={0.44}>
+              <motion.button
+                whileHover={{ scale: 1.03, backgroundColor: "#000" }}
+                whileTap={{ scale: 0.97 }}
+                type="submit"
+                className="w-full bg-[#020B2D] text-white font-semibold py-3 rounded-full transition-colors duration-300 relative overflow-hidden group"
+              >
+                {/* shimmer sweep */}
+                <motion.span
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.1) 50%, transparent 65%)",
+                    backgroundSize: "200% 100%",
+                  }}
+                  animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
+                  transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1.5 }}
+                />
+                Submit Request
+              </motion.button>
+            </AnimatedField>
           </form>
         </div>
 
-        {/* 🔥 RIGHT - DARK CONTENT SIDE */}
-        <div className="bg-[#020B2D] text-white p-8 md:p-10 flex flex-col justify-center">
-          <p className="text-[#FFC107] uppercase tracking-widest text-sm mb-4">
+        {/* ── RIGHT — DARK SIDE ── */}
+        <motion.div
+          ref={rightRef}
+          variants={rightContainer}
+          initial="hidden"
+          animate={rightInView ? "visible" : "hidden"}
+          className="bg-[#020B2D] text-white p-8 md:p-10 flex flex-col justify-center relative overflow-hidden"
+        >
+          {/* ambient particles */}
+          {PARTICLES.map((p) => (
+            <Particle key={p.id} {...p} />
+          ))}
+
+          {/* pulsing glow orb */}
+          <motion.div
+            className="absolute -top-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(255,193,7,0.12) 0%, transparent 70%)" }}
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <motion.p
+            variants={fadeUp}
+            className="text-[#FFC107] uppercase tracking-widest text-sm mb-4 flex items-center gap-2"
+          >
+            <motion.span
+              className="inline-block w-2 h-2 rounded-full bg-[#FFC107]"
+              animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity }}
+            />
             Talk To Us
-          </p>
+          </motion.p>
 
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
-            Not Sure Where to Start? <br />
-            <span className="text-[#FFC107]">We’ll Guide You.</span>
-          </h1>
+          <motion.h1
+            variants={fadeUp}
+            className="text-3xl md:text-4xl font-bold leading-tight mb-6"
+          >
+            Not Sure Where to Start?{" "}
+            <br />
+            <span className="text-[#FFC107] relative inline-block">
+              We'll Guide You.
+              <motion.span
+                className="absolute -bottom-1 left-0 h-[3px] bg-[#FFC107]/30 rounded-full"
+                initial={{ width: 0 }}
+                animate={rightInView ? { width: "100%" } : {}}
+                transition={{ duration: 0.7, delay: 0.6 }}
+              />
+            </span>
+          </motion.h1>
 
-          <p className="text-gray-300 mb-6">
-            Speak with our advisors to choose the right career path in tech. 
-            Get clarity on Software Development, Cybersecurity, and Multimedia programs.
-          </p>
+          <motion.p variants={fadeUp} className="text-gray-300 mb-6">
+            Speak with our advisors to choose the right career path in tech. Get clarity on
+            Software Development, Cybersecurity, and Multimedia programs.
+          </motion.p>
 
-          {/* Quick CTA */}
-          <button className="bg-[#FFC107] text-black px-6 py-2 rounded-full text-sm w-fit mb-6">
-            Chat on WhatsApp
-          </button>
+          {/* WhatsApp CTA */}
+          <motion.div variants={fadeUp}>
+            <motion.button
+              whileHover={{ scale: 1.06, boxShadow: "0 0 20px rgba(255,193,7,0.35)" }}
+              whileTap={{ scale: 0.96 }}
+              className="bg-[#FFC107] text-black px-6 py-2 rounded-full text-sm w-fit mb-6 font-semibold flex items-center gap-2 transition-shadow"
+              onClick={handleButtonClick}
+            >
+              <FaWhatsapp className="text-base" />
+              Chat on WhatsApp
+            </motion.button>
+          </motion.div>
 
           {/* Socials */}
-          <div className="flex gap-4">
-            <Link href="#">
-              <FaFacebook className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
-            </Link>
-            <Link href="#">
-              <FaInstagram className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
-            </Link>
-            <Link href="#">
-              <FaLinkedinIn className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
-            </Link>
-            <Link href="#">
-              <FaTwitter className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full hover:scale-110 transition" />
-            </Link>
-          </div>
-        </div>
-
-      </div>
+          {/* <motion.div variants={fadeUp} className="flex gap-4">
+            {socialLinks.map(({ Icon, href, label }, i) => (
+              <Link href={href} key={label} aria-label={label}>
+                <motion.div
+                  whileHover={{ scale: 1.2, rotate: 8, backgroundColor: "#FFC107" }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={rightInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}
+                  className="w-8 h-8 p-2 bg-white text-[#020B2D] rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer"
+                >
+                  <Icon className="w-full h-full" />
+                </motion.div>
+              </Link>
+            ))}
+          </motion.div> */}
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import SectionTitle from "./SectionTitle";
 import CourseCard from "./CourseCard";
 
@@ -462,27 +464,178 @@ const skillBuilderCourses = [
   }
 ];
 
+// Smart Professional Courses (New Category)
+const smartProfessionalCourses = [
+  {
+    id: "data-science",
+    title: "Data Science & Analytics",
+    subtitle: "Python, SQL, Machine Learning",
+    category: "Smart Professional",
+    duration: "6 months",
+    certification: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=870&auto=format&fit=crop",
+    shortDescription: "Master data science techniques including Python, SQL, statistics, and machine learning fundamentals.",
+    longDescription: "Comprehensive data science program covering Python programming, data manipulation, visualization, statistics, and machine learning. Prepare for roles in data analytics and data science.",
+    keyFeatures: [
+      "Python for Data Science",
+      "SQL & Database Management",
+      "Data Visualization (Matplotlib, Seaborn)",
+      "Statistical Analysis",
+      "Machine Learning Basics",
+      "Real-world Projects",
+      "Portfolio Development"
+    ],
+    technologies: ["Python", "Pandas", "NumPy", "SQL", "Scikit-learn", "Tableau"],
+    careerPaths: ["Data Analyst", "Junior Data Scientist", "Business Intelligence Analyst"],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    gallery: []
+  },
+  {
+    id: "cybersecurity",
+    title: "Cybersecurity Fundamentals",
+    subtitle: "Network Security, Ethical Hacking",
+    category: "Smart Professional",
+    duration: "6 months",
+    certification: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=870&auto=format&fit=crop",
+    shortDescription: "Learn to protect organizations from cyber threats with hands-on security training.",
+    longDescription: "Essential cybersecurity skills including network security, ethical hacking, cryptography, and security management. Prepare for industry certifications.",
+    keyFeatures: [
+      "Network Security",
+      "Ethical Hacking Basics",
+      "Cryptography",
+      "Security Auditing",
+      "Incident Response",
+      "Compliance & Governance"
+    ],
+    technologies: ["Wireshark", "Nmap", "Metasploit", "Linux", "Firewalls"],
+    careerPaths: ["Security Analyst", "Network Security Specialist", "IT Security Officer"],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    gallery: []
+  },
+  {
+    id: "cloud-computing",
+    title: "Cloud Computing",
+    subtitle: "AWS, Azure, Cloud Architecture",
+    category: "Smart Professional",
+    duration: "4 months",
+    certification: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=872&auto=format&fit=crop",
+    shortDescription: "Master cloud platforms and services for modern infrastructure deployment.",
+    longDescription: "Comprehensive cloud computing training covering AWS, Azure, cloud architecture, and DevOps fundamentals.",
+    keyFeatures: [
+      "AWS Fundamentals",
+      "Azure Basics",
+      "Cloud Architecture Design",
+      "Serverless Computing",
+      "Cloud Security",
+      "Cost Optimization"
+    ],
+    technologies: ["AWS", "Azure", "Docker", "Kubernetes", "Terraform"],
+    careerPaths: ["Cloud Associate", "DevOps Engineer", "Cloud Support Specialist"],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    gallery: []
+  },
+  {
+    id: "full-stack-web",
+    title: "Full Stack Web Development",
+    subtitle: "MERN Stack, APIs, Deployment",
+    category: "Smart Professional",
+    duration: "6 months",
+    certification: "Professional Certificate",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=872&auto=format&fit=crop",
+    shortDescription: "Build complete web applications with MongoDB, Express, React, and Node.js.",
+    longDescription: "Master full-stack web development using the MERN stack. Learn frontend and backend development, APIs, database design, and deployment.",
+    keyFeatures: [
+      "MongoDB Database Design",
+      "Express.js Backend",
+      "React Frontend Development",
+      "Node.js Runtime",
+      "RESTful APIs",
+      "Authentication & Authorization",
+      "Deployment & DevOps"
+    ],
+    technologies: ["MongoDB", "Express.js", "React", "Node.js", "Git", "Docker"],
+    careerPaths: ["Full Stack Developer", "MERN Stack Developer", "Web Application Developer"],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    gallery: []
+  }
+];
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 const SkillBuilderCourses = ({ openModal }) => {
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { 
+    once: false, 
+    amount: 0.1,
+    margin: "-50px 0px -50px 0px"
+  });
+
   return (
-    <section className="py-16 bg-white px-6 md:px-16">
+    <motion.section 
+      ref={sectionRef}
+      className="py-16 bg-white px-6 md:px-16"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
       <div className="max-w-7xl mx-auto">
+        {/* Skill Builder Section */}
         <SectionTitle
           badge="Skill Builder"
           title="Foundation & Short Courses"
           description="Quick, focused programs to build essential skills for career advancement."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {skillBuilderCourses.map((course) => (
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+          variants={containerVariants}
+        >
+          {skillBuilderCourses.map((course, index) => (
             <CourseCard
               key={course.id}
               course={course}
               onClick={openModal}
+              index={index}
             />
           ))}
+        </motion.div>
+
+        {/* Smart Professional Courses Section */}
+        <div className="mt-20">
+          <SectionTitle
+            badge="Smart Professional"
+            title="Professional Development"
+            description="Advanced programs for career growth and specialization."
+          />
+
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={containerVariants}
+          >
+            {smartProfessionalCourses.map((course, index) => (
+              <CourseCard
+                key={course.id}
+                course={course}
+                onClick={openModal}
+                index={index}
+              />
+            ))}
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

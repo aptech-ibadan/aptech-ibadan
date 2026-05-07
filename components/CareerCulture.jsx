@@ -8,23 +8,27 @@ const CareerCulture = () => {
     {
       icon: Heart,
       title: "Inclusive Environment",
-      description: "We celebrate diverse perspectives and foster a culture of respect and belonging for everyone."
+      description:
+        "We celebrate diverse perspectives and foster a culture of respect and belonging for everyone.",
     },
     {
       icon: Target,
       title: "Growth Mindset",
-      description: "Continuous learning and professional development are at the core of our philosophy."
+      description:
+        "Continuous learning and professional development are at the core of our philosophy.",
     },
     {
       icon: Shield,
       title: "Work-Life Balance",
-      description: "Flexible work options and supportive policies that respect your personal time."
+      description:
+        "Flexible work options and supportive policies that respect your personal time.",
     },
     {
       icon: Zap,
       title: "Innovation First",
-      description: "We encourage creative thinking and reward innovative solutions to challenges."
-    }
+      description:
+        "We encourage creative thinking and reward innovative solutions to challenges.",
+    },
   ];
 
   return (
@@ -62,11 +66,12 @@ const CareerCulture = () => {
             </h2>
 
             <p className="text-gray-600 leading-relaxed mb-8 text-lg">
-              At Aptech Agodi, we believe that our greatest asset is our people. We are
-              committed to creating an environment where innovation thrives,
-              collaboration is key, and every team member feels valued and
-              empowered. Our inclusive culture celebrates diversity and
-              encourages continuous learning and professional growth.
+              At Aptech Ibadan, we believe that our greatest asset is our
+              people. We are committed to creating an environment where
+              innovation thrives, collaboration is key, and every team member
+              feels valued and empowered. Our inclusive culture celebrates
+              diversity and encourages continuous learning and professional
+              growth.
             </p>
 
             <p className="text-gray-600 leading-relaxed mb-8">
@@ -81,12 +86,17 @@ const CareerCulture = () => {
             {/* Values Grid */}
             <div className="grid sm:grid-cols-2 gap-4 mt-8">
               {values.map((value, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition">
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition"
+                >
                   <div className="w-10 h-10 bg-[#FFC107]/10 rounded-lg flex items-center justify-center flex-shrink-0">
                     <value.icon className="text-[#FFC107]" size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#020B2D] mb-1">{value.title}</h4>
+                    <h4 className="font-semibold text-[#020B2D] mb-1">
+                      {value.title}
+                    </h4>
                     <p className="text-gray-500 text-sm">{value.description}</p>
                   </div>
                 </div>

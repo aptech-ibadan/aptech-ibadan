@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import AptechLogo from '@/assets/APTECHLOGO.png'
+import AptechLogo from "@/assets/APTECHLOGO.png";
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -13,17 +13,17 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Programs", href: "/program" },     // Changed "Program" to "Programs"
+    { name: "Programs", href: "/program" }, // Changed "Program" to "Programs"
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Careers", href: "/career" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Arena", href: "/courses/amsp" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 bg-[#020B2D]/95 backdrop-blur-xl border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-0">
         <div className="flex items-center justify-between h-20">
-
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
@@ -37,8 +37,12 @@ const Navbar = () => {
               />
             </div>
             <div className="hidden sm:block">
-              <span className="text-white font-bold text-2xl tracking-tighter">APTECH</span>
-              <p className="text-[#FFC107] text-[10px] -mt-1 tracking-[2px] font-medium">IBADAN</p>
+              <span className="text-white font-bold text-2xl tracking-tighter">
+                APTECH
+              </span>
+              <p className="text-[#FFC107] text-[10px] -mt-1 tracking-[2px] font-medium">
+                IBADAN
+              </p>
             </div>
           </Link>
 
@@ -48,10 +52,11 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-sm font-medium tracking-wide transition-all duration-300 pb-1
-                  ${pathname === link.href 
-                    ? "text-white" 
-                    : "text-gray-400 hover:text-white"
+                className={`relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1
+                  ${
+                    pathname === link.href
+                      ? "text-white"
+                      : "text-gray-400 hover:text-white"
                   }`}
               >
                 {link.name}
@@ -63,16 +68,16 @@ const Navbar = () => {
           </div>
 
           {/* Desktop CTA Button */}
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <Link
-              href="/apply"
+              href="/contact"
               className="bg-[#FFC107] hover:bg-[#FFD700] text-black font-semibold px-8 py-3 rounded-full 
                          transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-[#FFC107]/30 flex items-center gap-2"
             >
               Apply Now
               <span className="text-lg">→</span>
             </Link>
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -94,23 +99,25 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenu(false)}
-                className={`font-medium transition-colors ${
-                  pathname === link.href ? "text-[#FFC107]" : "text-gray-300 hover:text-white"
+                className={`font-medium transition-colors cursor-pointer ${
+                  pathname === link.href
+                    ? "text-[#FFC107]"
+                    : "text-gray-300 hover:text-white"
                 }`}
               >
                 {link.name}
               </Link>
             ))}
 
-            <div className="pt-4 border-t border-white/10">
+            {/* <div className="pt-4 border-t border-white/10">
               <Link
-                href="/apply"
+                href="/contact"
                 onClick={() => setMobileMenu(false)}
                 className="block w-full text-center bg-[#FFC107] text-black font-semibold py-4 rounded-full hover:bg-[#FFD700] transition-all"
               >
                 Apply Now
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

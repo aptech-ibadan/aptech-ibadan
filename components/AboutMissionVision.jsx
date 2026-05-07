@@ -1,46 +1,169 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import { Target, Eye } from "lucide-react";
 
 const AboutMissionVision = () => {
-  return (
-    <section className="bg-[#020B2D] py-20 md:py-28 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(at_top_right,#FFC107_0%,transparent_50%)] opacity-10" />
-      <div className="absolute inset-0 bg-[radial-gradient(at_bottom_left,#3B82F6_0%,transparent_60%)] opacity-10" />
+  const sectionRef = useRef(null);
+  const missionRef = useRef(null);
+  const visionRef = useRef(null);
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid md:grid-cols-2 gap-8">
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const missionInView = useInView(missionRef, { once: true, amount: 0.5 });
+  const visionInView = useInView(visionRef, { once: true, amount: 0.5 });
+
+  // Scroll (safe)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const gradient1Y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const gradient2Y = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const opacity1 = useTransform(scrollYProgress, [0, 0.5, 1], [0.1, 0.15, 0.1]);
+  const opacity2 = useTransform(scrollYProgress, [0, 0.5, 1], [0.1, 0.15, 0.1]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: (custom) => ({
+      opacity: 0,
+      x: custom === 0 ? -80 : 80,
+      scale: 0.9,
+    }),
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: { type: "spring", stiffness: 100, damping: 12 },
+    },
+    hover: {
+      y: -10,
+      scale: 1.02,
+    },
+  };
+
+  const iconVariants = {
+    initial: { scale: 1 },
+    animate: {
+      scale: [1, 1.15, 1],
+      transition: { duration: 0.6 },
+    },
+    hover: { scale: 1.1 },
+  };
+
+  return (
+    <section
+      ref={sectionRef}
+      className="bg-[#020B2D] py-20 md:py-28 relative overflow-hidden"
+    >
+      {/* Background */}
+      <motion.div
+        className="absolute inset-0"
+        style={mounted ? { y: gradient1Y, opacity: opacity1 } : {}}
+      >
+        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(at_top_right,#FFC107_0%,transparent_70%)] opacity-20" />
+      </motion.div>
+
+      <motion.div
+        className="absolute inset-0"
+        style={mounted ? { y: gradient2Y, opacity: opacity2 } : {}}
+      >
+        <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(at_bottom_left,#3B82F6_0%,transparent_70%)] opacity-20" />
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <motion.div
+          className="grid md:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={mounted && isInView ? "visible" : "hidden"}
+        >
           {/* Mission */}
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:border-[#FFC107]/30 transition-all duration-300 group">
-            <div className="w-16 h-16 bg-[#FFC107]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Target className="text-[#FFC107]" size={36} />
+          <motion.div
+            ref={missionRef}
+            custom={0}
+            variants={cardVariants}
+            whileHover="hover"
+          >
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+              <motion.div
+                variants={iconVariants}
+                initial="initial"
+                animate={mounted && missionInView ? "animate" : "initial"}
+                className="mb-6"
+              >
+                <Target className="text-[#FFC107]" size={32} />
+              </motion.div>
+
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Our Mission
+              </h3>
+
+              <p className="text-gray-300">
+                To provide high-quality, accessible education in programming,
+                empowering students to reach their full potential.
+              </p>
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Our Mission
-            </h3>
-            <p className="text-gray-300 leading-relaxed text-lg">
-              To provide high-quality, accessible education in computer programming. 
-              We aim to inspire and empower students to achieve their full potential, 
-              fostering a lifelong love for coding and continuous learning.
-            </p>
-          </div>
+          </motion.div>
 
           {/* Vision */}
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:border-[#FFC107]/30 transition-all duration-300 group">
-            <div className="w-16 h-16 bg-[#FFC107]/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <Eye className="text-[#FFC107]" size={36} />
+          <motion.div
+            ref={visionRef}
+            custom={1}
+            variants={cardVariants}
+            whileHover="hover"
+          >
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+              <motion.div
+                variants={iconVariants}
+                initial="initial"
+                animate={mounted && visionInView ? "animate" : "initial"}
+                className="mb-6"
+              >
+                <Eye className="text-[#FFC107]" size={32} />
+              </motion.div>
+
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Our Vision
+              </h3>
+
+              <p className="text-gray-300">
+                To create a world where anyone can become a skilled developer
+                through hands-on, practical learning.
+              </p>
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Our Vision
-            </h3>
-            <p className="text-gray-300 leading-relaxed text-lg">
-              We envision a world where anyone with the passion and dedication can become 
-              a proficient programmer. By offering comprehensive, hands-on training, we 
-              strive to bridge the gap between aspiring developers and the tech industry's 
-              ever-evolving demands.
-            </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Divider */}
+        <AnimatePresence>
+          {mounted && isInView && (
+            <motion.div
+              className="hidden md:block absolute left-1/2 top-1/2 w-px h-32 bg-[#FFC107]/30"
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: 1 }}
+              exit={{ scaleY: 0 }}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
