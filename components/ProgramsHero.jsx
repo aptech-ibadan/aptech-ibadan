@@ -18,8 +18,19 @@ import { useInView } from "react-intersection-observer";
 const Particle = ({ x, y, size, duration, delay, color }) => (
   <motion.div
     className="absolute rounded-full pointer-events-none"
-    style={{ left: `${x}%`, top: `${y}%`, width: size, height: size, background: color }}
-    animate={{ y: [0, -28, 0], x: [0, 10, -6, 0], opacity: [0, 0.55, 0.25, 0.55, 0], scale: [0, 1, 0.8, 1, 0] }}
+    style={{
+      left: `${x}%`,
+      top: `${y}%`,
+      width: size,
+      height: size,
+      background: color,
+    }}
+    animate={{
+      y: [0, -28, 0],
+      x: [0, 10, -6, 0],
+      opacity: [0, 0.55, 0.25, 0.55, 0],
+      scale: [0, 1, 0.8, 1, 0],
+    }}
     transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
   />
 );
@@ -49,25 +60,64 @@ const Counter = ({ to, suffix = "+" }) => {
     return ctrl.stop;
   }, [inView, to]);
 
-  return <span ref={ref}>{count}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
 };
 
 /* ── Carousel images ── */
 const carouselImages = [
-  { id: 1, src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=870&auto=format&fit=crop", alt: "Students learning at Aptech" },
-  { id: 2, src: "https://images.unsplash.com/photo-1574717025058-2f8737d2e2b7?q=80&w=387&auto=format&fit=crop", alt: "Classroom session" },
-  { id: 3, src: "https://res.cloudinary.com/ddldviftf/image/upload/v1777742251/Gemini_Generated_Image_13t7kj13t7kj13t7_irqdag.png", alt: "Computer lab" },
-  { id: 4, src: "https://images.unsplash.com/photo-1637946902191-57cf1fe3c056?q=80&w=858&auto=format&fit=crop", alt: "Students collaborating" },
-  { id: 5, src: "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?q=80&w=871&auto=format&fit=crop", alt: "Coding session" },
-  { id: 6, src: "https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=736&auto=format&fit=crop", alt: "Design workshop" },
+   {
+    id: 1,
+    src: "/aptech001.jpg",
+    alt: "Students learning at Aptech",
+  },
+  {
+    id: 2,
+    src: "/aptech002.JPG",
+    alt: "Classroom session",
+  },
+  {
+    id: 3,
+    src: "/aptech009.png",
+    alt: "Computer lab",
+  },
+  {
+    id: 4,
+    src: "/aptech004.png",
+    alt: "Students collaborating",
+  },
+  {
+    id: 5,
+    src: "/aptech003.png",
+    alt: "Coding session",
+  },
+  {
+    id: 6,
+    src: "/aptech006.png",
+    alt: "Design workshop",
+  },
   // { id: 7, src: "https://images.unsplash.com/photo-1476242906366-d8eb64c2f661?q=80&w=1169&auto=format&fit=crop", alt: "Career counseling" },
 ];
 
 /* ── Slide directions ── */
 const slideVariants = {
   enter: (dir) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0, scale: 0.96 }),
-  center: { x: 0, opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-  exit: (dir) => ({ x: dir < 0 ? "100%" : "-100%", opacity: 0, scale: 0.96, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: (dir) => ({
+    x: dir < 0 ? "100%" : "-100%",
+    opacity: 0,
+    scale: 0.96,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  }),
 };
 
 const ProgramsHero = () => {
@@ -123,15 +173,23 @@ const ProgramsHero = () => {
   /* Stagger variants */
   const container = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.10, delayChildren: 0.1 } },
+    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
   };
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    },
   };
   const fadeLeft = {
     hidden: { opacity: 0, x: 60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    },
   };
 
   return (
@@ -139,27 +197,41 @@ const ProgramsHero = () => {
       {/* ── Ambient orbs ── */}
       <motion.div
         className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(255,193,7,0.07) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,193,7,0.07) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.2, 1], x: [0, 25, 0], y: [0, -18, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute -bottom-20 right-0 w-[380px] h-[380px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(80,100,255,0.05) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(80,100,255,0.05) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.15, 1], x: [0, -18, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
       />
 
       {/* ── Particles ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {PARTICLES.map((p) => <Particle key={p.id} {...p} />)}
+        {PARTICLES.map((p) => (
+          <Particle key={p.id} {...p} />
+        ))}
       </div>
 
       {/* ── Grid overlay ── */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }}
       />
@@ -185,10 +257,8 @@ const ProgramsHero = () => {
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-3 py-20 lg:py-0">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
             {/* ── Left Content ── */}
             <div className="lg:col-span-7 space-y-6">
-
               {/* Badge */}
               <motion.div variants={fadeUp}>
                 <motion.p
@@ -201,7 +271,7 @@ const ProgramsHero = () => {
                     animate={{ scale: [1, 1.5, 1] }}
                     transition={{ duration: 1.0, repeat: Infinity }}
                   />
-                  Aptech Ibadan • Arena Multimedia
+                  ACE • Arena Multimedia
                 </motion.p>
               </motion.div>
 
@@ -212,7 +282,9 @@ const ProgramsHero = () => {
               >
                 Build Your Future With{" "}
                 <span className="relative inline-block">
-                  <span className="text-[#FFC107]">Industry-Aligned Courses</span>
+                  <span className="text-[#FFC107]">
+                    Industry-Aligned Courses
+                  </span>
                   <motion.span
                     className="absolute -bottom-1 left-0 h-1.5 bg-[#FFC107]/30 -z-10 rounded-full"
                     initial={{ width: 0 }}
@@ -223,21 +295,34 @@ const ProgramsHero = () => {
               </motion.h1>
 
               {/* Description */}
-              <motion.p variants={fadeUp} className="text-gray-300 text-lg md:text-xl max-w-2xl">
-                From foundational skills to professional certifications — choose your path and become
-                career-ready with Aptech's globally recognized programs.
+              <motion.p
+                variants={fadeUp}
+                className="text-gray-300 text-lg md:text-xl max-w-2xl"
+              >
+                From foundational skills to professional certifications — choose
+                your path and become career-ready with Aptech's globally
+                recognized programs.
               </motion.p>
 
               {/* CTA Buttons */}
-              <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 pt-4">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+              <motion.div
+                variants={fadeUp}
+                className="flex flex-col sm:flex-row gap-4 pt-4"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
                   <Button
                     classes="bg-[#FFC107] text-black px-8 py-4 rounded-full font-semibold hover:bg-[#FFD700] transition-colors duration-300 shadow-lg text-center block"
                     link="/contact"
                     text="Enroll Now"
                   />
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
                   <Button
                     classes="border-2 border-white px-8 py-4 rounded-full transition-all duration-300 text-center block"
                     link="#professional"
@@ -270,19 +355,32 @@ const ProgramsHero = () => {
             <motion.div
               variants={fadeLeft}
               className="hidden lg:block lg:col-span-5"
-              style={{ rotateX, rotateY, perspective: 1000, transformStyle: "preserve-3d" }}
+              style={{
+                rotateX,
+                rotateY,
+                perspective: 1000,
+                transformStyle: "preserve-3d",
+              }}
             >
               <div className="relative group">
                 {/* Glow */}
                 <motion.div
                   className="absolute -inset-6 rounded-[3rem] pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse, rgba(255,193,7,0.22) 0%, transparent 70%)" }}
+                  style={{
+                    background:
+                      "radial-gradient(ellipse, rgba(255,193,7,0.22) 0%, transparent 70%)",
+                  }}
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 />
 
                 {/* Corner accents */}
-                {["top-0 left-0", "top-0 right-0", "bottom-0 left-0", "bottom-0 right-0"].map((pos, i) => (
+                {[
+                  "top-0 left-0",
+                  "top-0 right-0",
+                  "bottom-0 left-0",
+                  "bottom-0 right-0",
+                ].map((pos, i) => (
                   <motion.div
                     key={i}
                     className={`absolute ${pos} w-5 h-5 border-[#FFC107] pointer-events-none z-20`}
@@ -301,7 +399,11 @@ const ProgramsHero = () => {
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#020B2D]/80 to-transparent border border-white/10">
                   {/* Carousel */}
                   <div className="relative h-[320px] sm:h-[380px] overflow-hidden">
-                    <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                    <AnimatePresence
+                      initial={false}
+                      custom={direction}
+                      mode="popLayout"
+                    >
                       <motion.div
                         key={currentIndex}
                         custom={direction}
@@ -326,11 +428,16 @@ const ProgramsHero = () => {
                     <motion.div
                       className="absolute inset-0 pointer-events-none z-10"
                       style={{
-                        background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
+                        background:
+                          "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
                         backgroundSize: "200% 100%",
                       }}
                       animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
-                      transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5 }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatDelay: 2.5,
+                      }}
                     />
 
                     {/* Bottom fade */}
@@ -363,7 +470,9 @@ const ProgramsHero = () => {
                     onClick={() => setIsAutoPlaying((p) => !p)}
                     whileHover={{ scale: 1.1 }}
                     className="absolute bottom-4 right-4 z-20 bg-black/50 hover:bg-[#FFC107]/80 text-white hover:text-black rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                    aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
+                    aria-label={
+                      isAutoPlaying ? "Pause slideshow" : "Play slideshow"
+                    }
                   >
                     {isAutoPlaying ? <Pause size={16} /> : <Play size={16} />}
                   </motion.button>
@@ -377,7 +486,10 @@ const ProgramsHero = () => {
                         whileHover={{ scale: 1.3 }}
                         animate={{
                           width: index === currentIndex ? 32 : 8,
-                          background: index === currentIndex ? "#FFC107" : "rgba(255,255,255,0.45)",
+                          background:
+                            index === currentIndex
+                              ? "#FFC107"
+                              : "rgba(255,255,255,0.45)",
                         }}
                         transition={{ duration: 0.3 }}
                         className="h-2 rounded-full"
@@ -391,7 +503,7 @@ const ProgramsHero = () => {
                     key={currentIndex}
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/70 rounded-full px-3 py-1"
+                    className="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-sm border border-white/10  text-white/70 rounded-full px-3 py-1"
                   >
                     {currentIndex + 1} / {carouselImages.length}
                   </motion.div>
@@ -404,13 +516,14 @@ const ProgramsHero = () => {
                     transition={{ delay: 1.5, duration: 0.6 }}
                     whileHover={{ scale: 1.04 }}
                   >
-                    <p className="text-xs text-gray-400">Next intake</p>
-                    <p className="text-sm font-semibold text-[#FFC107]">Enrolling Now</p>
+                    <p className=" text-gray-400">Next intake</p>
+                    <p className="text-sm font-semibold text-[#FFC107]">
+                      Enrolling Now
+                    </p>
                   </motion.div>
                 </div>
               </div>
             </motion.div>
-
           </div>
         </div>
       </motion.div>

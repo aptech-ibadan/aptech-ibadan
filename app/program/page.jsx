@@ -28,10 +28,10 @@ const ProgramsPage = () => {
       <ProgramsHero />
       <CareerCourses openModal={openModal} />
       <SmartProfessionalCourses openModal={openModal} />
-      <SkillBuilderCourses openModal={openModal} />
+      {/* <SkillBuilderCourses openModal={openModal} /> */}
       <CtaSection />
-      <Footer />
-      
+      {/* <Footer /> */}
+
       {/* Modal */}
       {isModalOpen && selectedCourse && (
         <CourseModal course={selectedCourse} onClose={closeModal} />

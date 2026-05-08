@@ -2,7 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { X, Clock, Award, Users, Briefcase, Cpu, CheckCircle, ArrowRight, Play } from "lucide-react";
+import {
+  X,
+  Clock,
+  Award,
+  Users,
+  Briefcase,
+  Cpu,
+  CheckCircle,
+  ArrowRight,
+  Play,
+} from "lucide-react";
 import { Button } from "@/const";
 
 const CourseModal = ({ course, onClose }) => {
@@ -22,7 +32,7 @@ const CourseModal = ({ course, onClose }) => {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
     animatedElementsRef.current.forEach((el) => {
@@ -68,13 +78,17 @@ const CourseModal = ({ course, onClose }) => {
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-500 ${
-        isVisible ? "bg-black/80 backdrop-blur-sm" : "bg-black/0 backdrop-blur-none"
+        isVisible
+          ? "bg-black/80 backdrop-blur-sm"
+          : "bg-black/0 backdrop-blur-none"
       }`}
       onClick={handleClose}
     >
       <div
         className={`relative bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-          isVisible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-10"
+          isVisible
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-10"
         } ${isClosing ? "scale-90 opacity-0 translate-y-5" : ""}`}
         onClick={(e) => e.stopPropagation()}
         ref={contentRef}
@@ -98,23 +112,25 @@ const CourseModal = ({ course, onClose }) => {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-          
+
           {/* Course Title Overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 animate-slideUp">
             <div className="flex flex-wrap items-center gap-2 mb-3">
               {course.category && (
-                <span className="bg-[#FFC107] text-black text-xs font-bold px-3 py-1 rounded-full animate-pulse-subtle">
+                <span className="bg-[#FFC107] text-black  font-bold px-3 py-1 rounded-full animate-pulse-subtle">
                   {course.category}
                 </span>
               )}
               {course.duration && (
-                <span className="bg-white/20 backdrop-blur text-white text-xs px-3 py-1 rounded-full flex items-center gap-1 hover:bg-white/30 transition-all duration-300">
-                  <Clock size={12} className="animate-spin-slow" /> {course.duration}
+                <span className="bg-white/20 backdrop-blur text-white  px-3 py-1 rounded-full flex items-center gap-1 hover:bg-white/30 transition-all duration-300">
+                  <Clock size={12} className="animate-spin-slow" />{" "}
+                  {course.duration}
                 </span>
               )}
               {course.certification && (
-                <span className="bg-white/20 backdrop-blur text-white text-xs px-3 py-1 rounded-full flex items-center gap-1 hover:bg-white/30 transition-all duration-300">
-                  <Award size={12} className="animate-bounce-subtle" /> {course.certification}
+                <span className="bg-white/20 backdrop-blur text-white  px-3 py-1 rounded-full flex items-center gap-1 hover:bg-white/30 transition-all duration-300">
+                  <Award size={12} className="animate-bounce-subtle" />{" "}
+                  {course.certification}
                 </span>
               )}
             </div>
@@ -164,7 +180,10 @@ const CourseModal = ({ course, onClose }) => {
                       className="flex items-start gap-2 group/item hover:translate-x-2 transition-all duration-300 cursor-default"
                       style={{ animationDelay: `${idx * 50}ms` }}
                     >
-                      <CheckCircle size={18} className="text-[#FFC107] mt-0.5 flex-shrink-0 group-hover/item:rotate-12 transition-transform duration-300" />
+                      <CheckCircle
+                        size={18}
+                        className="text-[#FFC107] mt-0.5 flex-shrink-0 group-hover/item:rotate-12 transition-transform duration-300"
+                      />
                       <span className="text-gray-700 text-sm group-hover/item:text-[#020B2D] transition-colors duration-300">
                         {feature}
                       </span>
@@ -174,7 +193,7 @@ const CourseModal = ({ course, onClose }) => {
               </div>
 
               {/* Technologies */}
-              <div
+              {/* <div
                 ref={(el) => addToRefs(el, 2)}
                 className="transform transition-all duration-700 opacity-0 translate-y-8"
               >
@@ -193,7 +212,7 @@ const CourseModal = ({ course, onClose }) => {
                     </span>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* Career Paths */}
               <div
@@ -202,7 +221,11 @@ const CourseModal = ({ course, onClose }) => {
               >
                 <h3 className="text-xl font-bold text-[#020B2D] mb-3 flex items-center gap-2 group">
                   <span className="w-1 h-6 bg-[#FFC107] rounded-full group-hover:h-8 transition-all duration-300"></span>
-                  <Briefcase size={18} className="group-hover:translate-x-1 transition-transform duration-300" /> Career Opportunities
+                  <Briefcase
+                    size={18}
+                    className="group-hover:translate-x-1 transition-transform duration-300"
+                  />{" "}
+                  Career Opportunities
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {course.careerPaths.map((career, idx) => (
@@ -283,14 +306,15 @@ const CourseModal = ({ course, onClose }) => {
                     Ready to Start?
                   </h4>
                   <p className="text-gray-300 text-sm mb-4 group-hover/enroll:translate-y-[-2px] transition-transform duration-300">
-                    Join this program and take the first step toward your dream career.
+                    Join this program and take the first step toward your dream
+                    career.
                   </p>
                   <Button
                     classes="bg-[#FFC107] text-black w-full py-3 rounded-xl font-bold hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                     link="/contact"
                     text="Enroll Now"
                   />
-                  <p className="text-gray-400 text-xs mt-3 animate-pulse-subtle">
+                  <p className="text-gray-400  mt-3 animate-pulse-subtle">
                     Limited seats available for next batch
                   </p>
                 </div>
@@ -344,7 +368,8 @@ const CourseModal = ({ course, onClose }) => {
         }
 
         @keyframes pulseSubtle {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
           }
           50% {
@@ -362,7 +387,8 @@ const CourseModal = ({ course, onClose }) => {
         }
 
         @keyframes bounceSubtle {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {

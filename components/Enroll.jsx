@@ -9,8 +9,19 @@ import { useEffect, useState } from "react";
 const Particle = ({ x, y, size, duration, delay, color }) => (
   <motion.div
     className="absolute rounded-full pointer-events-none"
-    style={{ left: `${x}%`, top: `${y}%`, width: size, height: size, background: color }}
-    animate={{ y: [0, -24, 0], x: [0, 10, -6, 0], opacity: [0, 0.5, 0.25, 0.5, 0], scale: [0, 1, 0.7, 1, 0] }}
+    style={{
+      left: `${x}%`,
+      top: `${y}%`,
+      width: size,
+      height: size,
+      background: color,
+    }}
+    animate={{
+      y: [0, -24, 0],
+      x: [0, 10, -6, 0],
+      opacity: [0, 0.5, 0.25, 0.5, 0],
+      scale: [0, 1, 0.7, 1, 0],
+    }}
     transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
   />
 );
@@ -40,7 +51,12 @@ const Counter = ({ to, suffix = "+" }) => {
     return ctrl.stop;
   }, [inView, to]);
 
-  return <span ref={ref}>{count}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
 };
 
 /* ── Card ── */
@@ -52,7 +68,11 @@ const BenefitCard = ({ icon: Icon, label, desc, index }) => {
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.15,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       whileHover={{ y: -6, borderColor: "rgba(255,193,7,0.4)" }}
       className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 transition-colors duration-300 group cursor-default"
     >
@@ -85,28 +105,45 @@ const Enroll = () => {
 
   const fadeUp = {
     hidden: { opacity: 0, y: 36 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    },
   };
 
   const BENEFITS = [
-    { icon: Users, label: "Global Network", desc: "Connect with students worldwide" },
-    { icon: Award, label: "Industry Certification", desc: "Earn recognized credentials" },
+    {
+      icon: Users,
+      label: "Global Network",
+      desc: "Connect with students worldwide",
+    },
+    {
+      icon: Award,
+      label: "Industry Certification",
+      desc: "Earn recognized credentials",
+    },
     { icon: Zap, label: "Fast-Track Career", desc: "Job-ready in 6–12 months" },
   ];
 
   return (
     <section className="bg-[#020B2D] py-20 md:py-28 relative overflow-hidden">
-
       {/* Gradient orbs */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at top right, rgba(255,193,7,0.08) 0%, transparent 55%)" }}
+        style={{
+          background:
+            "radial-gradient(ellipse at top right, rgba(255,193,7,0.08) 0%, transparent 55%)",
+        }}
         animate={{ opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
       <motion.div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at bottom left, rgba(59,130,246,0.07) 0%, transparent 60%)" }}
+        style={{
+          background:
+            "radial-gradient(ellipse at bottom left, rgba(59,130,246,0.07) 0%, transparent 60%)",
+        }}
         animate={{ opacity: [1, 0.5, 1] }}
         transition={{ duration: 10, repeat: Infinity, delay: 2 }}
       />
@@ -123,7 +160,9 @@ const Enroll = () => {
 
       {/* Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {PARTICLES.map((p) => <Particle key={p.id} {...p} />)}
+        {PARTICLES.map((p) => (
+          <Particle key={p.id} {...p} />
+        ))}
       </div>
 
       <motion.div
@@ -134,12 +173,17 @@ const Enroll = () => {
         className="max-w-5xl mx-auto px-6 md:px-12 relative z-10"
       >
         <div className="flex flex-col items-center text-center">
-
           {/* Badge */}
           <motion.div variants={fadeUp}>
             <motion.div
               className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-6"
-              animate={{ boxShadow: ["0 0 0px rgba(255,193,7,0)", "0 0 18px rgba(255,193,7,0.25)", "0 0 0px rgba(255,193,7,0)"] }}
+              animate={{
+                boxShadow: [
+                  "0 0 0px rgba(255,193,7,0)",
+                  "0 0 18px rgba(255,193,7,0.25)",
+                  "0 0 0px rgba(255,193,7,0)",
+                ],
+              }}
               transition={{ duration: 3, repeat: Infinity }}
             >
               <motion.div
@@ -164,8 +208,7 @@ const Enroll = () => {
             variants={fadeUp}
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight max-w-4xl"
           >
-            Ready To Get Started?{" "}
-            <br />
+            Ready To Get Started? <br />
             <span className="relative inline-block text-[#FFC107]">
               Your Tech Future Begins Here
               <motion.span
@@ -182,9 +225,9 @@ const Enroll = () => {
             variants={fadeUp}
             className="mt-6 text-gray-300 text-lg md:text-xl max-w-2xl leading-relaxed"
           >
-            Join a diverse community of ambitious learners from around the world.
-            Build real skills, earn globally recognized certifications, and launch
-            your career in tech.
+            Join a diverse community of ambitious learners from around the
+            world. Build real skills, earn globally recognized certifications,
+            and launch your career in tech.
           </motion.p>
 
           {/* Mini stats */}
@@ -193,7 +236,7 @@ const Enroll = () => {
             className="flex flex-wrap justify-center gap-10 mt-10 py-6 border-y border-white/10 w-full max-w-xl"
           >
             {[
-              { value: 5000, label: "Graduates" },
+              { value: 2000, label: "Graduates" },
               { value: 20, label: "Years Running" },
               { value: 30, label: "Courses" },
             ].map(({ value, label }) => (
@@ -201,7 +244,7 @@ const Enroll = () => {
                 <p className="text-2xl font-bold text-[#FFC107]">
                   <Counter to={value} />
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">{label}</p>
+                <p className=" text-gray-400 mt-0.5">{label}</p>
               </div>
             ))}
           </motion.div>
@@ -243,7 +286,6 @@ const Enroll = () => {
           >
             Limited slots available for the new intake • Starts soon
           </motion.p>
-
         </div>
       </motion.div>
     </section>

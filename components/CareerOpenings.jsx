@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "@/const";
-import { 
-  MapPin, 
-  Clock, 
-  Briefcase, 
-  DollarSign, 
+import {
+  MapPin,
+  Clock,
+  Briefcase,
+  DollarSign,
   ChevronRight,
   Search,
-  Filter
+  Filter,
 } from "lucide-react";
 
 // Job openings data
@@ -195,18 +195,27 @@ import {
 //     ]
 //   }
 // ];
-const OPENINGS = []
+const OPENINGS = [];
 
 const CareerOpenings = ({ openModal }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
 
-  const departments = ["All", "Engineering", "Design", "Academics", "Marketing", "Student Services"];
+  const departments = [
+    "All",
+    "Engineering",
+    "Design",
+    "Academics",
+    "Marketing",
+    "Student Services",
+  ];
 
   const filteredOpenings = OPENINGS.filter((opening) => {
-    const matchesSearch = opening.job.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          opening.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDepartment = selectedDepartment === "All" || opening.department === selectedDepartment;
+    const matchesSearch =
+      opening.job.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      opening.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesDepartment =
+      selectedDepartment === "All" || opening.department === selectedDepartment;
     return matchesSearch && matchesDepartment;
   });
 
@@ -229,7 +238,10 @@ const CareerOpenings = ({ openModal }) => {
         {/* Search and Filter */}
         <div className="flex flex-col md:flex-row gap-4 mb-10">
           <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+            <Search
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+              size={20}
+            />
             <input
               type="text"
               placeholder="Search positions..."
@@ -267,10 +279,10 @@ const CareerOpenings = ({ openModal }) => {
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap mb-2">
-                      <span className="bg-[#FFC107]/10 text-[#FFC107] text-xs font-semibold px-3 py-1 rounded-full">
+                      <span className="bg-[#FFC107]/10 text-[#FFC107]  font-semibold px-3 py-1 rounded-full">
                         {opening.department}
                       </span>
-                      <span className="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                      <span className="bg-green-100 text-green-700  font-semibold px-3 py-1 rounded-full">
                         {opening.type}
                       </span>
                     </div>
@@ -295,10 +307,15 @@ const CareerOpenings = ({ openModal }) => {
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <div className="text-sm text-gray-500">Salary Range</div>
-                      <div className="font-semibold text-[#020B2D]">{opening.salary}</div>
+                      <div className="font-semibold text-[#020B2D]">
+                        {opening.salary}
+                      </div>
                     </div>
                     <button className="w-10 h-10 bg-[#FFC107]/10 rounded-full flex items-center justify-center group-hover:bg-[#FFC107] transition-all duration-300">
-                      <ChevronRight size={20} className="text-[#FFC107] group-hover:text-white" />
+                      <ChevronRight
+                        size={20}
+                        className="text-[#FFC107] group-hover:text-white"
+                      />
                     </button>
                   </div>
                 </div>
@@ -307,8 +324,12 @@ const CareerOpenings = ({ openModal }) => {
           ) : (
             <div className="text-center py-20">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-[#020B2D] mb-2">No positions found</h3>
-              <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+              <h3 className="text-xl font-semibold text-[#020B2D] mb-2">
+                No positions found
+              </h3>
+              <p className="text-gray-500">
+                Try adjusting your search or filter criteria
+              </p>
             </div>
           )}
         </div>
@@ -317,8 +338,12 @@ const CareerOpenings = ({ openModal }) => {
         {OPENINGS.length === 0 && (
           <div className="text-center py-20 bg-gray-50 rounded-2xl">
             <div className="text-6xl mb-4">📢</div>
-            <h3 className="text-xl font-semibold text-[#020B2D] mb-2">No Openings at the Moment</h3>
-            <p className="text-gray-500">Check back soon for new opportunities</p>
+            <h3 className="text-xl font-semibold text-[#020B2D] mb-2">
+              No Openings at the Moment
+            </h3>
+            <p className="text-gray-500">
+              Check back soon for new opportunities
+            </p>
           </div>
         )}
       </div>

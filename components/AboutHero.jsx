@@ -265,7 +265,7 @@ const AboutHero = () => {
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 Nigeria's Premier{" "}
                 <motion.span
-                  className="relative inline-block group"
+                  className="relative inline-block group mt-4"
                   whileHover={{ scale: 1.08 }}
                   transition={{ type: "spring", stiffness: 350 }}
                   animate={
@@ -364,7 +364,7 @@ const AboutHero = () => {
                     : {}
                 }
               >
-                Welcome to Aptech Agodi, a leading center for technology
+                Welcome to Aptech Ibadan, a leading center for technology
                 education and digital skills development. We are dedicated to
                 equipping students, professionals, and business owners with
                 practical, industry-relevant knowledge.

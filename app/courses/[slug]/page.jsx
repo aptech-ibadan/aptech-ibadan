@@ -2,8 +2,245 @@ import { notFound } from "next/navigation";
 import CourseClient from "./CourseClient";
 
 const courseData = {
+  miscpapp: {
+    title: "Diploma in MIS and Cross-Platform App Development",
+    tagline:
+      "From office automation to cross-platform apps — all in one program.",
+    description:
+      "A comprehensive MIS and app development program covering data analysis, database management, Java programming, and cross-platform mobile development using Flutter and Dart.",
+
+    media: {
+      type: "image",
+      src: "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=870&auto=format&fit=crop",
+    },
+
+    outcomes:
+      "Automate everyday tasks and leverage AI capabilities through Microsoft 365 and CoPilot. Create, analyze, and manipulate data using MS Excel. Normalize raw data into well-organized SQL Server database tables. Build programs using Python. Design dashboards and visualizations with Tableau. Exchange data using XML and JSON. Design GUI and object-oriented applications with Java. Implement Agile software development methodology. Build cross-platform mobile apps using Flutter and Dart.",
+
+    terms: [
+      {
+        title: "Office & Data Tools",
+        modules: [
+          "Office Automation (MS Office 365)",
+          "Data Analysis with MS Excel",
+          "Data Management with SQL Server",
+          "Visual Analytics with Tableau",
+        ],
+      },
+      {
+        title: "Programming Foundations",
+        modules: [
+          "Developing Applications with Python",
+          "Data Processing with XML and JSON",
+          "Java Programming - I",
+          "Java Programming - II",
+        ],
+      },
+      {
+        title: "Professional Skills",
+        modules: [
+          "Soft Skills",
+          "Agile and DevOps",
+          "UI/UX for Mobile Development",
+        ],
+      },
+      {
+        title: "Mobile Development",
+        modules: [
+          "Introduction to Dart Programming",
+          "Application Development Using Flutter and Dart",
+        ],
+      },
+      {
+        title: "Capstone",
+        modules: ["Project - Cross Platform App Development"],
+      },
+    ],
+
+    jobRoles: [
+      "MIS Professional",
+      "Data Analyst",
+      "Data Visualizer",
+      "Android App Developer",
+      "Cross Platform App Developer (Android & iOS)",
+    ],
+  },
+
+  dsaiml: {
+    title: "Diploma in Data Science, AI, and Machine Learning",
+    tagline:
+      "Harness the power of Python, AI, and big data for real-world impact.",
+    description:
+      "An intensive data science and AI program covering machine learning, deep learning, NLP, big data with Hadoop, and advanced Python — culminating in a real-world capstone project.",
+
+    media: {
+      type: "image",
+      src: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=870&auto=format&fit=crop",
+    },
+
+    outcomes:
+      "Understand MongoDB concepts, features, and data model. Perform data mining tasks with WEKA. Build visualizations and dashboards with Tableau. Program confidently in Python. Apply NLP techniques and leverage AI in language applications. Master supervised and unsupervised machine learning algorithms. Understand the Hadoop ecosystem and big data processing lifecycle. Extract insights from data using Python's data science libraries. Implement advanced data science techniques. Master deep learning with TensorFlow. Develop a real-world capstone project on recommendation engines and customer churn prediction.",
+
+    terms: [
+      {
+        title: "Data Foundations",
+        modules: [
+          "Managing Large Datasets with MongoDB",
+          "Data Mining with WEKA",
+          "Visual Analytics with Tableau",
+          "Application Based Programming in Python",
+        ],
+      },
+      {
+        title: "AI & Machine Learning",
+        modules: [
+          "AI Applications of NLP",
+          "AI and ML with Python",
+          "Applied Machine Learning using Python",
+        ],
+      },
+      {
+        title: "Big Data & Advanced Data Science",
+        modules: [
+          "Foundations of Big Data Systems with Hadoop",
+          "Data Science with Python",
+          "Advanced Data Science with Python",
+        ],
+      },
+      {
+        title: "Deep Learning",
+        modules: ["Deep Learning using Neural Networks"],
+      },
+      {
+        title: "Capstone",
+        modules: [
+          "Capstone Project - Recommendation Engine and Customer Churn Prediction",
+        ],
+      },
+    ],
+
+    jobRoles: ["Data Analytics Professional", "AI Developer", "ML Developer"],
+  },
+
+  nwad: {
+    title: "Diploma in Network Administration",
+    tagline: "Build, manage, and secure enterprise networks with confidence.",
+    description:
+      "A complete network administration program covering Windows desktop management, cloud infrastructure with Microsoft Azure, Cisco enterprise networking, and cybersecurity fundamentals.",
+
+    media: {
+      type: "image",
+      src: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=870&auto=format&fit=crop",
+    },
+
+    outcomes:
+      "Install, configure, and maintain Windows systems and protect devices and data. Establish, maintain, and troubleshoot essential business networks. Gain foundational knowledge of Microsoft Azure cloud services. Implement and manage identity, governance, storage, compute, and virtual networks in the cloud. Manage on-premises and hybrid solutions. Understand network fundamentals, IP connectivity, and security. Gain knowledge in security monitoring, host-based analysis, and network intrusion analysis. Implement Cisco Enterprise Network Core Technologies and Advanced Routing. Design solutions to administer complex networks.",
+
+    terms: [
+      {
+        title: "Desktop & Network Fundamentals",
+        modules: [
+          "Manage Modern Desktops with Windows",
+          "Technologies of Computer Networks",
+        ],
+      },
+      {
+        title: "Microsoft Azure",
+        modules: [
+          "Azure Fundamentals",
+          "Implementing, Managing, and Monitoring Azure Environment",
+          "Azure Architect Technologies",
+          "Azure Architect Design",
+        ],
+      },
+      {
+        title: "Cisco Networking",
+        modules: [
+          "Implementing and Administering Network Solutions",
+          "Implementing and Operating Enterprise Network Core Technologies (ENCOR)",
+          "Implementing Enterprise Advanced Routing and Services (ENARSI)",
+        ],
+      },
+      {
+        title: "Security",
+        modules: ["Cybersecurity Operations Fundamentals"],
+      },
+      {
+        title: "Capstone",
+        modules: ["Project - Administering Network Solutions"],
+      },
+    ],
+
+    jobRoles: ["Azure Administrator", "Network Administrator (CISCO)"],
+  },
+
+  cyforen: {
+    title: "Diploma in Cybersecurity and Digital Forensics",
+    tagline:
+      "Defend systems, investigate crimes, and uncover digital evidence.",
+    description:
+      "A comprehensive cybersecurity and digital forensics program covering ethical hacking, network security, computer forensics, cyber crime investigation, and social media forensics using industry-standard tools.",
+
+    media: {
+      type: "image",
+      src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=870&auto=format&fit=crop",
+    },
+
+    outcomes:
+      "Understand roles and responsibilities in information security. Identify security vulnerabilities in mobile devices and laptops. Learn threat modelling and server hacking techniques. Understand hacking methods in Windows OS and Linux. Design and implement security for networked devices. Find vulnerabilities and security leaks in software. Master fundamentals of computer forensics, analysis, and investigation. Investigate computer crimes and digital evidence acquisition. Perform steganography analysis and image file forensics. Investigate wireless attacks and social media fraud. Recognize and reduce the risk of corporate fraud.",
+
+    terms: [
+      {
+        title: "Security Fundamentals",
+        modules: [
+          "Information Security and Organizational Structure",
+          "Securing Mobile Devices",
+          "Security Architecture and Hacking",
+        ],
+      },
+      {
+        title: "Ethical Hacking",
+        modules: [
+          "Windows/Unix/Linux Hacking",
+          "Implementing Network Security",
+          "Ethical Hacking",
+        ],
+      },
+      {
+        title: "Computer Forensics",
+        modules: [
+          "Introduction to Computer Forensics",
+          "Introduction to Cyber Crime Investigation",
+          "Digital Evidence and Computer Forensic Investigation Process",
+          "Data Acquisition - Duplication and Recovery",
+          "Forensic Investigation",
+        ],
+      },
+      {
+        title: "Advanced Forensics",
+        modules: [
+          "Steganography and Image File Forensics",
+          "Investigating Wireless Attacks",
+          "Social Media Forensics",
+          "Investigating Corporate Frauds",
+        ],
+      },
+      {
+        title: "Capstone",
+        modules: ["Project - Ethical Hacking"],
+      },
+    ],
+
+    jobRoles: [
+      "Security Administrator",
+      "Ethical Hacker",
+      "Forensics Investigator",
+      "Cyber Crime Investigator",
+    ],
+  },
+
   adse: {
-    title: "Advanced Diploma in Software Engineering (ADSE AI)",
+    title: "Aptech Certifed Computer Professional with AI",
 
     tagline:
       "Build real-world software, master AI tools, and start earning while you learn.",
@@ -13,7 +250,8 @@ const courseData = {
 
     media: {
       type: "image",
-      src: "../../../assets/adse.png",
+      //src: "../../../assets/adse.png",
+      src: "https://res.cloudinary.com/dmm4m5u6n/image/upload/q_auto/f_auto/v1778236541/adse_gnfy6s.png",
     },
 
     highlights: [
@@ -116,11 +354,7 @@ const courseData = {
 
       {
         title: "Term 4C - Oracle",
-        modules: [
-          "Oracle SQL",
-          "PL/SQL",
-          "Database Administration",
-        ],
+        modules: ["Oracle SQL", "PL/SQL", "Database Administration"],
         outcomes:
           "Design and manage enterprise databases. Optimize queries, ensure security, and maintain high availability systems.",
         totalHours: 242,
@@ -306,7 +540,8 @@ const courseData = {
         "Global animation, VFX & gaming market projected to reach $517B by 2027",
       insight1: "90% of US animation is produced in Asia",
       insight2: "Animation film production costs range from $20M to $300M",
-      insight3: "Africa is one of the fastest-growing media & entertainment markets",
+      insight3:
+        "Africa is one of the fastest-growing media & entertainment markets",
     },
     terms: [
       {
@@ -398,11 +633,7 @@ const courseData = {
 
       {
         title: "Basics of 3D Animation",
-        modules: [
-          "3D Basics",
-          "Modeling Fundamentals",
-          "Rendering with V-Ray",
-        ],
+        modules: ["3D Basics", "Modeling Fundamentals", "Rendering with V-Ray"],
         jobRoles: ["3D Modeler", "Animator"],
         totalHours: 88,
       },
@@ -454,7 +685,8 @@ const courseData = {
   },
   realtime3d: {
     title: "Certificate in Realtime 3D & Game Art",
-    tagline: "Create immersive real-time game worlds and interactive experiences.",
+    tagline:
+      "Create immersive real-time game worlds and interactive experiences.",
     description:
       "A professional training program focused on building real-time 3D environments, game assets, and interactive gameplay systems using Unity and Unreal Engine.",
 
@@ -558,10 +790,7 @@ const courseData = {
 
       {
         title: "Advanced VFX Techniques",
-        modules: [
-          "Matte Painting Techniques",
-          "Visual Effects with Houdini",
-        ],
+        modules: ["Matte Painting Techniques", "Visual Effects with Houdini"],
       },
 
       {
@@ -593,7 +822,7 @@ const courseData = {
 
     media: {
       type: "image",
-      src: "/acns.png",
+      src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
 
     highlights: [
@@ -667,7 +896,8 @@ const courseData = {
   smartstack: {
     title: "Smart Professional & Skill Builder Programs",
 
-    tagline: "Flexible tech, design, and IT skills for job-ready professionals.",
+    tagline:
+      "Flexible tech, design, and IT skills for job-ready professionals.",
 
     description:
       "A modular learning ecosystem made up of Smart Professional certifications and Skill Builder short courses. Designed for flexible skill acquisition across software development, design, data, cloud, networking, and emerging technologies.",
@@ -694,7 +924,10 @@ const courseData = {
           { name: "Network Administration", hours: 192 },
           { name: "Azure Administration", hours: 126 },
           { name: "Designing Azure Infrastructure Solutions", hours: 80 },
-          { name: "Network Administration for Enterprise Solutions", hours: 80 },
+          {
+            name: "Network Administration for Enterprise Solutions",
+            hours: 80,
+          },
           { name: "Artificial Intelligence and Machine Learning", hours: 340 },
           { name: "Data Visualization", hours: 88 },
           { name: "User Interface and Experience Design", hours: 270 },

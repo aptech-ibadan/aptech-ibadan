@@ -3,21 +3,76 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { ChevronDown } from "lucide-react";
 import AptechLogo from "@/assets/APTECHLOGO.png";
+
+import middlesex from "@/assets/middlesex.png";
+import lincoln from "@/assets/lincoln.png";
+import ncc from "@/assets/ncc.png";
+import sgsu from "@/assets/sgsu.png";
+import bolton from "@/assets/bolton.png";
+
+const partners = [
+  {
+    name: "Middlesex University ",
+    href: "https://www.mdx.ac.uk/",
+    external: true,
+    logo: middlesex,
+  },
+  {
+    name: "Lincoln University",
+    href: "https://www.lincoln.ac.uk/",
+    external: true,
+    logo: lincoln,
+  },
+  {
+    name: "NCC",
+    href: "http://www.nccu.edu/",
+    external: true,
+    logo: ncc,
+  },
+  {
+    name: "SGSU",
+    href: "http://sgsuniversity.ac.in/",
+    external: true,
+    logo: sgsu,
+  },
+  {
+    name: "Bolton University",
+    href: "https://www.bolton.ac.uk/",
+    external: true,
+    logo: bolton,
+  },
+];
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [partnersOpen, setPartnersOpen] = useState(false);
+  const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
+  const partnersRef = useRef(null);
   const pathname = usePathname();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (partnersRef.current && !partnersRef.current.contains(e.target)) {
+        setPartnersOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Programs", href: "/program" }, // Changed "Program" to "Programs"
+    { name: "Programs", href: "/program" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Gallery", href: "/gallery" },
-    { name: "Arena", href: "/courses/amsp" },
+    { name: "Arena", href: "/courses/amsp", isNew: true },
+    { name: "Accommodation", href: "/accomodation", isNew: true },
   ];
 
   return (
@@ -30,29 +85,21 @@ const Navbar = () => {
               <Image
                 src={AptechLogo}
                 alt="Aptech Logo"
-                width={52}
-                height={52}
+                width={100}
+                height={100}
                 className="object-contain transition-transform group-hover:scale-110 duration-300"
                 priority
               />
             </div>
-            <div className="hidden sm:block">
-              <span className="text-white font-bold text-2xl tracking-tighter">
-                APTECH
-              </span>
-              <p className="text-[#FFC107] text-[10px] -mt-1 tracking-[2px] font-medium">
-                IBADAN
-              </p>
-            </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-10">
+          {/* Desktop Navigation - Hidden on tablets and below */}
+          <div className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1
+                className={`relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1 flex items-center gap-1.5
                   ${
                     pathname === link.href
                       ? "text-white"
@@ -60,29 +107,65 @@ const Navbar = () => {
                   }`}
               >
                 {link.name}
+                {link.isNew && (
+                  <span className="inline-flex items-center rounded-full bg-[#FFC107] px-1.5 py-0.5 text-[10px] font-bold text-black leading-none tracking-wide">
+                    NEW
+                  </span>
+                )}
                 {pathname === link.href && (
                   <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#FFC107] rounded-full" />
                 )}
               </Link>
             ))}
+
+            {/* Partners Dropdown */}
+            <div className="relative" ref={partnersRef}>
+              <button
+                onClick={() => setPartnersOpen(!partnersOpen)}
+                className="relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1 flex items-center gap-1.5 text-gray-400 hover:text-white"
+              >
+                Partners
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${partnersOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {partnersOpen && (
+                <div className="absolute top-full right-0 mt-3 w-52 bg-[#020B2D] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+                  <div className="py-2">
+                    {partners.map((partner) => (
+                      <a
+                        key={partner.name}
+                        href={partner.href}
+                        target={partner.external ? "_blank" : undefined}
+                        rel={
+                          partner.external ? "noopener noreferrer" : undefined
+                        }
+                        onClick={() => setPartnersOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                      >
+                        <div className="w-8 h-8 relative flex-shrink-0 bg-white rounded-md p-1">
+                          <Image
+                            src={partner.logo}
+                            alt={partner.name}
+                            fill
+                            className="object-contain p-0.5"
+                          />
+                        </div>
+                        {partner.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Desktop CTA Button */}
-          {/* <div className="hidden md:block">
-            <Link
-              href="/contact"
-              className="bg-[#FFC107] hover:bg-[#FFD700] text-black font-semibold px-8 py-3 rounded-full 
-                         transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-[#FFC107]/30 flex items-center gap-2"
-            >
-              Apply Now
-              <span className="text-lg">→</span>
-            </Link>
-          </div> */}
-
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Visible on tablets and below (lg breakpoint) */}
           <button
             onClick={() => setMobileMenu(!mobileMenu)}
-            className="md:hidden text-white text-3xl p-2 focus:outline-none"
+            className="lg:hidden text-white text-3xl p-2 focus:outline-none"
             aria-label="Toggle Menu"
           >
             {mobileMenu ? <FaTimes /> : <FaBars />}
@@ -90,34 +173,68 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Visible on tablets and below */}
       {mobileMenu && (
-        <div className="md:hidden bg-[#020B2D] border-t border-white/10 py-6">
+        <div className="lg:hidden bg-[#020B2D] border-t border-white/10 py-6">
           <div className="flex flex-col px-6 space-y-6 text-lg">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenu(false)}
-                className={`font-medium transition-colors cursor-pointer ${
+                className={`font-medium transition-colors cursor-pointer flex items-center gap-2 ${
                   pathname === link.href
                     ? "text-[#FFC107]"
                     : "text-gray-300 hover:text-white"
                 }`}
               >
                 {link.name}
+                {link.isNew && (
+                  <span className="inline-flex items-center rounded-full bg-[#FFC107] px-1.5 py-0.5 text-[10px] font-bold text-black leading-none tracking-wide">
+                    NEW
+                  </span>
+                )}
               </Link>
             ))}
 
-            {/* <div className="pt-4 border-t border-white/10">
-              <Link
-                href="/contact"
-                onClick={() => setMobileMenu(false)}
-                className="block w-full text-center bg-[#FFC107] text-black font-semibold py-4 rounded-full hover:bg-[#FFD700] transition-all"
+            {/* Mobile Partners Accordion */}
+            <div>
+              <button
+                onClick={() => setMobilePartnersOpen(!mobilePartnersOpen)}
+                className="w-full flex items-center justify-between font-medium text-gray-300 hover:text-white transition-colors"
               >
-                Apply Now
-              </Link>
-            </div> */}
+                Partners
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${mobilePartnersOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {mobilePartnersOpen && (
+                <div className="mt-3 ml-3 flex flex-col space-y-4 border-l border-white/10 pl-4">
+                  {partners.map((partner) => (
+                    <a
+                      key={partner.name}
+                      href={partner.href}
+                      target={partner.external ? "_blank" : undefined}
+                      rel={partner.external ? "noopener noreferrer" : undefined}
+                      onClick={() => setMobileMenu(false)}
+                      className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-3"
+                    >
+                      <div className="w-7 h-7 relative flex-shrink-0 bg-white rounded-md p-1">
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name}
+                          fill
+                          className="object-contain p-0.5"
+                        />
+                      </div>
+                      {partner.name}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

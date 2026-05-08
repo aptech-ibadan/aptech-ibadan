@@ -1,6 +1,7 @@
 import Campus from "@/components/Campus";
 import Enroll from "@/components/Enroll";
 import Footer from "@/components/Footer";
+import GlobalAlliance from "@/components/GlobalAlliance";
 import Hero from "@/components/HeroSection";
 import InfoBox from "@/components/InfoBox";
 import Partners from "@/components/Partners";
@@ -12,14 +13,15 @@ const HomePage = () => {
   return (
     <div>
       <Hero />
-      <Partners />
+      <GlobalAlliance />
+      {/* <Partners /> */}
       <Work />
       <InfoBox />
       <Programs />
       <Campus />
       <Enroll />
       <Question />
-      <Footer />
+        {/* <Footer /> */}
     </div>
   );
 };

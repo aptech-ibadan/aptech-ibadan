@@ -17,7 +17,7 @@ const AboutPage = () => {
       <AboutStats />
       <Testimonials />
       <AboutCTA />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

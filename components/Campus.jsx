@@ -47,7 +47,11 @@ const AnimatedSection = ({ children, delay = 0, className = "" }) => {
       animate={controls}
       variants={{
         hidden: { opacity: 0, y: 48 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] } },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
+        },
       }}
       className={className}
     >
@@ -71,7 +75,11 @@ const CampusCard = ({ campus, index }) => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.75, delay: index * 0.18, ease: [0.22, 1, 0.36, 1] },
+      transition: {
+        duration: 0.75,
+        delay: index * 0.18,
+        ease: [0.22, 1, 0.36, 1],
+      },
     },
   };
 
@@ -118,12 +126,18 @@ const CampusCard = ({ campus, index }) => {
           animate={controls}
           variants={{
             hidden: { opacity: 0, x: -20 },
-            visible: { opacity: 1, x: 0, transition: { delay: index * 0.18 + 0.4, duration: 0.5 } },
+            visible: {
+              opacity: 1,
+              x: 0,
+              transition: { delay: index * 0.18 + 0.4, duration: 0.5 },
+            },
           }}
         >
           <div
-            className="px-4 py-1.5 text-white text-xs font-bold rounded-full flex items-center gap-2 shadow-lg uppercase tracking-widest"
-            style={{ background: `linear-gradient(135deg, ${campus.gradientFrom}, ${campus.gradientTo})` }}
+            className="px-4 py-1.5 text-white  font-bold rounded-full flex items-center gap-2 shadow-lg uppercase tracking-widest"
+            style={{
+              background: `linear-gradient(135deg, ${campus.gradientFrom}, ${campus.gradientTo})`,
+            }}
           >
             <MapPin size={13} />
             {campus.label}
@@ -137,7 +151,15 @@ const CampusCard = ({ campus, index }) => {
           animate={controls}
           variants={{
             hidden: { opacity: 0, scale: 0 },
-            visible: { opacity: 1, scale: 1, transition: { delay: index * 0.18 + 0.5, type: "spring", stiffness: 300 } },
+            visible: {
+              opacity: 1,
+              scale: 1,
+              transition: {
+                delay: index * 0.18 + 0.5,
+                type: "spring",
+                stiffness: 300,
+              },
+            },
           }}
         >
           0{campus.id}
@@ -150,16 +172,21 @@ const CampusCard = ({ campus, index }) => {
           animate={controls}
           variants={{
             hidden: { opacity: 0, y: 12 },
-            visible: { opacity: 1, y: 0, transition: { delay: index * 0.18 + 0.45, duration: 0.5 } },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { delay: index * 0.18 + 0.45, duration: 0.5 },
+            },
           }}
         >
-          <h3 className="text-white text-2xl font-bold drop-shadow-md">{campus.name}</h3>
+          <h3 className="text-white text-2xl font-bold drop-shadow-md">
+            {campus.name}
+          </h3>
         </motion.div>
       </div>
 
       {/* ── Content ── */}
       <div className="p-8 pb-10 space-y-5">
-
         {/* Address */}
         <motion.div
           className="flex items-start gap-3"
@@ -167,7 +194,11 @@ const CampusCard = ({ campus, index }) => {
           animate={controls}
           variants={{
             hidden: { opacity: 0, x: -16 },
-            visible: { opacity: 1, x: 0, transition: { delay: index * 0.18 + 0.55, duration: 0.5 } },
+            visible: {
+              opacity: 1,
+              x: 0,
+              transition: { delay: index * 0.18 + 0.55, duration: 0.5 },
+            },
           }}
         >
           <div
@@ -186,7 +217,11 @@ const CampusCard = ({ campus, index }) => {
           animate={controls}
           variants={{
             hidden: { opacity: 0, x: -16 },
-            visible: { opacity: 1, x: 0, transition: { delay: index * 0.18 + 0.65, duration: 0.5 } },
+            visible: {
+              opacity: 1,
+              x: 0,
+              transition: { delay: index * 0.18 + 0.65, duration: 0.5 },
+            },
           }}
         >
           <div
@@ -209,12 +244,18 @@ const CampusCard = ({ campus, index }) => {
           target="_blank"
           rel="noopener noreferrer"
           className="mt-2 flex items-center justify-center gap-3 text-white font-medium py-4 px-6 rounded-2xl transition-opacity duration-300 hover:opacity-90"
-          style={{ background: `linear-gradient(135deg, ${campus.gradientFrom}, ${campus.gradientTo})` }}
+          style={{
+            background: `linear-gradient(135deg, ${campus.gradientFrom}, ${campus.gradientTo})`,
+          }}
           initial={{ opacity: 0, y: 16 }}
           animate={controls}
           variants={{
             hidden: { opacity: 0, y: 16 },
-            visible: { opacity: 1, y: 0, transition: { delay: index * 0.18 + 0.75, duration: 0.5 } },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { delay: index * 0.18 + 0.75, duration: 0.5 },
+            },
           }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -232,12 +273,21 @@ const CampusCard = ({ campus, index }) => {
       {/* Bottom accent bar */}
       <motion.div
         className="h-1.5 w-full"
-        style={{ background: `linear-gradient(to right, ${campus.gradientFrom}, ${campus.gradientTo})` }}
+        style={{
+          background: `linear-gradient(to right, ${campus.gradientFrom}, ${campus.gradientTo})`,
+        }}
         initial={{ scaleX: 0, originX: 0 }}
         animate={controls}
         variants={{
           hidden: { scaleX: 0 },
-          visible: { scaleX: 1, transition: { delay: index * 0.18 + 0.8, duration: 0.6, ease: "easeOut" } },
+          visible: {
+            scaleX: 1,
+            transition: {
+              delay: index * 0.18 + 0.8,
+              duration: 0.6,
+              ease: "easeOut",
+            },
+          },
         }}
       />
     </motion.div>
@@ -251,19 +301,29 @@ const Campus = () => {
       {/* Background decorative blobs */}
       <motion.div
         className="absolute -top-24 -right-24 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.15, 1], rotate: [0, 10, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
       />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-
         {/* ── Header ── */}
         <AnimatedSection className="text-center mb-16">
           <motion.div
@@ -293,7 +353,8 @@ const Campus = () => {
           />
 
           <p className="mt-5 text-gray-600 max-w-2xl mx-auto text-lg">
-            Two strategic locations in Ibadan designed for excellence in tech education
+            Two strategic locations in Ibadan designed for excellence in tech
+            education
           </p>
         </AnimatedSection>
 

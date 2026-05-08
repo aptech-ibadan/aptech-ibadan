@@ -1,6 +1,14 @@
 "use client";
 
-import { motion, useAnimation, useMotionValue, useTransform, AnimatePresence, animate } from "framer-motion";
+import Footer from "@/components/Footer";
+import {
+  motion,
+  useAnimation,
+  useMotionValue,
+  useTransform,
+  AnimatePresence,
+  animate,
+} from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -8,8 +16,19 @@ import { useInView } from "react-intersection-observer";
 const Particle = ({ x, y, size, duration, delay, color }) => (
   <motion.div
     className="absolute rounded-full pointer-events-none"
-    style={{ left: `${x}%`, top: `${y}%`, width: size, height: size, background: color }}
-    animate={{ y: [0, -28, 0], x: [0, 10, -6, 0], opacity: [0, 0.55, 0.25, 0.55, 0], scale: [0, 1, 0.8, 1, 0] }}
+    style={{
+      left: `${x}%`,
+      top: `${y}%`,
+      width: size,
+      height: size,
+      background: color,
+    }}
+    animate={{
+      y: [0, -28, 0],
+      x: [0, 10, -6, 0],
+      opacity: [0, 0.55, 0.25, 0.55, 0],
+      scale: [0, 1, 0.8, 1, 0],
+    }}
     transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
   />
 );
@@ -37,25 +56,36 @@ const Counter = ({ to, suffix = "+" }) => {
     });
     return ctrl.stop;
   }, [inView, to]);
-  return <span ref={ref}>{count}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
 };
 
 /* ── Stagger variants (shared) ── */
 const container = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.10, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
 };
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 const fadeRight = {
   hidden: { opacity: 0, x: -60 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
- 
- 
 export default function CourseClient({ course, slug }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -71,6 +101,7 @@ export default function CourseClient({ course, slug }) {
   const mouseY = useMotionValue(0);
   const rotateX = useTransform(mouseY, [-300, 300], [3, -3]);
   const rotateY = useTransform(mouseX, [-300, 300], [-3, 3]);
+  console.log("course", course);
 
   useEffect(() => {
     controls.start(inView ? "visible" : "hidden");
@@ -91,37 +122,58 @@ export default function CourseClient({ course, slug }) {
 
   return (
     <div className="bg-[#020B2D] text-white relative overflow-hidden min-h-screen">
-
       {/* ── Ambient orbs (from ProgramsHero) ── */}
       <motion.div
         className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(255,193,7,0.07) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,193,7,0.07) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.2, 1], x: [0, 25, 0], y: [0, -18, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute top-[40%] -right-20 w-[380px] h-[380px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(80,100,255,0.05) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(80,100,255,0.05) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.15, 1], x: [0, -18, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
       />
       <motion.div
         className="absolute bottom-0 left-1/3 w-[300px] h-[300px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(255,193,7,0.04) 0%, transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,193,7,0.04) 0%, transparent 70%)",
+        }}
         animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
       />
 
       {/* ── Particles ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {PARTICLES.map((p) => <Particle key={p.id} {...p} />)}
+        {PARTICLES.map((p) => (
+          <Particle key={p.id} {...p} />
+        ))}
       </div>
 
       {/* ── Grid overlay ── */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }}
       />
@@ -149,7 +201,7 @@ export default function CourseClient({ course, slug }) {
                 animate={{ scale: [1, 1.5, 1] }}
                 transition={{ duration: 1.0, repeat: Infinity }}
               />
-              Aptech Ibadan • Arena Multimedia
+              ACE • Arena Multimedia
             </motion.p>
           </motion.div>
 
@@ -160,10 +212,10 @@ export default function CourseClient({ course, slug }) {
           >
             {course.title.split(" ").map((word, i, arr) =>
               i === arr.length - 1 ? (
-                <span key={i} className="relative inline-block">
+                <span key={i} className="relative mt-6 inline-block">
                   <span className="text-[#FFC107]">{word}</span>
                   <motion.span
-                    className="absolute -bottom-1 left-0 h-1.5 bg-[#FFC107]/30 -z-10 rounded-full"
+                    className="absolute -bottom-1 left-0 h-1.5 bg-[#FFC107]/30 -z-10 rounded-full "
                     initial={{ width: 0 }}
                     animate={{ width: "50%" }}
                     transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
@@ -171,24 +223,33 @@ export default function CourseClient({ course, slug }) {
                 </span>
               ) : (
                 <span key={i}>{word} </span>
-              )
+              ),
             )}
           </motion.h1>
 
           {/* Tagline */}
           {course.tagline && (
-            <motion.p variants={fadeUp} className="text-gray-300 text-lg md:text-xl max-w-xl">
+            <motion.p
+              variants={fadeUp}
+              className="text-gray-300 text-lg md:text-xl max-w-xl"
+            >
               {course.tagline}
             </motion.p>
           )}
 
           {/* Description */}
-          <motion.p variants={fadeUp} className="text-gray-400 leading-relaxed max-w-xl">
+          <motion.p
+            variants={fadeUp}
+            className="text-gray-400 leading-relaxed max-w-xl"
+          >
             {course.description}
           </motion.p>
 
           {/* CTA */}
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 pt-2">
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-col sm:flex-row gap-4 pt-2"
+          >
             <motion.a
               href="/contact"
               whileHover={{ scale: 1.05 }}
@@ -214,9 +275,25 @@ export default function CourseClient({ course, slug }) {
               className="flex flex-wrap gap-8 pt-4 border-t border-white/10"
             >
               {[
-                { value: parseInt(course.totalHours), label: "Total Hours", suffix: "h" },
-                { value: course.terms?.length ?? 0, label: "Terms", suffix: "" },
-                { value: course.terms?.reduce((acc, t) => acc + t.modules.length, 0) ?? 0, label: "Modules", suffix: "+" },
+                {
+                  value: parseInt(course.totalHours),
+                  label: "Total Hours",
+                  suffix: "h",
+                },
+                {
+                  value: course.terms?.length ?? 0,
+                  label: "Terms",
+                  suffix: "",
+                },
+                {
+                  value:
+                    course.terms?.reduce(
+                      (acc, t) => acc + t.modules.length,
+                      0,
+                    ) ?? 0,
+                  label: "Modules",
+                  suffix: "+",
+                },
               ].map(({ value, label, suffix }) => (
                 <div key={label}>
                   <p className="text-2xl font-bold text-[#FFC107]">
@@ -232,19 +309,32 @@ export default function CourseClient({ course, slug }) {
         {/* RIGHT: media card */}
         <motion.div
           variants={fadeRight}
-          style={{ rotateX, rotateY, perspective: 1000, transformStyle: "preserve-3d" }}
+          style={{
+            rotateX,
+            rotateY,
+            perspective: 1000,
+            transformStyle: "preserve-3d",
+          }}
           className="relative group"
         >
           {/* Gold glow */}
           <motion.div
             className="absolute -inset-6 rounded-[3rem] pointer-events-none"
-            style={{ background: "radial-gradient(ellipse, rgba(255,193,7,0.18) 0%, transparent 70%)" }}
+            style={{
+              background:
+                "radial-gradient(ellipse, rgba(255,193,7,0.18) 0%, transparent 70%)",
+            }}
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 4, repeat: Infinity }}
           />
 
           {/* Corner accents */}
-          {["top-0 left-0", "top-0 right-0", "bottom-0 left-0", "bottom-0 right-0"].map((pos, i) => (
+          {[
+            "top-0 left-0",
+            "top-0 right-0",
+            "bottom-0 left-0",
+            "bottom-0 right-0",
+          ].map((pos, i) => (
             <motion.div
               key={i}
               className={`absolute ${pos} w-5 h-5 border-[#FFC107] pointer-events-none z-20`}
@@ -266,7 +356,10 @@ export default function CourseClient({ course, slug }) {
               {course.media?.type === "video" ? (
                 <video
                   className="w-full h-full object-cover"
-                  autoPlay loop muted playsInline
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 >
                   <source src={course.media.src} type="video/mp4" />
                 </video>
@@ -282,7 +375,8 @@ export default function CourseClient({ course, slug }) {
               <motion.div
                 className="absolute inset-0 pointer-events-none z-10"
                 style={{
-                  background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
+                  background:
+                    "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
                   backgroundSize: "200% 100%",
                 }}
                 animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
@@ -295,7 +389,9 @@ export default function CourseClient({ course, slug }) {
 
             {/* Card footer */}
             <div className="p-5">
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Preview</p>
+              <p className=" text-gray-500 uppercase tracking-widest">
+                Preview
+              </p>
               <p className="font-semibold text-base text-white mt-1">
                 Structured, guided, industry-ready path
               </p>
@@ -309,7 +405,7 @@ export default function CourseClient({ course, slug }) {
               transition={{ delay: 1.2, duration: 0.6 }}
               whileHover={{ scale: 1.04 }}
             >
-              <p className="text-xs text-gray-400">Enrollment</p>
+              <p className=" text-gray-400">Enrollment</p>
               <p className="text-sm font-semibold text-[#FFC107]">Open Now</p>
             </motion.div>
           </div>
@@ -317,8 +413,10 @@ export default function CourseClient({ course, slug }) {
       </motion.section>
 
       {/* ════════════════════ CURRICULUM ════════════════════ */}
-      <section id="curriculum" className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-6 py-20">
-
+      <section
+        id="curriculum"
+        className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-6 py-20"
+      >
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -345,7 +443,6 @@ export default function CourseClient({ course, slug }) {
         </motion.div>
 
         <div className="grid md:grid-cols-12 gap-8">
-
           {/* ── LEFT: Term tabs ── */}
           <div className="md:col-span-4 space-y-3">
             {course.terms.map((term, index) => {
@@ -365,13 +462,17 @@ export default function CourseClient({ course, slug }) {
                   <div className="flex items-center gap-3">
                     <motion.div
                       animate={{
-                        background: isActive ? "#FFC107" : "rgba(255,255,255,0.2)",
+                        background: isActive
+                          ? "#FFC107"
+                          : "rgba(255,255,255,0.2)",
                         scale: isActive ? 1.2 : 1,
                       }}
                       transition={{ duration: 0.3 }}
                       className="w-3 h-3 rounded-full flex-shrink-0"
                     />
-                    <h3 className={`font-bold transition-colors duration-300 ${isActive ? "text-[#FFC107]" : "text-white"}`}>
+                    <h3
+                      className={`font-bold transition-colors duration-300 ${isActive ? "text-[#FFC107]" : "text-white"}`}
+                    >
                       {term.title}
                     </h3>
                   </div>
@@ -400,7 +501,6 @@ export default function CourseClient({ course, slug }) {
 
           {/* ── RIGHT: Content ── */}
           <div ref={contentRef} className="md:col-span-8 space-y-5">
-
             {/* Modules panel */}
             <AnimatePresence mode="wait">
               <motion.div
@@ -412,8 +512,13 @@ export default function CourseClient({ course, slug }) {
                 className="rounded-2xl p-8 bg-white/5 border border-white/10 relative overflow-hidden"
               >
                 {/* Subtle corner glow */}
-                <div className="absolute top-0 right-0 w-32 h-32 rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(circle, rgba(255,193,7,0.06) 0%, transparent 70%)" }} />
+                <div
+                  className="absolute top-0 right-0 w-32 h-32 rounded-full pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(255,193,7,0.06) 0%, transparent 70%)",
+                  }}
+                />
 
                 <h2 className="text-xl font-bold mb-6 text-[#FFC107]">
                   {activeTerm.title}
@@ -431,7 +536,11 @@ export default function CourseClient({ course, slug }) {
                       <motion.span
                         className="w-1.5 h-1.5 rounded-full bg-[#FFC107]/50 group-hover:bg-[#FFC107] flex-shrink-0"
                         animate={{ scale: [1, 1.3, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.1,
+                        }}
                       />
                       {mod}
                     </motion.div>
@@ -455,11 +564,17 @@ export default function CourseClient({ course, slug }) {
                 </h3>
                 {course.totalHours && (
                   <p className="text-gray-400 text-sm">
-                    ⏱ <span className="text-[#FFC107] font-semibold">{course.totalHours}</span> Total Hours
+                    ⏱{" "}
+                    <span className="text-[#FFC107] font-semibold">
+                      {course.totalHours}
+                    </span>{" "}
+                    Total Hours
                   </p>
                 )}
                 {course.outcomes && (
-                  <p className="text-gray-400 text-sm mt-2">{course.outcomes}</p>
+                  <p className="text-gray-400 text-sm mt-2">
+                    {course.outcomes}
+                  </p>
                 )}
               </motion.div>
             )}
@@ -516,11 +631,16 @@ export default function CourseClient({ course, slug }) {
                     course.industryOverview.insight1,
                     course.industryOverview.insight2,
                     course.industryOverview.insight3,
-                  ].filter(Boolean).map((insight, i) => (
-                    <p key={i} className={`text-sm ${i === 0 ? "text-gray-300" : "text-gray-500"}`}>
-                      {insight}
-                    </p>
-                  ))}
+                  ]
+                    .filter(Boolean)
+                    .map((insight, i) => (
+                      <p
+                        key={i}
+                        className={`text-sm ${i === 0 ? "text-gray-300" : "text-gray-500"}`}
+                      >
+                        {insight}
+                      </p>
+                    ))}
                 </div>
               </motion.div>
             )}
@@ -543,8 +663,11 @@ export default function CourseClient({ course, slug }) {
                   {course.skillBuilderPrograms.map((s, i) => (
                     <motion.span
                       key={i}
-                      whileHover={{ scale: 1.08, borderColor: "rgba(255,193,7,0.6)" }}
-                      className="px-3 py-1.5 text-xs rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-[#FFC107] transition-colors duration-300 cursor-default"
+                      whileHover={{
+                        scale: 1.08,
+                        borderColor: "rgba(255,193,7,0.6)",
+                      }}
+                      className="px-3 py-1.5  rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-[#FFC107] transition-colors duration-300 cursor-default"
                     >
                       {s}
                     </motion.span>
@@ -563,8 +686,13 @@ export default function CourseClient({ course, slug }) {
         viewport={{ once: true }}
         className="relative border-t border-white/10 py-16 text-center px-6"
       >
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at center, rgba(255,193,7,0.04) 0%, transparent 70%)" }} />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(255,193,7,0.04) 0%, transparent 70%)",
+          }}
+        />
         <p className="text-[#FFC107] uppercase tracking-widest text-sm font-semibold mb-3">
           Ready to begin?
         </p>
@@ -580,7 +708,7 @@ export default function CourseClient({ course, slug }) {
           Enroll Now
         </motion.a>
       </motion.section>
-
+      {/* <Footer/> */}
     </div>
   );
 }

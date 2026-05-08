@@ -24,14 +24,14 @@ const Footer = () => {
               <Image
                 src={AptechLogo}
                 alt="Aptech Logo"
-                width={50}
-                height={50}
+                width={150}
+                height={100}
                 className="object-contain"
               />
-              <div>
+              {/* <div>
                 <h2 className="font-bold text-xl tracking-tight">APTECH</h2>
-                <p className="text-[#FFC107] text-xs tracking-widest">IBADAN</p>
-              </div>
+                <p className="text-[#FFC107]  tracking-widest">IBADAN</p>
+              </div> */}
             </div>
 
             <p className="text-gray-400 text-sm leading-relaxed">

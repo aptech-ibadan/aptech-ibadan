@@ -1,15 +1,15 @@
 "use client";
 
 import { Button } from "@/const";
-import { 
-  ArrowRight, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Send, 
+import {
+  ArrowRight,
+  Mail,
+  Phone,
+  MapPin,
+  Send,
   Users,
   Briefcase,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 
 const CareerCTA = () => {
@@ -18,7 +18,7 @@ const CareerCTA = () => {
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(at_top_right,#FFC107_0%,transparent_50%)] opacity-10" />
       <div className="absolute inset-0 bg-[radial-gradient(at_bottom_left,#3B82F6_0%,transparent_60%)] opacity-10" />
-      
+
       {/* Floating particles */}
       <div className="absolute top-20 left-10 w-2 h-2 bg-[#FFC107] rounded-full animate-ping" />
       <div className="absolute bottom-20 right-10 w-3 h-3 bg-blue-500 rounded-full animate-ping animation-delay-1000" />
@@ -28,7 +28,9 @@ const CareerCTA = () => {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 mb-6">
             <Sparkles className="text-[#FFC107]" size={18} />
-            <span className="text-[#FFC107] font-semibold">Don't See the Perfect Role?</span>
+            <span className="text-[#FFC107] font-semibold">
+              Don't See the Perfect Role?
+            </span>
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
@@ -40,9 +42,9 @@ const CareerCTA = () => {
           </h2>
 
           <p className="text-gray-300 text-lg max-w-3xl mx-auto mb-12">
-            Even if we don't have an open position that matches your skills right now, 
-            we'd still love to hear from you. Send us your resume and we'll keep you 
-            in mind for future opportunities.
+            Even if we don't have an open position that matches your skills
+            right now, we'd still love to hear from you. Send us your resume and
+            we'll keep you in mind for future opportunities.
           </p>
         </div>
 
@@ -54,7 +56,8 @@ const CareerCTA = () => {
               Submit Your Application
             </h3>
             <p className="text-gray-300 text-sm mb-6">
-              Upload your resume and tell us why you'd be a great fit for our team
+              Upload your resume and tell us why you'd be a great fit for our
+              team
             </p>
 
             <form className="space-y-4">
@@ -119,8 +122,9 @@ const CareerCTA = () => {
                 Submit Application <Send size={18} />
               </button>
 
-              <p className="text-gray-400 text-xs text-center mt-4">
-                By submitting, you agree to our privacy policy and consent to storing your information
+              <p className="text-gray-400  text-center mt-4">
+                By submitting, you agree to our privacy policy and consent to
+                storing your information
               </p>
             </form>
           </div>
@@ -133,13 +137,16 @@ const CareerCTA = () => {
                 <Users size={24} className="text-[#FFC107]" />
                 Connect With Us
               </h3>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center gap-3 text-gray-300">
                   <Mail size={20} className="text-[#FFC107] flex-shrink-0" />
                   <div>
                     <div className="text-sm text-gray-400">Email</div>
-                    <a href="mailto:careers@aptech-ibadan.com" className="hover:text-[#FFC107] transition">
+                    <a
+                      href="mailto:careers@aptech-ibadan.com"
+                      className="hover:text-[#FFC107] transition"
+                    >
                       careers@aptech-ibadan.com
                     </a>
                   </div>
@@ -148,8 +155,13 @@ const CareerCTA = () => {
                 <div className="flex items-center gap-3 text-gray-300">
                   <Phone size={20} className="text-[#FFC107] flex-shrink-0" />
                   <div>
-                    <div className="text-sm text-gray-400">Phone / WhatsApp</div>
-                    <a href="tel:+2348071234567" className="hover:text-[#FFC107] transition">
+                    <div className="text-sm text-gray-400">
+                      Phone / WhatsApp
+                    </div>
+                    <a
+                      href="tel:+2348071234567"
+                      className="hover:text-[#FFC107] transition"
+                    >
                       +234 807 123 4567
                     </a>
                   </div>
@@ -159,7 +171,9 @@ const CareerCTA = () => {
                   <MapPin size={20} className="text-[#FFC107] flex-shrink-0" />
                   <div>
                     <div className="text-sm text-gray-400">Visit Us</div>
-                    <div>Westone Building, Beside Governor’s Office, Agodi, Ibadan</div>
+                    <div>
+                      Westone Building, Beside Governor’s Office, Agodi, Ibadan
+                    </div>
                   </div>
                 </div>
               </div>
@@ -180,23 +194,25 @@ const CareerCTA = () => {
 
             {/* Stats Card */}
             <div className="bg-gradient-to-r from-[#FFC107]/10 to-transparent rounded-2xl p-6 border border-[#FFC107]/20">
-              <h3 className="text-lg font-semibold text-white mb-4">Why Work With Us?</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">
+                Why Work With Us?
+              </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-[#FFC107]">95%</div>
-                  <div className="text-xs text-gray-400">Employee Satisfaction</div>
+                  <div className=" text-gray-400">Employee Satisfaction</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-[#FFC107]">50+</div>
-                  <div className="text-xs text-gray-400">Team Members</div>
+                  <div className=" text-gray-400">Team Members</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-[#FFC107]">100%</div>
-                  <div className="text-xs text-gray-400">Growth Opportunities</div>
+                  <div className=" text-gray-400">Growth Opportunities</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-[#FFC107]">20+</div>
-                  <div className="text-xs text-gray-400">Countries Reached</div>
+                  <div className=" text-gray-400">Countries Reached</div>
                 </div>
               </div>
             </div>
@@ -205,16 +221,21 @@ const CareerCTA = () => {
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-3">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-[#FFC107] text-lg">★</span>
+                  <span key={i} className="text-[#FFC107] text-lg">
+                    ★
+                  </span>
                 ))}
               </div>
               <p className="text-gray-300 text-sm italic">
-                "Aptech provides an amazing work environment with endless opportunities for growth. 
-                The team is supportive and the culture is truly inclusive."
+                "Aptech provides an amazing work environment with endless
+                opportunities for growth. The team is supportive and the culture
+                is truly inclusive."
               </p>
               <div className="mt-3 text-sm">
-                <div className="text-white font-semibold">— Michael Adebayo</div>
-                <div className="text-gray-400 text-xs">Senior Software Engineer</div>
+                <div className="text-white font-semibold">
+                  — Michael Adebayo
+                </div>
+                <div className="text-gray-400 ">Senior Software Engineer</div>
               </div>
             </div>
           </div>

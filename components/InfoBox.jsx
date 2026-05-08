@@ -210,7 +210,7 @@ const InfoCard = ({ img, title, points, highlight, index }) => {
               onClick={handleButtonClick}
             >
               <span
-                className={`text-xs font-semibold tracking-widest uppercase
+                className={` font-semibold tracking-widest uppercase
                 ${isHighlight ? "text-black/60" : "text-[#FFC107]/70"}`}
               >
                 Learn more
@@ -322,7 +322,7 @@ const InfoBox = () => {
         <div ref={headingRef} className="text-center mb-14">
           {/* Label */}
           <motion.p
-            className="text-[#FFC107] text-xs uppercase tracking-[0.3em] font-semibold mb-3 inline-flex items-center gap-2"
+            className="text-[#FFC107]  uppercase tracking-[0.3em] font-semibold mb-3 inline-flex items-center gap-2"
             initial={{ opacity: 0, y: 10 }}
             animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}

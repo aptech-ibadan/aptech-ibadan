@@ -174,7 +174,7 @@ const TestimonialCard = ({ t, index, isActive }) => {
 
       {/* Course badge */}
       <motion.span
-        className="self-start text-xs font-semibold px-3 py-1 rounded-full mb-4"
+        className="self-start  font-semibold px-3 py-1 rounded-full mb-4"
         style={{
           background: `${t.accentColor}18`,
           color: t.accentColor === "#FFC107" ? "#92700a" : t.accentColor,
@@ -198,11 +198,11 @@ const TestimonialCard = ({ t, index, isActive }) => {
         <Avatar initials={t.avatar} accentColor={t.accentColor} />
         <div>
           <p className="font-semibold text-[#020B2D] text-sm">{t.name}</p>
-          <p className="text-xs text-gray-500">
+          <p className=" text-gray-500">
             {t.role} · {t.company}
           </p>
         </div>
-        <span className="ml-auto text-xs text-gray-400">{t.year}</span>
+        <span className="ml-auto  text-gray-400">{t.year}</span>
       </div>
     </motion.div>
   );
@@ -280,7 +280,7 @@ const FeaturedCarousel = () => {
               </p>
             </div>
             <span
-              className="ml-4 text-xs font-semibold px-3 py-1 rounded-full"
+              className="ml-4  font-semibold px-3 py-1 rounded-full"
               style={{ background: `${t.accentColor}22`, color: t.accentColor }}
             >
               {t.course}
@@ -429,7 +429,7 @@ const Testimonials = () => {
             >
               <div className="text-2xl mb-1">{s.icon}</div>
               <p className="text-2xl font-bold text-[#020B2D]">{s.value}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
+              <p className=" text-gray-500 mt-0.5">{s.label}</p>
             </motion.div>
           ))}
         </motion.div> */}

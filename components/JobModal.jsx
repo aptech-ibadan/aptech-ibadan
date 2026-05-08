@@ -53,13 +53,13 @@ const JobModal = ({ job, onClose }) => {
         {/* Header */}
         <div className="px-6 md:px-8 pb-6">
           <div className="flex flex-wrap items-center gap-2 mb-4">
-            <span className="bg-[#FFC107] text-black text-xs font-bold px-3 py-1 rounded-full">
+            <span className="bg-[#FFC107] text-black  font-bold px-3 py-1 rounded-full">
               {job.type}
             </span>
-            <span className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+            <span className="bg-gray-100 text-gray-600  px-3 py-1 rounded-full">
               {job.department}
             </span>
-            <span className="text-gray-400 text-xs flex items-center gap-1">
+            <span className="text-gray-400  flex items-center gap-1">
               <Clock size={12} /> Posted {job.posted}
             </span>
           </div>
@@ -175,7 +175,7 @@ const JobModal = ({ job, onClose }) => {
                   link="/contact?type=career"
                   text="Apply Now →"
                 /> */}
-                <p className="text-gray-400 text-xs mt-3">
+                <p className="text-gray-400  mt-3">
                   Applications reviewed within 5-7 business days
                 </p>
               </div>

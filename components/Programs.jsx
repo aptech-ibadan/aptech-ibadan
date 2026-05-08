@@ -78,7 +78,11 @@ const ProgramCard = ({ prog, index }) => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.6, delay: index * 0.18, ease: [0.22, 1, 0.36, 1] },
+      transition: {
+        duration: 0.6,
+        delay: index * 0.18,
+        ease: [0.22, 1, 0.36, 1],
+      },
     },
   };
 
@@ -105,7 +109,8 @@ const ProgramCard = ({ prog, index }) => {
       <motion.div
         className="absolute top-0 right-0 w-24 h-24 rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(255,193,7,0.15) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(255,193,7,0.15) 0%, transparent 70%)",
           translateX: "40%",
           translateY: "-40%",
         }}
@@ -116,7 +121,9 @@ const ProgramCard = ({ prog, index }) => {
       {/* Decorative number */}
       <motion.span
         className="absolute top-4 right-5 text-6xl font-black pointer-events-none select-none"
-        style={{ color: hovered ? "rgba(255,193,7,0.12)" : "rgba(2,11,45,0.05)" }}
+        style={{
+          color: hovered ? "rgba(255,193,7,0.12)" : "rgba(2,11,45,0.05)",
+        }}
         animate={{ scale: hovered ? 1.1 : 1 }}
         transition={{ duration: 0.4 }}
       >
@@ -146,7 +153,7 @@ const ProgramCard = ({ prog, index }) => {
 
         {/* Subtitle */}
         <motion.p
-          className="font-semibold mb-5 text-sm"
+          className="font-semibold mb-5 text-lg"
           animate={{ color: hovered ? "rgba(255,255,255,0.7)" : "#FFC107" }}
           transition={{ duration: 0.3 }}
         >
@@ -157,9 +164,7 @@ const ProgramCard = ({ prog, index }) => {
         <motion.div
           className="h-px mb-5"
           animate={{
-            background: hovered
-              ? "rgba(255,193,7,0.3)"
-              : "rgba(2,11,45,0.08)",
+            background: hovered ? "rgba(255,193,7,0.3)" : "rgba(2,11,45,0.08)",
           }}
           transition={{ duration: 0.3 }}
         />
@@ -169,8 +174,10 @@ const ProgramCard = ({ prog, index }) => {
           {prog.items.map((item, i) => (
             <motion.li
               key={i}
-              className="flex items-center gap-2 text-sm"
-              animate={{ color: hovered ? "rgba(255,255,255,0.85)" : "#4b5563" }}
+              className="flex items-center gap-2 text-lg"
+              animate={{
+                color: hovered ? "rgba(255,255,255,0.85)" : "#4b5563",
+              }}
               transition={{ duration: 0.3, delay: i * 0.03 }}
               initial={{ opacity: 0, x: -12 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -218,11 +225,10 @@ const Programs = () => {
   return (
     <section className="bg-white py-20 px-6 md:px-0">
       <div className="container max-w-7xl mx-auto">
-
         {/* Heading */}
         <div className="text-center mb-14 overflow-hidden">
           <motion.p
-            className="text-[#FFC107] uppercase tracking-widest text-xs font-bold mb-2"
+            className="text-[#FFC107] uppercase tracking-widest text-xl font-bold mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -231,17 +237,17 @@ const Programs = () => {
             What We Offer
           </motion.p>
 
-          <div className="overflow-hidden">
+          {/* <div className="overflow-hidden">
             <motion.h2
               className="text-3xl md:text-4xl font-black text-[#020B2D]"
-              initial={{ y: 60, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              // initial={{ y: 60, opacity: 0 }}
+              // whileInView={{ y: 0, opacity: 1 }}
+              // viewport={{ once: true }}
+              // transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
             >
               Flagship Career Programs
             </motion.h2>
-          </div>
+          </div> */}
 
           <motion.div
             className="mx-auto mt-4 h-1 bg-[#FFC107] rounded-full"
@@ -276,7 +282,7 @@ const Programs = () => {
             View All Programs
             <motion.span
               animate={{ x: [0, 4, 0] }}
-              transition={{ duration: 1.2, repeat: Infinity }} 
+              transition={{ duration: 1.2, repeat: Infinity }}
             >
               →
             </motion.span>

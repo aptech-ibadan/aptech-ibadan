@@ -2,229 +2,291 @@
 
 import SectionTitle from "./SectionTitle";
 import CourseCard from "./CourseCard";
+import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 const smartProfessionalCourses = [
   {
-    id: "full-stack-dev",
-    title: "Full Stack Development",
-    subtitle: "MERN/MEAN/Python",
-    category: "Smart Professional",
-    duration: "6 months",
-    certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    shortDescription: "Master frontend and backend development with modern frameworks and tools.",
-    longDescription: "This intensive program covers both frontend and backend development using modern frameworks. Students learn to build complete web applications from scratch, deploy to cloud platforms, and follow industry best practices. The curriculum is aligned with current job market demands and includes real-world projects.",
+    id: "japa-miscpapp",
+    slug: "miscpapp",
+    title: "Mastering MIS & Cross-Platform App Development",
+    subtitle: "Diploma in MIS and Cross-Platform App Development",
+    category: "JAPA Course",
+    duration: "~6 months",
+    hours: 392,
+    certification: "Aptech Diploma",
+    image:
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=870&auto=format&fit=crop",
+    badge: "Work Abroad Ready",
+    shortDescription:
+      "From office tools to cross-platform mobile apps — covering Python, Java, SQL, Tableau, Flutter, and Dart.",
+    longDescription:
+      "A practical MIS and app development diploma designed for professionals and graduates looking to build job-ready tech skills for the international market. Covers data analysis, database management, Java, Python, and cross-platform app development with Flutter.",
     keyFeatures: [
-      "Frontend: React, Angular, or Vue.js",
-      "Backend: Node.js, Python/Django, or PHP/Laravel",
-      "Database: MongoDB, PostgreSQL, MySQL",
-      "RESTful APIs & GraphQL",
-      "Authentication & Authorization",
-      "Deployment (Vercel, Netlify, AWS)",
-      "Version Control with Git",
-      "Real-world capstone projects"
+      "Office Automation with Microsoft 365 & CoPilot",
+      "Data Analysis with MS Excel & Tableau",
+      "Database Management with SQL Server",
+      "Python Programming",
+      "Java Application Development (GUI & OOP)",
+      "Cross-Platform App Development with Flutter & Dart",
+      "Agile & DevOps Methodology",
+      "UI/UX Design for Mobile",
     ],
     technologies: [
-      "React.js/Angular", "Node.js/Express", "Python/Django",
-      "MongoDB/PostgreSQL", "Git/GitHub", "Docker", "AWS"
+      "MS Office 365",
+      "MS SQL Server 2022",
+      "Python 3.7+",
+      "Tableau Desktop",
+      "Java SE 19 / JavaFx 20",
+      "Dart / Flutter SDK",
+      "Apache NetBeans",
+      "XAMPP",
     ],
     careerPaths: [
-      "Full Stack Developer", "Frontend Developer", "Backend Developer",
-      "Web Application Developer", "JavaScript Developer"
+      "MIS Professional",
+      "Data Analyst",
+      "Data Visualizer",
+      "Android App Developer",
+      "Cross Platform App Developer",
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/fullstack-1.jpg", "/images/fullstack-2.jpg"]
+    gallery: [],
+    accentColor: "#3B82F6",
+    icon: "📊",
   },
   {
-    id: "data-science",
-    title: "Data Science & Analytics",
-    subtitle: "Python, R, Machine Learning",
-    category: "Smart Professional",
-    duration: "6 months",
-    certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    shortDescription: "Learn data analysis, visualization, and machine learning with industry tools.",
-    longDescription: "Data Science is one of the fastest-growing fields globally. This program equips students with skills in Python programming, statistical analysis, data visualization, and machine learning. Students work on real datasets and build predictive models,citation:4]",
+    id: "japa-dsaiml",
+    slug: "dsaiml",
+    title: "Python Powerhouse: AI, ML & Data Science",
+    subtitle: "Diploma in Data Science, AI, and Machine Learning",
+    category: "JAPA Course",
+    duration: "~7 months",
+    hours: 448,
+    certification: "Aptech Diploma",
+    image:
+      "https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=870&auto=format&fit=crop",
+    badge: "High Demand Overseas",
+    shortDescription:
+      "Master Python, machine learning, deep learning, NLP, and big data to land AI-focused roles abroad.",
+    longDescription:
+      "An intensive AI and data science diploma built for those targeting high-paying overseas tech roles. Covers the full data science stack — from MongoDB and WEKA to TensorFlow deep learning — with a real-world capstone project.",
     keyFeatures: [
-      "Python Programming for Data Science",
-      "Data Analysis with Pandas & NumPy",
-      "Data Visualization (Matplotlib, Seaborn, Tableau)",
-      "SQL for Data Extraction",
-      "Machine Learning (Scikit-learn)",
-      "Statistical Analysis & A/B Testing",
-      "Big Data Fundamentals",
-      "Capstone industry project"
+      "MongoDB & Big Data with Hadoop & Spark",
+      "Data Mining with WEKA",
+      "Visual Analytics with Tableau",
+      "AI Applications of NLP",
+      "Machine Learning (Supervised & Unsupervised)",
+      "Deep Learning with Neural Networks & TensorFlow",
+      "Advanced Data Science with Python",
+      "Real-world Capstone Project",
     ],
     technologies: [
-      "Python", "Pandas/NumPy", "Matplotlib/Seaborn",
-      "Scikit-learn", "SQL", "Tableau/Power BI", "Jupyter Notebooks"
+      "Python",
+      "MongoDB",
+      "WEKA",
+      "Tableau Desktop",
+      "Jupyter Notebook",
+      "Google Colab",
+      "Hadoop / Spark",
+      "DL APIs & TensorFlow",
     ],
     careerPaths: [
-      "Data Analyst", "Data Scientist", "Business Intelligence Analyst",
-      "Machine Learning Engineer", "Data Engineer"
+      "Data Analytics Professional",
+      "AI Developer",
+      "ML Developer",
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/datascience-1.jpg", "/images/datascience-2.jpg"]
+    gallery: [],
+    accentColor: "#8B5CF6",
+    icon: "🤖",
   },
   {
-    id: "ui-ux-design",
-    title: "UI/UX Design",
-    subtitle: "User Interface & Experience",
-    category: "Smart Professional",
-    duration: "4 months",
-    certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1602576666092-bf6447a729fc?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    shortDescription: "Master design thinking, prototyping, and user research for digital products.",
-    longDescription: "This program focuses on user-centered design principles, research methodologies, and prototyping tools. Students learn to create intuitive, accessible, and visually appealing interfaces for web and mobile applications. The course includes portfolio development and real client projects.",
+    id: "japa-nwad",
+    slug: "nwad",
+    title: "Complete Network Administration",
+    subtitle: "Diploma in Network Administration",
+    category: "JAPA Course",
+    duration: "~6 months",
+    hours: 408,
+    certification: "Aptech Diploma",
+    image:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=870&auto=format&fit=crop",
+    shortDescription:
+      "Build expertise in Windows, Microsoft Azure, and Cisco networking to become a globally ready network professional.",
+    longDescription:
+      "A complete networking diploma aligned with Microsoft and Cisco certifications. Covers Windows desktop management, Azure cloud architecture, enterprise routing, and cybersecurity fundamentals — ideal for those targeting network and cloud roles abroad.",
     keyFeatures: [
-      "Design Thinking Methodology",
-      "User Research & Persona Creation",
-      "Wireframing & Prototyping",
-      "Visual Design Principles",
-      "Usability Testing",
-      "Mobile-First Design",
-      "Design Systems & Component Libraries",
-      "Portfolio Development"
+      "Windows Desktop Management",
+      "Microsoft Azure (Fundamentals to Architect level)",
+      "Cisco ENCOR & ENARSI Enterprise Routing",
+      "Network Security & Cybersecurity Fundamentals",
+      "Cloud Identity, Governance & Virtual Networks",
+      "Hybrid & On-Premises Solutions",
+      "GNS3 Network Simulation Lab",
+      "Capstone Network Administration Project",
     ],
     technologies: [
-      "Figma", "Adobe XD", "Sketch",
-      "Miro/MURAL", "InVision", "Adobe Photoshop/Illustrator"
+      "Windows 10+",
+      "Microsoft Azure",
+      "Cisco Networking",
+      "GNS3",
+      "Network Tools",
+    ],
+    careerPaths: ["Azure Administrator", "Network Administrator (CISCO)"],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    gallery: [],
+    accentColor: "#06B6D4",
+    icon: "🌐",
+  },
+  {
+    id: "japa-cyforen",
+    slug: "cyforen",
+    title: "Cybersecurity & Digital Forensics",
+    subtitle: "Diploma in Cybersecurity and Digital Forensics",
+    category: "JAPA Course",
+    duration: "~7 months",
+    hours: 450,
+    certification: "Aptech Diploma",
+    image:
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=870&auto=format&fit=crop",
+    badge: "Top Security Track",
+    shortDescription:
+      "Become an ethical hacker and digital forensics investigator with hands-on training in KALI Linux, Nmap, and forensic tools.",
+    longDescription:
+      "A dual-track cybersecurity and digital forensics diploma covering ethical hacking, network defense, and full forensic investigation workflows. Uses industry tools like KALI Linux, Wireshark, Autopsy, and Volatility — preparing students for high-demand security roles globally.",
+    keyFeatures: [
+      "Ethical Hacking & Penetration Testing",
+      "Windows, Unix & Linux Hacking Techniques",
+      "Network Security Implementation",
+      "Computer Forensics & Cyber Crime Investigation",
+      "Digital Evidence Acquisition & Analysis",
+      "Steganography & Image File Forensics",
+      "Wireless Attack Investigation",
+      "Social Media & Corporate Fraud Forensics",
+    ],
+    technologies: [
+      "KALI Linux",
+      "Autopsy / Sleuth Kit",
+      "Volatility",
+      "FTK Imager",
+      "Wireshark / Nmap",
+      "Helix / Backtrack",
+      "MailXaminer",
+      "Mandiant Redline",
     ],
     careerPaths: [
-      "UI/UX Designer", "Product Designer", "Interaction Designer",
-      "User Researcher", "Visual Designer"
+      "Security Administrator",
+      "Ethical Hacker",
+      "Forensics Investigator",
+      "Cyber Crime Investigator",
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/uiux-1.jpg", "/images/uiux-2.jpg", "/images/uiux-3.jpg"]
+    gallery: [],
+    accentColor: "#EF4444",
+    icon: "🔐",
   },
-   {
-    id: "advanced-3d-animation-maya",
-    title: "Advanced 3D Animation with Maya",
-    subtitle: "3D Modeling, Rigging, Texturing, Lighting, Animation",
-    category: "Smart Professional",
-     duration: "3-4 months",
-    image:"https://images.unsplash.com/photo-1627012441283-79151a20adf6?q=80&w=467&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    hours: 100,
-    certification: "Certificate of Accomplishment",
-    source: "Arena Multimedia",
-    description: "Master professional 3D animation using Autodesk Maya. Learn modeling, texturing, rigging, lighting, and rendering techniques used in the animation industry.",
-    learningOutcomes: [
-      "Prepare 3D models using various Modeling tools",
-      "Create and edit textures for aesthetics",
-      "Create dramatic studio lighting using Maya techniques",
-      "Apply rigging on various models",
-      "Set up and animate characters",
-      "Render images with Arnold renderer"
-    ],
-    technologies: ["Autodesk Maya", "Arnold Renderer"],
-    careerPaths: [
-      "3D Animator",
-      "3D Modeler",
-      "Rigging Artist",
-      "Texture Artist",
-      "Lighting Artist"
-    ]
-  },
-  {
-    id: "3d-modeling-animation",
-    title: "3D Modeling and Animation",
-    subtitle: "3Ds Max, Modeling, Texturing, Animation",
-    category: "Smart Professional",
-    duration: "2-3 months",
-    image:"https://images.unsplash.com/photo-1651611243377-2c15b94ad613?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    hours: 80,
-    certification: "Certificate of Accomplishment",
-    source: "Arena Multimedia",
-    description: "Learn 3D modeling, texturing, and animation using 3Ds Max. Create stunning 3D assets and animations for games, films, and architectural visualization.",
-    learningOutcomes: [
-      "Understand basics of 3D modeling, rigging, and animation",
-      "Render different passes in Vray",
-      "Prepare 3D models using various Modeling tools",
-      "Create and edit textures",
-      "Create dramatic studio lighting techniques in Maya",
-      "Apply rigging on various models",
-      "Set up and animate characters"
-    ],
-    technologies: ["3Ds Max", "Vray", "Maya"],
-    careerPaths: [
-      "3D Modeler",
-      "3D Animator",
-      "Texture Artist",
-      "Lighting Artist"
-    ]
-  },
-  {
-    id: "3d-interior-designing",
-    title: "3D Interior Designing",
-    subtitle: "3D Modeling, Visualization, Interior Design",
-    category: "Smart Professional",
-    duration: "2-3 months",
-    image:"https://images.unsplash.com/photo-1634382653568-8271aa4956fb?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    hours: 80,
-    certification: "Certificate of Accomplishment",
-    source: "Arena Multimedia",
-    description: "Specialized program for interior designers to create stunning 3D visualizations of interior spaces, furniture, and architectural elements.",
-    keyFeatures: [
-      "3D Modeling for Interiors",
-      "Texturing & Materials",
-      "Lighting Techniques",
-      "Interior Visualization",
-      "Rendering with Vray",
-      "Walkthrough Creation"
-    ],
-    technologies: ["3Ds Max", "Vray", "AutoCAD"],
-    careerPaths: [
-      "3D Interior Designer",
-      "Interior Visualization Artist",
-      "Architectural Visualizer"
-    ]
-  },
-  {
-    id: "industrial-art-autocad",
-    title: "Industrial Art (AutoCAD)",
-    subtitle: "Technical Drawing, 2D/3D Drafting, Industrial Design",
-    category: "Smart Professional",
-    duration: "2 months",
-    hours: 60,
-    image:"https://images.unsplash.com/photo-1637946902191-57cf1fe3c056?q=80&w=858&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    certification: "Certificate of Accomplishment",
-    source: "Arena Multimedia",
-    description: "Master AutoCAD for industrial design, architectural drafting, and technical drawing. Create precise 2D and 3D technical drawings for manufacturing and construction.",
-    keyFeatures: [
-      "2D Drafting & Detailing",
-      "3D Modeling in AutoCAD",
-      "Isometric Drawings",
-      "Layer Management",
-      "Dimensioning & Annotation",
-      "Plotting & Printing"
-    ],
-    technologies: ["AutoCAD"],
-    careerPaths: [
-      "CAD Designer",
-      "Industrial Designer",
-      "Architectural Drafter",
-      "Mechanical Drafter"
-    ]
-  }
 ];
+const AnimatedCard = ({ course, index, openModal }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const [hovered, setHovered] = useState(false);
 
+  const col = index % 3;
+  const row = Math.floor(index / 3);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50, scale: 0.96 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{
+        duration: 0.65,
+        delay: col * 0.12 + row * 0.05,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      className="relative group"
+      whileHover={{ y: -6, transition: { duration: 0.3, ease: "easeOut" } }}
+    >
+      {/* Accent glow on hover */}
+      <motion.div
+        className="absolute -inset-px rounded-2xl pointer-events-none z-0"
+        animate={{
+          opacity: hovered ? 1 : 0,
+          boxShadow: hovered
+            ? `0 0 0 2px ${course.accentColor || "#FFC107"}40, 0 20px 40px ${course.accentColor || "#FFC107"}20`
+            : "none",
+        }}
+        transition={{ duration: 0.25 }}
+      />
+
+      {/* Badge dot pulse (for courses with a badge) */}
+      {/* {course.badge && (
+        <motion.div
+          className="absolute -top-2 -right-2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full  font-semibold text-black shadow-lg"
+          style={{ background: course.accentColor || "#FFC107" }}
+          initial={{ scale: 0, rotate: -10 }}
+          animate={inView ? { scale: 1, rotate: 0 } : {}}
+          transition={{ delay: col * 0.12 + 0.35, type: "spring", stiffness: 260, damping: 18 }}
+        >
+          <motion.span
+            className="inline-block w-1.5 h-1.5 rounded-full bg-black/30"
+            animate={{ scale: [1, 1.6, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+          {/* {course.badge} 
+        </motion.div>
+      )} */}
+
+      {/* Icon reveal on hover */}
+      <motion.div
+        className="absolute top-3 left-3 z-20 w-8 h-8 rounded-full flex items-center justify-center text-base backdrop-blur-sm"
+        style={{
+          background: `${course.accentColor || "#FFC107"}22`,
+          border: `1px solid ${course.accentColor || "#FFC107"}44`,
+        }}
+        animate={{ opacity: hovered ? 1 : 0, scale: hovered ? 1 : 0.7 }}
+        transition={{ duration: 0.2 }}
+      >
+        {course.icon}
+      </motion.div>
+
+      {/* Progress bar accent on hover */}
+      <motion.div
+        className="absolute bottom-0 left-0 h-[3px] rounded-b-2xl z-20"
+        style={{ background: course.accentColor || "#FFC107" }}
+        animate={{ width: hovered ? "100%" : "0%" }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      />
+
+      {/* The real card */}
+      <div className="relative z-10 h-full">
+        <CourseCard course={course} variant="default" />
+      </div>
+    </motion.div>
+  );
+};
 const SmartProfessionalCourses = ({ openModal }) => {
   return (
     <section className="py-16 bg-gray-50 px-6 md:px-16">
       <div className="max-w-7xl mx-auto">
         <SectionTitle
-          badge="Smart Professional"
-          title="Specialized Professional Programs"
-          description="Short-term, focused programs to upskill and advance your career."
+          badge="JAPA Courses"
+          title="JAPA Courses"
+          description="Japa readiness programs designed to equip you with globally recognized IT skills."
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {smartProfessionalCourses.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              onClick={openModal}
-            />
+          {smartProfessionalCourses.map((course, index) => (
+            <a key={course.id} href={`/courses/${course.slug}`}>
+              <AnimatedCard
+                course={course}
+                index={index}
+                // openModal={openModal}
+              />
+            </a>
           ))}
         </div>
       </div>

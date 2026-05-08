@@ -8,8 +8,9 @@ import { useRef, useEffect, useState } from "react";
 const careerCourses = [
   {
     id: "accp",
-    title: "ACCP",
-    subtitle: "Aptech Certified Computer Professional",
+    slug: "adse",
+    title: "ACCP(AI)",
+    subtitle: "Aptech Certified Computer Professional (AI)",
     category: "Career Course",
     duration: "24+ months",
     certification: "Global Certification",
@@ -55,6 +56,7 @@ const careerCourses = [
   },
   {
     id: "acns",
+    slug: "acns",
     title: "ACNS",
     subtitle: "Aptech Certified Network Specialist",
     category: "Career Course",
@@ -100,6 +102,7 @@ const careerCourses = [
   {
     id: "arena-multimedia",
     title: "Arena Multimedia SP",
+    slug: "amsp",
     subtitle: "Animation & VFX Professional",
     category: "Career Course",
     duration: "25 months",
@@ -151,6 +154,7 @@ const careerCourses = [
   {
     id: "realtime-3d-game-art",
     title: "Realtime 3D & Game Art",
+    slug: "realtime3d",
     subtitle: "Unity, Unreal Engine, Game Development",
     category: "Career Course",
     duration: "6-8 months",
@@ -185,6 +189,7 @@ const careerCourses = [
   {
     id: "vfx-animation-films",
     title: "VFX For Animation & Films",
+    slug: "vfx",
     subtitle: "Nuke, Houdini, Matchmoving, Compositing",
     category: "Career Course",
     duration: "6-8 months",
@@ -292,7 +297,7 @@ const AnimatedCard = ({ course, index, openModal }) => {
       {/* Badge dot pulse (for courses with a badge) */}
       {/* {course.badge && (
         <motion.div
-          className="absolute -top-2 -right-2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-black shadow-lg"
+          className="absolute -top-2 -right-2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full  font-semibold text-black shadow-lg"
           style={{ background: course.accentColor || "#FFC107" }}
           initial={{ scale: 0, rotate: -10 }}
           animate={inView ? { scale: 1, rotate: 0 } : {}}
@@ -330,7 +335,7 @@ const AnimatedCard = ({ course, index, openModal }) => {
 
       {/* The real card */}
       <div className="relative z-10 h-full">
-        <CourseCard course={course} onClick={openModal} variant="default" />
+        <CourseCard course={course} variant="default" />
       </div>
     </motion.div>
   );
@@ -419,12 +424,13 @@ const CareerCourses = ({ openModal }) => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {careerCourses.map((course, index) => (
-            <AnimatedCard
-              key={course.id}
-              course={course}
-              index={index}
-              openModal={openModal}
-            />
+            <a key={course.id} href={`/courses/${course.slug}`}>
+              <AnimatedCard
+                course={course}
+                index={index}
+                // openModal={openModal}
+              />
+            </a>
           ))}
         </div>
 

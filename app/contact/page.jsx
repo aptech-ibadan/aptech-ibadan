@@ -8,11 +8,26 @@ import {
   FaFacebook,
   FaTwitter,
   FaWhatsapp,
+  FaWhatsappSquare,
 } from "react-icons/fa";
 import { Button } from "@/const";
 import { useState, useRef } from "react";
-import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { MapPin, Phone, ArrowRight, X, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import {
+  MapPin,
+  Phone,
+  ArrowRight,
+  X,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import Footer from "@/components/Footer";
 
 const ContactPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -29,7 +44,7 @@ const ContactPage = () => {
 
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
 
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 100]);
@@ -243,12 +258,12 @@ const ContactPage = () => {
   return (
     <div className="bg-white overflow-hidden">
       {/* HERO SECTION */}
-      <motion.section 
+      <motion.section
         ref={heroRef}
         className="bg-[#020B2D] text-white py-20 px-6 md:px-10 lg:px-16 relative overflow-hidden"
       >
         {/* Animated Background Elements */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{ y: heroY, opacity: heroOpacity }}
         >
@@ -256,28 +271,32 @@ const ContactPage = () => {
           <div className="absolute bottom-20 left-10 w-80 h-80 bg-[#FFC107]/5 rounded-full blur-3xl" />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="max-w-7xl mx-auto w-full relative z-10"
           variants={containerVariants}
           initial="hidden"
           animate={heroInView ? "visible" : "hidden"}
         >
-          <motion.p 
+          <motion.p
             variants={badgeVariants}
             className="text-[#FFC107] uppercase tracking-widest text-sm mb-4"
           >
             Contact Aptech Ibadan
           </motion.p>
 
-          <motion.h1 
+          <motion.h1
             variants={titleVariants}
             className="text-4xl md:text-6xl font-bold leading-tight max-w-3xl"
           >
             Visit Our Campus or{" "}
-            <motion.span 
+            <motion.span
               className="text-[#FFC107] inline-block"
-              animate={{ 
-                textShadow: ["0 0 0px rgba(255,193,7,0)", "0 0 10px rgba(255,193,7,0.5)", "0 0 0px rgba(255,193,7,0)"]
+              animate={{
+                textShadow: [
+                  "0 0 0px rgba(255,193,7,0)",
+                  "0 0 10px rgba(255,193,7,0.5)",
+                  "0 0 0px rgba(255,193,7,0)",
+                ],
               }}
               transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
             >
@@ -285,7 +304,7 @@ const ContactPage = () => {
             </motion.span>
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="mt-6 text-gray-300 max-w-xl"
           >
@@ -293,7 +312,7 @@ const ContactPage = () => {
             with a career-focused program designed to make you job-ready.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="mt-8 flex flex-wrap gap-4"
           >
@@ -310,9 +329,9 @@ const ContactPage = () => {
       </motion.section>
 
       {/* CAMPUS SECTION */}
-      <motion.section 
+      <motion.section
         ref={campusRef}
-        id="campus" 
+        id="campus"
         className="py-16 px-6 md:px-10 lg:px-16"
       >
         <div className="max-w-7xl mx-auto w-full">
@@ -325,7 +344,7 @@ const ContactPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Our Campuses in Ibadan
             </h2>
-            <motion.div 
+            <motion.div
               className="w-20 h-1 bg-[#FFC107] mx-auto mb-12"
               initial={{ width: 0 }}
               animate={campusInView ? { width: 80 } : { width: 0 }}
@@ -333,7 +352,7 @@ const ContactPage = () => {
             />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="grid sm:grid-cols-1 md:grid-cols-2 gap-8"
             variants={containerVariants}
             initial="hidden"
@@ -346,7 +365,7 @@ const ContactPage = () => {
                 whileHover="hover"
                 className="p-6 rounded-2xl shadow-lg border bg-white group"
               >
-                <motion.h3 
+                <motion.h3
                   className="text-xl font-bold text-[#020B2D] mb-2"
                   whileHover={{ x: 5, color: "#FFC107" }}
                 >
@@ -354,7 +373,7 @@ const ContactPage = () => {
                 </motion.h3>
                 <p className="text-gray-600 text-sm mb-4">{campus.address}</p>
                 <div className="space-y-2">
-                  <motion.a 
+                  <motion.a
                     href={`tel:${campus.phone}`}
                     className="text-[#020B2D] font-semibold inline-flex items-center gap-2 hover:text-[#FFC107] transition-colors"
                     whileHover={{ x: 5 }}
@@ -362,12 +381,30 @@ const ContactPage = () => {
                     <Phone size={16} /> {campus.phone}
                   </motion.a>
                   <br />
-                  <motion.a 
+                  <motion.a
                     href={`mailto:${campus.email}`}
                     className="text-[#020B2D] font-semibold inline-flex items-center gap-2 hover:text-[#FFC107] transition-colors"
                     whileHover={{ x: 5 }}
                   >
                     <FaEnvelope size={14} /> {campus.email}
+                  </motion.a>
+                  <br />
+                  {/* <motion.a
+                    href={`${campus.phone}`}
+                    className="bg-[#FFC107]/5 text-[#000] p-2 rounded-xl inline-flex items-center gap-2 hover:text-[#020B2D] transition-colors"
+                    whileHover={{ x: 5 }}
+                  >
+                    <FaWhatsappSquare size={14} /> {campus.phone}
+                  </motion.a> */}
+                  <motion.a
+                    href={`https://wa.me/${campus.phone}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-2 bg-[#020B2D] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#FFC107] transition-all duration-300"
+                    whileHover={{ x: 5, scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <FaWhatsapp size={16} /> Chat with us
                   </motion.a>
                 </div>
               </motion.div>
@@ -377,7 +414,7 @@ const ContactPage = () => {
       </motion.section>
 
       {/* QUICK CONTACT - WITH CAMPUS OPTIONS */}
-      <motion.section 
+      <motion.section
         ref={contactRef}
         className="bg-gray-50 py-16 px-6 md:px-10 lg:px-16"
       >
@@ -388,7 +425,9 @@ const ContactPage = () => {
             animate={contactInView ? "visible" : "hidden"}
           >
             <h2 className="text-3xl font-bold mb-6">Reach Out Instantly</h2>
-            <p className="text-gray-600 mb-8">Choose your preferred campus to connect with us</p>
+            <p className="text-gray-600 mb-8">
+              Choose your preferred campus to connect with us
+            </p>
           </motion.div>
 
           {/* <motion.div 
@@ -398,7 +437,7 @@ const ContactPage = () => {
             animate={contactInView ? "visible" : "hidden"}
           >
             {/* Call Section */}
-            {/* <motion.div
+          {/* <motion.div
               variants={cardVariants}
               className="bg-white rounded-xl shadow-lg overflow-hidden"
             >
@@ -530,7 +569,10 @@ const ContactPage = () => {
             <motion.div
               onClick={() => setShowModal(true)}
               className="bg-white rounded-xl shadow-lg p-6 cursor-pointer"
-              whileHover={{ y: -5, boxShadow: "0 20px 25px -12px rgba(0,0,0,0.1)" }}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 20px 25px -12px rgba(0,0,0,0.1)",
+              }}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -542,8 +584,12 @@ const ContactPage = () => {
                     <FaFacebook className="text-[#020B2D]" size={24} />
                   </motion.div>
                   <div className="text-left">
-                    <p className="font-semibold text-[#020B2D] text-lg">Social Media</p>
-                    <p className="text-gray-500 text-sm">Connect with us on social platforms</p>
+                    <p className="font-semibold text-[#020B2D] text-lg">
+                      Social Media
+                    </p>
+                    <p className="text-gray-500 text-sm">
+                      Connect with us on social platforms
+                    </p>
                   </div>
                 </div>
                 <ArrowRight size={20} className="text-[#FFC107]" />
@@ -554,10 +600,7 @@ const ContactPage = () => {
       </motion.section>
 
       {/* MAP SECTION */}
-      <motion.section 
-        ref={mapRef}
-        className="py-16 px-6 md:px-10 lg:px-16"
-      >
+      <motion.section ref={mapRef} className="py-16 px-6 md:px-10 lg:px-16">
         <div className="max-w-7xl mx-auto w-full">
           <motion.div
             variants={titleVariants}
@@ -568,7 +611,7 @@ const ContactPage = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Find Us Here
             </h2>
-            <motion.div 
+            <motion.div
               className="w-20 h-1 bg-[#FFC107] mx-auto"
               initial={{ width: 0 }}
               animate={mapInView ? { width: 80 } : { width: 0 }}
@@ -576,7 +619,7 @@ const ContactPage = () => {
             />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
             variants={containerVariants}
             initial="hidden"
@@ -589,7 +632,7 @@ const ContactPage = () => {
                 whileHover="hover"
                 className="group bg-white rounded-3xl overflow-hidden shadow-xl border"
               >
-                <motion.div 
+                <motion.div
                   className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
@@ -606,7 +649,7 @@ const ContactPage = () => {
                 </motion.div>
 
                 <div className="p-6">
-                  <motion.h3 
+                  <motion.h3
                     className="text-xl font-bold mb-2"
                     whileHover={{ x: 5, color: "#FFC107" }}
                   >
@@ -628,7 +671,8 @@ const ContactPage = () => {
                       className="block font-semibold text-[#020B2D] hover:text-[#FFC107] transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      <FaEnvelope size={14} className="inline mr-2" /> {campus.email}
+                      <FaEnvelope size={14} className="inline mr-2" />{" "}
+                      {campus.email}
                     </motion.a>
                   </div>
 
@@ -679,7 +723,7 @@ const ContactPage = () => {
                 <X size={24} />
               </motion.button>
 
-              <motion.h3 
+              <motion.h3
                 className="text-2xl font-bold mb-6 text-center text-[#020B2D]"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -688,7 +732,7 @@ const ContactPage = () => {
                 Campus Socials
               </motion.h3>
 
-              <motion.div 
+              <motion.div
                 className="space-y-6"
                 variants={containerVariants}
                 initial="hidden"
@@ -730,7 +774,7 @@ const ContactPage = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <motion.p 
+                <motion.p
                   className="text-gray-500 text-sm"
                   whileHover={{ scale: 1.02 }}
                 >
@@ -741,6 +785,7 @@ const ContactPage = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* <Footer /> */}
     </div>
   );
 };
