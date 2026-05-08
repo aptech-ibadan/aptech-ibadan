@@ -108,7 +108,7 @@ const Question = () => {
     "w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#FFC107] transition-shadow";
 
   return (
-    <section className="bg-white md:h-[60vh] mt-[8%] px-6 md:px-16 py-6 md:py-0">
+    <section className="bg-white px-6 md:px-16 py-6 pb-20 md:py-20">
       {/* Success toast */}
       <AnimatePresence>
         {success && (
@@ -147,7 +147,7 @@ const Question = () => {
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-6xl mx-auto grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl min-h-[60%]"
       >
-        {/* ── LEFT — FORM SIDE ── */}
+        
         <div className="bg-white p-8 md:p-10">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -263,7 +263,7 @@ const Question = () => {
           </form>
         </div>
 
-        {/* ── RIGHT — DARK SIDE ── */}
+        
         <motion.div
           ref={rightRef}
           variants={rightContainer}

@@ -179,7 +179,7 @@ const Work = () => {
         }}
       />
 
-      <div className="container-xl lg:container mx-auto px-6 relative z-10">
+      <div className="container-xl lg:max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* ── TEXT SIDE ── */}
           <div className="space-y-6">
@@ -202,11 +202,11 @@ const Work = () => {
             {/* Heading */}
             <motion.h1
               variants={fadeUp}
-              className="text-3xl md:text-5xl font-bold leading-tight"
+              className="text-3xl md:text-5xl leading-12 font-bold"
             >
               Building Global Careers Through{" "}
-              <span className="relative inline-block">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+              <span className="relative inline-block mt-4">
+                <span className="text-transparent bg-clip-text  bg-gradient-to-r from-blue-400 to-purple-500">
                   Tech Education & International Pathways
                 </span>
                 <motion.span
