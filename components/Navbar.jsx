@@ -3,112 +3,238 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { ChevronDown } from "lucide-react";
+import AptechLogo from "@/assets/APTECHLOGO.png";
+
+import middlesex from "@/assets/middlesex.png";
+import lincoln from "@/assets/lincoln.png";
+import ncc from "@/assets/ncc.png";
+import sgsu from "@/assets/sgsu.png";
+import bolton from "@/assets/bolton.png";
+
+const partners = [
+  {
+    name: "Middlesex University ",
+    href: "https://www.mdx.ac.uk/",
+    external: true,
+    logo: middlesex,
+  },
+  {
+    name: "Lincoln University",
+    href: "https://www.lincoln.ac.uk/",
+    external: true,
+    logo: lincoln,
+  },
+  {
+    name: "NCC",
+    href: "http://www.nccu.edu/",
+    external: true,
+    logo: ncc,
+  },
+  {
+    name: "SGSU",
+    href: "http://sgsuniversity.ac.in/",
+    external: true,
+    logo: sgsu,
+  },
+  {
+    name: "Bolton University",
+    href: "https://www.bolton.ac.uk/",
+    external: true,
+    logo: bolton,
+  },
+];
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const path = usePathname();
+  const [partnersOpen, setPartnersOpen] = useState(false);
+  const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
+  const partnersRef = useRef(null);
+  const pathname = usePathname();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (partnersRef.current && !partnersRef.current.contains(e.target)) {
+        setPartnersOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Program", href: "/program" },
+    { name: "Programs", href: "/program" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Career", href: "/career" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Arena", href: "/courses/amsp", isNew: true },
+    { name: "Accommodation", href: "/accomodation", isNew: true },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-lg border-b border-green-500/20">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
+    <nav className="sticky top-0 z-50 bg-[#020B2D]/95 backdrop-blur-xl border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-0">
         <div className="flex items-center justify-between h-20">
-
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/itssc2.png"
-              alt="logo"
-              width={50}
-              height={50}
-              className="object-contain"
-              priority
-            />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative">
+              <Image
+                src={AptechLogo}
+                alt="Aptech Logo"
+                width={100}
+                height={100}
+                className="object-contain transition-transform group-hover:scale-110 duration-300"
+                priority
+              />
+            </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Hidden on tablets and below */}
+          <div className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-sm font-medium tracking-wide transition duration-300
-                ${
-                  path === link.href
-                    ? "text-green-500"
-                    : "text-gray-300 hover:text-green-400"
-                }`}
+                className={`relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1 flex items-center gap-1.5
+                  ${
+                    pathname === link.href
+                      ? "text-white"
+                      : "text-gray-400 hover:text-white"
+                  }`}
               >
                 {link.name}
-
-                {/* Active underline */}
-                {path === link.href && (
-                  <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-green-500"></span>
+                {link.isNew && (
+                  <span className="inline-flex items-center rounded-full bg-[#FFC107] px-1.5 py-0.5 text-[10px] font-bold text-black leading-none tracking-wide">
+                    NEW
+                  </span>
+                )}
+                {pathname === link.href && (
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#FFC107] rounded-full" />
                 )}
               </Link>
             ))}
 
-            {/* CTA */}
-            <Link
-              href="/apply"
-              className="ml-4 bg-green-500 text-black px-6 py-2 rounded-full font-semibold
-              hover:bg-green-400 transition duration-300 shadow-lg shadow-green-500/30 hover:scale-105"
-            >
-              Apply
-            </Link>
+            {/* Partners Dropdown */}
+            <div className="relative" ref={partnersRef}>
+              <button
+                onClick={() => setPartnersOpen(!partnersOpen)}
+                className="relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1 flex items-center gap-1.5 text-gray-400 hover:text-white"
+              >
+                Partners
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${partnersOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {partnersOpen && (
+                <div className="absolute top-full right-0 mt-3 w-52 bg-[#020B2D] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+                  <div className="py-2">
+                    {partners.map((partner) => (
+                      <a
+                        key={partner.name}
+                        href={partner.href}
+                        target={partner.external ? "_blank" : undefined}
+                        rel={
+                          partner.external ? "noopener noreferrer" : undefined
+                        }
+                        onClick={() => setPartnersOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                      >
+                        <div className="w-8 h-8 relative flex-shrink-0 bg-white rounded-md p-1">
+                          <Image
+                            src={partner.logo}
+                            alt={partner.name}
+                            fill
+                            className="object-contain p-0.5"
+                          />
+                        </div>
+                        {partner.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Mobile Toggle */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setMobileMenu((prev) => !prev)}
-              className="text-green-500 text-2xl"
-            >
-              {mobileMenu ? <FaTimes /> : <FaBars />}
-            </button>
-          </div>
+          {/* Mobile Menu Button - Visible on tablets and below (lg breakpoint) */}
+          <button
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className="lg:hidden text-white text-3xl p-2 focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenu ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Visible on tablets and below */}
       {mobileMenu && (
-        <div className="md:hidden bg-black border-t border-green-500/20">
-          <div className="flex flex-col px-6 py-4 space-y-4">
-
+        <div className="lg:hidden bg-[#020B2D] border-t border-white/10 py-6">
+          <div className="flex flex-col px-6 space-y-6 text-lg">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenu(false)}
-                className={`text-base font-medium transition duration-300
-                ${
-                  path === link.href
-                    ? "text-green-500"
-                    : "text-gray-300 hover:text-green-400"
+                className={`font-medium transition-colors cursor-pointer flex items-center gap-2 ${
+                  pathname === link.href
+                    ? "text-[#FFC107]"
+                    : "text-gray-300 hover:text-white"
                 }`}
               >
                 {link.name}
+                {link.isNew && (
+                  <span className="inline-flex items-center rounded-full bg-[#FFC107] px-1.5 py-0.5 text-[10px] font-bold text-black leading-none tracking-wide">
+                    NEW
+                  </span>
+                )}
               </Link>
             ))}
 
-            <Link
-              href="/apply"
-              onClick={() => setMobileMenu(false)}
-              className="mt-4 text-center bg-green-500 text-black py-3 rounded-full font-semibold
-              hover:bg-green-400 transition duration-300"
-            >
-              Apply
-            </Link>
+            {/* Mobile Partners Accordion */}
+            <div>
+              <button
+                onClick={() => setMobilePartnersOpen(!mobilePartnersOpen)}
+                className="w-full flex items-center justify-between font-medium text-gray-300 hover:text-white transition-colors"
+              >
+                Partners
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${mobilePartnersOpen ? "rotate-180" : ""}`}
+                />
+              </button>
 
+              {mobilePartnersOpen && (
+                <div className="mt-3 ml-3 flex flex-col space-y-4 border-l border-white/10 pl-4">
+                  {partners.map((partner) => (
+                    <a
+                      key={partner.name}
+                      href={partner.href}
+                      target={partner.external ? "_blank" : undefined}
+                      rel={partner.external ? "noopener noreferrer" : undefined}
+                      onClick={() => setMobileMenu(false)}
+                      className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-3"
+                    >
+                      <div className="w-7 h-7 relative flex-shrink-0 bg-white rounded-md p-1">
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name}
+                          fill
+                          className="object-contain p-0.5"
+                        />
+                      </div>
+                      {partner.name}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
