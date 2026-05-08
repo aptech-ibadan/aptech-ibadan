@@ -435,7 +435,7 @@ const CareerCourses = ({ openModal }) => {
         </div>
 
         {/* Bottom CTA row */}
-        <motion.div
+        {/* <motion.div
           className="mt-14 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-2xl border border-[#FFC107]/20 bg-[#020B2D]/[0.03]"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -458,7 +458,7 @@ const CareerCourses = ({ openModal }) => {
           >
             Get Free Counselling →
           </motion.a>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

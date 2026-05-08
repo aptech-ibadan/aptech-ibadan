@@ -15,6 +15,7 @@ const ProgramsPage = () => {
 
   const openModal = (course) => {
     setSelectedCourse(course);
+    console.log(course);
     setIsModalOpen(true);
   };
 
@@ -28,7 +29,7 @@ const ProgramsPage = () => {
       <ProgramsHero />
       <CareerCourses openModal={openModal} />
       <SmartProfessionalCourses openModal={openModal} />
-      {/* <SkillBuilderCourses openModal={openModal} /> */}
+      <SkillBuilderCourses openModal={openModal} />
       <CtaSection />
       {/* <Footer /> */}
 

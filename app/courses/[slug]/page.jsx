@@ -967,6 +967,349 @@ const courseData = {
       },
     ],
   },
+
+  arenaCourse : {
+  id: "arena-smart-pro",
+  slug: "smart-pro-skill-builder",
+  title: "Smart Pro & Skill Builder",
+  subtitle: "Arena Multimedia Smart Pro & Skill Builder Programs",
+  category: "Short-Term Certificate Programs",
+  duration: "Variable (16 – 250 hours)",
+  certification: "Certificate of Accomplishment / Certificate of Participation",
+  image: "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=464&auto=format&fit=crop",
+  badge: "Industry Ready",
+  shortDescription:
+    "Flexible short-term certificate programs in animation, graphics, web design, and multimedia — designed to build job-ready creative professionals.",
+  longDescription:
+    "The Arena Multimedia Smart Pro & Skill Builder Programs are targeted to train and skill students with the latest industry-relevant technology and techniques. These short-term courses aim to produce full-fledged Animation and Multimedia professionals who are completely at ease with their skills and can confidently create a rewarding career for themselves.",
+  keyFeatures: [
+    "Industry relevant curriculum",
+    "Laddered Learning approach",
+    "Latest tools and techniques",
+    "Job Oriented Programs",
+    "Student Portfolio Development",
+    "Onlinevarsity – Learn Anytime, Anywhere",
+    "AR-enabled books for immersive learning",
+    "Globally recognized certificates",
+  ],
+  accentColor: "#C0392B",
+  icon: "🎨",
+
+  media: {
+    type: "image",
+    src: "/arena-smart-pro.png",
+  },
+
+  skillCatalog: [
+    {
+      category: "Smart Pro Programs",
+      courses: [
+        {
+          name: "Graphic Designing",
+          hours: 122,
+          certificate: "Certificate of Accomplishment in Graphic Designing",
+          modules: [
+            { name: "Concepts of Graphics and Illustrations", software: "Concept", theory: 16, lab: 8, total: 24 },
+            { name: "Digital Art", software: "Adobe Illustrator", theory: 10, lab: 12, total: 22 },
+            { name: "Magic with Images", software: "Adobe Photoshop", theory: 14, lab: 26, total: 40 },
+            { name: "Publishing for the Media", software: "Adobe Indesign & Incopy", theory: 20, lab: 16, total: 36 },
+          ],
+          jobProfiles: ["Graphic Designer", "Illustrator", "Photo Editor", "Layout Designer"],
+          learningOutcomes: [
+            "Understand fundamentals of Graphics and various aspects of drawings",
+            "Create artworks/Illustrations",
+            "Use Image Editing tools and retouch images",
+            "Design and publish a page layout for magazine and brochures",
+          ],
+        },
+        {
+          name: "Print and Publishing",
+          hours: 114,
+          certificate: "Certificate of Accomplishment in Print and Publishing",
+          modules: [
+            { name: "Concepts of Graphics and Illustrations", software: "Concept", theory: 16, lab: 8, total: 24 },
+            { name: "Typography Design", software: "Concept", theory: 8, lab: 10, total: 18 },
+            { name: "Digital Art", software: "Adobe Illustrator", theory: 10, lab: 12, total: 22 },
+            { name: "Design for Print and Advertising", software: "Concept", theory: 6, lab: 8, total: 14 },
+            { name: "Publishing for the Media", software: "Adobe Indesign & Incopy", theory: 20, lab: 16, total: 36 },
+          ],
+          jobProfiles: ["Graphic Designer", "Illustrator", "Layout Designer"],
+          learningOutcomes: [
+            "Understand fundamentals of Graphics and various aspects of drawings",
+            "Learn basic techniques of typography, traces the evolution and covers various aspects of typography",
+            "Create artworks/Illustrations",
+            "Understand functional aspects of print advertising",
+            "Design and publish a page layout for magazine and brochures",
+          ],
+        },
+        {
+          name: "Audio-Video Editing",
+          hours: 48,
+          certificate: "Certificate of Accomplishment in Audio-Video Editing",
+          modules: [
+            { name: "Digital Soundtrack", software: "Adobe Audition", theory: 8, lab: 8, total: 16 },
+            { name: "Editing Digital Video", software: "Adobe Premier Pro", theory: 18, lab: 14, total: 32 },
+          ],
+          jobProfiles: ["Audio Editor", "Video Editor"],
+          learningOutcomes: [
+            "Create, record, and edit audio",
+            "Edit and composite videos",
+          ],
+        },
+        {
+          name: "Web Designing",
+          hours: 100,
+          certificate: "Certificate of Accomplishment in Web Designing",
+          modules: [
+            { name: "Web Designing Concepts", software: "Concept", theory: 10, lab: 0, total: 10 },
+            { name: "Building Next Generation Websites", software: "HTML5, CSS3 and Javascript", theory: 20, lab: 20, total: 40 },
+            { name: "Web Page Design", software: "Adobe Dreamweaver", theory: 16, lab: 10, total: 26 },
+            { name: "Web Animation using Animate CC", software: "Adobe Animate", theory: 12, lab: 12, total: 24 },
+          ],
+          jobProfiles: ["UI Designer", "Web Designer", "Web Animator"],
+          learningOutcomes: [
+            "Explain principles of good web design",
+            "Design, code and develop web pages & learn to use JavaScript effectively to make web pages more dynamic and functional",
+            "Learn how to design web pages using Dreamweaver CC",
+            "Web Animation using Animate CC",
+          ],
+        },
+        {
+          name: "Digital Graphics and Animation",
+          hours: 250,
+          certificate: "Certificate of Accomplishment in Digital Graphics and Animation",
+          modules: [
+            { name: "Concepts of Graphics and Illustrations", software: "-", theory: 16, lab: 8, total: 24 },
+            { name: "Typography Design", software: "-", theory: 8, lab: 10, total: 18 },
+            { name: "Digital Art", software: "Adobe Illustrator", theory: 10, lab: 12, total: 22 },
+            { name: "Design for Print and Advertising", software: "-", theory: 6, lab: 8, total: 14 },
+            { name: "Publishing for the Media", software: "Adobe Indesign & Incopy", theory: 20, lab: 16, total: 36 },
+            { name: "Digital Sound Track", software: "Adobe Audition", theory: 8, lab: 8, total: 16 },
+            { name: "Editing Digital Video", software: "Adobe Premier Pro", theory: 18, lab: 14, total: 32 },
+            { name: "3D Basics - Modeling to Animation", software: "-", theory: 8, lab: 0, total: 8 },
+            { name: "3DS Max with V-Ray", software: "3ds Max latest version", theory: 40, lab: 40, total: 80 },
+          ],
+          jobProfiles: ["Graphic Designer", "Illustrator", "Layout Designer", "Audio Editor", "Video Editor", "3D Modeler", "Texturing Artist", "Lighting Artist", "3D Animator", "Renderer"],
+          learningOutcomes: [
+            "Understand fundamentals of Graphics and various aspects of drawings",
+            "Learn basic techniques of typography",
+            "Create artworks/Illustrations",
+            "Understand functional aspects of print advertising",
+            "Design and publish a page layout for magazine and brochures",
+            "Create, record, and edit audio",
+            "Edit and composite videos",
+            "Understand the basics of 3D modeling, rigging, and animation",
+            "Apply a range of techniques to produce 3D model & assets in 3Ds Max",
+          ],
+        },
+        {
+          name: "3D Modeling and Animation",
+          hours: 132,
+          certificate: "Certificate of Accomplishment in 3D Modeling and Animation",
+          modules: [
+            { name: "Modeling 3D Objects with Maya", software: "MAYA", theory: 14, lab: 14, total: 28 },
+            { name: "Texturing 3D Objects with Maya", software: "MAYA", theory: 14, lab: 14, total: 28 },
+            { name: "Lighting and Rendering 3D Objects with Maya", software: "MAYA", theory: 12, lab: 12, total: 24 },
+            { name: "Rigging 3D Objects with MAYA", software: "MAYA", theory: 12, lab: 12, total: 24 },
+            { name: "Character Animation with Maya", software: "MAYA", theory: 14, lab: 14, total: 28 },
+          ],
+          jobProfiles: ["3D Modeler", "Texturing Artist", "Lighting Artist", "Rigging Artist", "3D Animator"],
+          learningOutcomes: [
+            "Prepare 3D models using various Modeling tools",
+            "Create and edit textures which are the most vital contributing factor to the aesthetics of the animation",
+            "Create dramatic studio lighting using the various lighting techniques in Maya",
+            "Render images in high quality with Arnold renderer in Maya",
+            "Apply rigging on various models",
+            "Set up and animate characters",
+          ],
+        },
+        {
+          name: "Basics of 3D Animation",
+          hours: 88,
+          certificate: "Certificate of Accomplishment in Basics of 3D Animation",
+          modules: [
+            { name: "3D Basics - Modeling to Animation", software: "Concept", theory: 8, lab: 0, total: 8 },
+            { name: "3DS Max with V-Ray", software: "3ds Max", theory: 40, lab: 40, total: 80 },
+          ],
+          jobProfiles: ["3D Modeler", "Texturing Artist", "Lighting Artist", "Renderer", "3D Animator"],
+          learningOutcomes: [
+            "Understand the basics of 3D modeling, rigging, and animation",
+            "Apply a range of techniques to produce 3D model & assets in 3Ds Max",
+          ],
+        },
+        {
+          name: "Advanced 3D Animation with Maya",
+          hours: 222,
+          certificate: "Certificate of Accomplishment in Advanced 3D Animation with Maya",
+          modules: [
+            { name: "3D Basics - Modeling to Animation", software: "-", theory: 8, lab: 0, total: 8 },
+            { name: "3DS Max with V-Ray", software: "3ds Max", theory: 40, lab: 40, total: 80 },
+            { name: "Modeling 3D Objects with Maya", software: "MAYA", theory: 14, lab: 14, total: 28 },
+            { name: "Texturing 3D Objects with Maya", software: "MAYA", theory: 14, lab: 14, total: 28 },
+            { name: "Lighting and Rendering 3D Objects with Maya", software: "MAYA", theory: 12, lab: 12, total: 24 },
+            { name: "Rigging 3D Objects with MAYA", software: "MAYA", theory: 12, lab: 12, total: 24 },
+            { name: "Character Animation with Maya", software: "MAYA", theory: 14, lab: 14, total: 28 },
+            { name: "Portfolio development with Demo Reel", software: "-", theory: 2, lab: 0, total: 2 },
+          ],
+          jobProfiles: ["3D Modeler", "Texturing Artist", "Lighting Artist", "Rigging Artist", "Renderer", "3D Animator"],
+          learningOutcomes: [
+            "Understand the basics of 3D modeling, rigging, and animation",
+            "Render the different passes in Vray",
+            "Prepare 3D models using various Modeling tools",
+            "Create and edit textures which are the most vital contributing factor to the aesthetics of the animation",
+            "Create dramatic studio lighting using the various lighting techniques in Maya",
+            "Apply rigging on various models",
+            "Set up and animate characters",
+          ],
+        },
+        {
+          name: "3D Interior Designing",
+          hours: 124,
+          certificate: "Certificate of Accomplishment in 3D Interior Designing",
+          modules: [
+            { name: "Model Designing with Autocad", software: "Autocad", theory: 20, lab: 24, total: 44 },
+            { name: "3DS Max with V-Ray", software: "3ds Max", theory: 40, lab: 40, total: 80 },
+          ],
+          jobProfiles: ["CAD Designer", "3D Modeler", "Texturing Artist", "Lighting Artist", "Renderer", "3D Animator"],
+          learningOutcomes: [
+            "Understand the basics of 3D modeling, rigging, and animation",
+            "Apply a range of techniques to produce 3D model & assets in 3Ds Max",
+          ],
+        },
+        {
+          name: "Industrial Art (AutoCAD)",
+          hours: 44,
+          certificate: "Certificate of Accomplishment in Industrial Art (AutoCAD)",
+          modules: [
+            { name: "Model Designing with Autocad", software: "Autocad", theory: 20, lab: 24, total: 44 },
+          ],
+          jobProfiles: ["CAD Designer"],
+          learningOutcomes: [
+            "Create 3D Drawings using AutoCAD",
+          ],
+        },
+      ],
+    },
+    {
+      category: "Skill Builder Programs",
+      courses: [
+        {
+          name: "Photoshop",
+          hours: 40,
+          certificate: "Certificate of Participation in Digital Painting",
+          modules: [
+            { name: "Digital Painting", software: "Adobe Photoshop", theory: 14, lab: 26, total: 40 },
+          ],
+          jobProfiles: ["Photo Editor"],
+          learningOutcomes: ["Use Image Editing tools and retouch images"],
+        },
+        {
+          name: "Digital Illustrations",
+          hours: 20,
+          certificate: "Certificate of Participation in Digital Illustrations",
+          modules: [
+            { name: "Digital Illustrations", software: "Adobe Illustrator", theory: 10, lab: 10, total: 20 },
+          ],
+          jobProfiles: ["Illustrator", "Graphic Designer"],
+          learningOutcomes: ["Create digital artworks/Illustrations using Illustrator"],
+        },
+        {
+          name: "CorelDraw",
+          hours: 24,
+          certificate: "Certificate of Participation in CorelDraw",
+          modules: [
+            { name: "Creating Artworks with CorelDraw", software: "CorelDRAW", theory: 10, lab: 14, total: 24 },
+          ],
+          jobProfiles: ["Illustrator", "Graphic Designer"],
+          learningOutcomes: ["Create digital artworks/Illustrations using Corel Draw"],
+        },
+        {
+          name: "Media Publishing",
+          hours: 36,
+          certificate: "Certificate of Participation in Media Publishing",
+          modules: [
+            { name: "Page Design", software: "Adobe Indesign and InCopy", theory: 20, lab: 16, total: 36 },
+          ],
+          jobProfiles: ["Layout Designer"],
+          learningOutcomes: ["Design and publish a page layout for magazine and brochures"],
+        },
+        {
+          name: "Web Weaver",
+          hours: 26,
+          certificate: "Certificate of Participation in Web Weaver",
+          modules: [
+            { name: "Web Page Design", software: "Adobe Dreamweaver", theory: 16, lab: 10, total: 26 },
+          ],
+          jobProfiles: ["Web Designer"],
+          learningOutcomes: ["Learn how to design web pages using Dreamweaver CC"],
+        },
+        {
+          name: "Video Editing",
+          hours: 32,
+          certificate: "Certificate of Participation in Video Editing",
+          modules: [
+            { name: "Video Editing", software: "Adobe Premiere and Prelude", theory: 18, lab: 14, total: 32 },
+          ],
+          jobProfiles: ["Video Editor"],
+          learningOutcomes: ["Edit and composite videos using Adobe Premiere and Prelude"],
+        },
+        {
+          name: "Working with Audio",
+          hours: 16,
+          certificate: "Certificate of Participation in Audio Editing",
+          modules: [
+            { name: "Working with Audio", software: "Adobe Audition", theory: 8, lab: 8, total: 16 },
+          ],
+          jobProfiles: ["Audio Editor"],
+          learningOutcomes: ["Create, record, and edit audio using Adobe Audition"],
+        },
+        {
+          name: "Motion Graphics - After Effects",
+          hours: 32,
+          certificate: "Certificate of Participation in Motion Graphics",
+          modules: [
+            { name: "Creating Motion Graphics", software: "Adobe After Effects", theory: 12, lab: 20, total: 32 },
+          ],
+          jobProfiles: ["Motion Graphic Artist"],
+          learningOutcomes: ["Create digital motion graphics and composite images using After Effects"],
+        },
+        {
+          name: "2D Digital Animation",
+          hours: 50,
+          certificate: "Certificate of Participation in 2D Digital Animation",
+          modules: [
+            { name: "2D Animation Concepts & 2D Animation using Animate CC", software: "Adobe Animate", theory: 22, lab: 28, total: 50 },
+          ],
+          jobProfiles: ["2D Animator"],
+          learningOutcomes: ["Create 2D digital animation using Adobe Animate"],
+        },
+        {
+          name: "Web Animation using Animate CC",
+          hours: 32,
+          certificate: "Certificate of Participation in Web Animation using Animate CC",
+          modules: [
+            { name: "Web Animation using Animate CC", software: "Adobe Animate", theory: 12, lab: 20, total: 32 },
+          ],
+          jobProfiles: ["Web Animator"],
+          learningOutcomes: ["Web Animation using Animate CC"],
+        },
+        {
+          name: "Building Next Generation Websites",
+          hours: 40,
+          certificate: "Certificate of Participation in Building Next Generation Websites",
+          modules: [
+            { name: "Building Next Generation Websites", software: "HTML5, CSS3 and Javascript", theory: 20, lab: 20, total: 40 },
+          ],
+          jobProfiles: ["Web Designer", "UI Designer"],
+          learningOutcomes: [
+            "Design, code and develop web pages & learn to use JavaScript effectively to make web pages more dynamic and functional",
+          ],
+        },
+      ],
+    },
+  ],
+},
+ 
 };
 
 export default async function Page({ params }) {
