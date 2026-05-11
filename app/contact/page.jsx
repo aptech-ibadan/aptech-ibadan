@@ -85,7 +85,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "https://wa.me/2347070491555",
+          link: "http://wa.me/2347070491555",
         },
         {
           name: "Facebook",
@@ -105,7 +105,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "https://wa.me/2348064634830",
+          link: "http://wa.me/2348064634830",
         },
         {
           name: "Facebook",
