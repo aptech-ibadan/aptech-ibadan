@@ -70,9 +70,9 @@ const Counter = ({ to, suffix = "+" }) => {
 
 /* ── Carousel images ── */
 const carouselImages = [
-   {
+  {
     id: 1,
-    src: "/aptech001.jpg",
+    src: "/aptech001.JPG",
     alt: "Students learning at Aptech",
   },
   {
