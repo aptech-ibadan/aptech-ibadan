@@ -143,7 +143,7 @@ const Navbar = () => {
                           partner.external ? "noopener noreferrer" : undefined
                         }
                         onClick={() => setPartnersOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-[0.50s]"
                       >
                         <div className="w-8 h-8 relative flex-shrink-0 bg-white rounded-md p-1">
                           <Image
