@@ -13,6 +13,7 @@ import lincoln from "@/assets/lincoln.png";
 import ncc from "@/assets/ncc.png";
 import sgsu from "@/assets/sgsu.png";
 import bolton from "@/assets/bolton.png";
+import ism from "@/assets/ism-img.png";
 
 const partners = [
   {
@@ -45,6 +46,12 @@ const partners = [
     external: true,
     logo: bolton,
   },
+{
+  name: "ISM",
+  href: "https://en.ism.de/",
+  external: true,
+  logo: ism,
+}
 ];
 
 const Navbar = () => {
