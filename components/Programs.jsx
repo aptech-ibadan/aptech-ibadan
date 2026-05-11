@@ -259,7 +259,7 @@ const Programs = () => {
         </div>
 
         {/* Cards grid */}
-        <div ref={ref} className="grid md:grid-cols-3 gap-6 px-5 lg:px-0">
+        <div ref={ref} className="grid md:grid-cols-3 gap-6 px-0 lg:px-0">
           {programs.map((prog, index) => (
             <ProgramCard key={index} prog={prog} index={index} />
           ))}
