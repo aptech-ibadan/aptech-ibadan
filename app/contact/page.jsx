@@ -54,9 +54,9 @@ const ContactPage = () => {
     {
       id: 1,
       name: "Aptech Agodi",
-      address: "Westone Building, beside Governor's Office, Agodi, Ibadan",
+      address: "Westone Building, beside the office of the Governor's Wife, Agodi, Ibadan",
       phone: "07070491555",
-      email: "agodi@aptechibadan.ng",
+      email: "info@aptechibadan.com",
       mapSrc:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42409.095596642524!2d3.8743114471435587!3d7.406026438412933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1039930067851fff%3A0x8ea29ec1f2186eb8!2sWest%20One!5e1!3m2!1sen!2sng!4v1777719155074!5m2!1sen!2sng",
       color: "from-blue-600 to-indigo-600",
@@ -66,7 +66,7 @@ const ContactPage = () => {
       name: "Aptech Ringroad",
       address: "93 M.K.O Abiola Way, Adjacent Sunrise Mall, Ibadan",
       phone: "08064634830",
-      email: "ringroad@aptechibadan.ng",
+      email: "info@aptechibadan.com",
       mapSrc:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5301.706136977626!2d3.8718979999999994!3d7.358547100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10398db6429effff%3A0x4bb79d52316cb4cf!2s93%20MKO%20Abiola%20Way%2C%20Ibadan%20200221%2C%20Oyo!5e1!3m2!1sen!2sng!4v1777970539395!5m2!1sen!2sng",
       color: "from-amber-600 to-orange-600",
@@ -85,7 +85,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "https://wa.me/2347070491555",
+          link: "http://wa.me/2347070491555",
         },
         {
           name: "Facebook",
@@ -105,7 +105,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "https://wa.me/2348064634830",
+          link: "http://wa.me/2348064634830",
         },
         {
           name: "Facebook",
