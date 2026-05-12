@@ -1,4 +1,5 @@
 import Campus from "@/components/Campus";
+import CampaignPopup from "@/components/offers/CampaignPopup";
 import Enroll from "@/components/Enroll";
 import Footer from "@/components/Footer";
 import GlobalAlliance from "@/components/GlobalAlliance";
@@ -12,6 +13,7 @@ import Work from "@/components/Work";
 const HomePage = () => {
   return (
     <div>
+      <CampaignPopup />
       <Hero />
       <GlobalAlliance />
       {/* <Partners /> */}

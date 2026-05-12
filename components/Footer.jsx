@@ -57,6 +57,12 @@ const Footer = () => {
                 Programs
               </Link>
               <Link
+                href="/blog"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Blog
+              </Link>
+              <Link
                 href="/about"
                 className="text-gray-400 hover:text-white transition"
               >
