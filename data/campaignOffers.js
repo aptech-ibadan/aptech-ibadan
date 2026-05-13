@@ -6,7 +6,7 @@ export const campaignOffers = [
       "A special 15% discount on all courses for KOPA members ready to build tech careers.",
     discount: "15% OFF",
     endDate: "2026-08-31T23:59:59",
-    audience: "KOPA Members",
+    audience: "Corp Members",
     image: "/aptech004.png",
   },
   {

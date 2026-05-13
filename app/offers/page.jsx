@@ -1,8 +1,9 @@
 import OffersPageClient from "@/components/offers/OffersPageClient";
-import { campaignOffers } from "@/data/campaignOffers";
+import { getOffers } from "@/lib/offers";
 
-const OffersPage = () => {
-  return <OffersPageClient offers={campaignOffers} />;
+const OffersPage = async () => {
+  const offers = await getOffers();
+  return <OffersPageClient offers={offers} />;
 };
 
 export default OffersPage;
