@@ -147,7 +147,7 @@ const BlogDetailsClient = ({ article, similarNews }) => {
               </div>
             </motion.article>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -178,7 +178,7 @@ const BlogDetailsClient = ({ article, similarNews }) => {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </motion.div> */}
           </div>
 
           <motion.aside
