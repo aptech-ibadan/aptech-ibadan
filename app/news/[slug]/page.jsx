@@ -1,17 +1,16 @@
 import { notFound } from "next/navigation";
 import BlogDetailsClient from "@/components/news/BlogDetailsClient";
-import { getNewsBySlug, newsItems } from "@/data/newsData";
+import { getPostBySlug, getPosts } from "@/lib/posts";
 
-const NewsDetailsPage = ({ params }) => {
-  const article = getNewsBySlug(params.slug);
+const NewsDetailsPage = async ({ params }) => {
+  const article = await getPostBySlug(params.slug);
 
   if (!article) {
     notFound();
   }
 
-  const similarNews = newsItems
-    .filter((item) => item.slug !== article.slug)
-    .slice(0, 3);
+  const allPosts = await getPosts();
+  const similarNews = allPosts.filter((item) => item.slug !== article.slug).slice(0, 3);
 
   return <BlogDetailsClient article={article} similarNews={similarNews} />;
 };

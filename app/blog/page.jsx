@@ -1,13 +1,15 @@
 import BlogHero from "@/components/news/BlogHero";
 import BlogLibrary from "@/components/news/BlogLibrary";
 import NewsletterCTA from "@/components/news/NewsletterCTA";
-import { newsItems } from "@/data/newsData";
+import { getPosts } from "@/lib/posts";
 
-const BlogPage = () => {
+const BlogPage = async () => {
+  const posts = await getPosts();
+
   return (
     <main>
       <BlogHero />
-      <BlogLibrary items={newsItems} />
+      <BlogLibrary items={posts} />
       <NewsletterCTA />
     </main>
   );

@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const NewsCard = ({ item, featured = false }) => {
+  const thumbnailSrc = item?.thumbnail || "/aptech004.png";
+
   return (
     <article
       className={`rounded-2xl border border-white/15 bg-[#040d2e]/95 backdrop-blur-sm overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.35)] ${
@@ -11,7 +13,7 @@ const NewsCard = ({ item, featured = false }) => {
       }`}
     >
       <div className={`relative ${featured ? "h-72 lg:h-full" : "h-48"}`}>
-        <Image src={item.thumbnail} alt={item.title} fill className="object-cover" />
+        <Image src={thumbnailSrc} alt={item.title} fill className="object-cover" />
       </div>
 
       <div className="p-5 lg:p-7">

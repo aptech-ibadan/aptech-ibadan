@@ -120,7 +120,7 @@ const BlogDetailsClient = ({ article, similarNews }) => {
         >
           <div className="relative h-[280px] sm:h-[340px]">
             <Image
-              src={article.heroImage}
+              src={article.heroImage || "/aptech004.png"}
               alt={article.title}
               fill
               className="object-cover"
