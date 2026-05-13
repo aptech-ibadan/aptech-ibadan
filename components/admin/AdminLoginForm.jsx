@@ -15,27 +15,38 @@ const AdminLoginForm = () => {
     setLoading(true);
     setError("");
 
+    const token = localStorage.getItem("adminToken");
     const response = await fetch("/api/admin/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ identifier: username, password }),
     });
 
     setLoading(false);
+    console.log(response);
+    const data = await response.json();
+    if (response.ok) {
 
-    if (!response.ok) {
-      const data = await response.json();
+      console.log(data);
+      // Save token to localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      router.push("/admin/dashboard");
+    } else {
       setError(data?.error || "Unable to login");
       return;
     }
-
-    router.push("/admin/dashboard");
   };
 
   return (
     <div className="mx-auto w-full max-w-xl rounded-3xl border border-slate-700 bg-slate-950/80 p-8 shadow-2xl shadow-slate-900/40">
       <h1 className="text-4xl font-semibold text-white">Admin Login</h1>
-      <p className="mt-3 text-slate-300">Sign in to manage blog posts, offers, and media uploads.</p>
+      <p className="mt-3 text-slate-300">
+        Sign in to manage blog posts, offers, and media uploads.
+      </p>
       <form onSubmit={handleSubmit} className="mt-8 space-y-5">
         <label className="block text-sm font-medium text-slate-200">
           Username

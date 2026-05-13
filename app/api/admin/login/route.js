@@ -1,23 +1,59 @@
+// app/api/admin/login/route.js
 import { NextResponse } from "next/server";
-import { isAdminValid, createAdminToken, ADMIN_COOKIE_NAME } from "@/lib/auth";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "@/model/User";
+import dbConnect from "@/lib/mongodb";
+
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export async function POST(req) {
-  const { username, password } = await req.json();
+  try {
+    await dbConnect();
 
-  if (!isAdminValid(username, password)) {
-    return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    const { identifier, password } = await req.json();
+
+    if (!identifier || !password) {
+      return NextResponse.json(
+        { error: "Identifier and password are required" },
+        { status: 400 },
+      );
+    }
+
+    // Find user by email or username
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+    const user = await User.findOne(
+      isEmail ? { email: identifier.toLowerCase() } : { username: identifier },
+    );
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 401 });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, username: user.username },
+      JWT_SECRET,
+      { expiresIn: "7d" },
+    );
+
+    return NextResponse.json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
-
-  const token = createAdminToken();
-  const response = NextResponse.json({ ok: true, user: username });
-  response.cookies.set({
-    name: ADMIN_COOKIE_NAME,
-    value: token,
-    httpOnly: true,
-    path: "/",
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 7 * 24 * 60 * 60,
-  });
-  return response;
 }

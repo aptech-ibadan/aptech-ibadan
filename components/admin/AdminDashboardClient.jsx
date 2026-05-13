@@ -30,6 +30,157 @@ const emptyOfferForm = {
   image: "",
 };
 
+// ── Image Field Component ─────────────────────────────────────
+const ImageField = ({ label, value, onChange, fieldId }) => {
+  const [mode, setMode] = useState("url"); // "url" | "upload"
+  const [preview, setPreview] = useState("");
+
+  const handleUrlChange = (e) => {
+    onChange(e.target.value);
+    setPreview(e.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result;
+      onChange(base64);
+      setPreview(base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="lg:col-span-2">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-sm text-slate-200">{label}</span>
+        <div className="flex rounded-xl overflow-hidden border border-slate-700 text-xs">
+          <button
+            type="button"
+            onClick={() => { setMode("url"); onChange(""); setPreview(""); }}
+            className={`px-3 py-1 transition ${mode === "url" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
+          >
+            URL
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("upload"); onChange(""); setPreview(""); }}
+            className={`px-3 py-1 transition ${mode === "upload" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
+          >
+            Upload
+          </button>
+        </div>
+      </div>
+
+      {mode === "url" ? (
+        <input
+          id={fieldId}
+          value={value}
+          onChange={handleUrlChange}
+          placeholder="https://..."
+          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
+        />
+      ) : (
+        <input
+          id={fieldId}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
+        />
+      )}
+
+      {preview && (
+        <div className="mt-3">
+          <img
+            src={preview}
+            alt="Preview"
+            className="h-32 w-full rounded-2xl object-cover border border-slate-700"
+            onError={() => setPreview("")}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ── Offer Image Field ─────────────────────────────────────────
+const OfferImageField = ({ value, onChange }) => {
+  const [mode, setMode] = useState("url");
+  const [preview, setPreview] = useState("");
+
+  const handleUrlChange = (e) => {
+    onChange(e.target.value);
+    setPreview(e.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result;
+      onChange(base64);
+      setPreview(base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="lg:col-span-2">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-sm text-slate-200">Image</span>
+        <div className="flex rounded-xl overflow-hidden border border-slate-700 text-xs">
+          <button
+            type="button"
+            onClick={() => { setMode("url"); onChange(""); setPreview(""); }}
+            className={`px-3 py-1 transition ${mode === "url" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
+          >
+            URL
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("upload"); onChange(""); setPreview(""); }}
+            className={`px-3 py-1 transition ${mode === "upload" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
+          >
+            Upload
+          </button>
+        </div>
+      </div>
+
+      {mode === "url" ? (
+        <input
+          value={value}
+          onChange={handleUrlChange}
+          placeholder="https://..."
+          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
+        />
+      ) : (
+        <input
+          type="file"
+          accept="image/*,video/*"
+          onChange={handleFileChange}
+          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
+        />
+      )}
+
+      {preview && (
+        <div className="mt-3">
+          <img
+            src={preview}
+            alt="Preview"
+            className="h-32 w-full rounded-2xl object-cover border border-slate-700"
+            onError={() => setPreview("")}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ── Main Dashboard ────────────────────────────────────────────
 const AdminDashboardClient = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("posts");
@@ -43,11 +194,23 @@ const AdminDashboardClient = () => {
   const [postForm, setPostForm] = useState(emptyPostForm);
   const [offerForm, setOfferForm] = useState(emptyOfferForm);
 
-  const selectedPostLabel = selectedPost ? `Editing ${selectedPost.title}` : "Create new blog post";
-  const selectedOfferLabel = selectedOffer ? `Editing ${selectedOffer.title}` : "Create new offer";
+  const selectedPostLabel = selectedPost
+    ? `Editing ${selectedPost.title}`
+    : "Create new blog post";
+  const selectedOfferLabel = selectedOffer
+    ? `Editing ${selectedOffer.title}`
+    : "Create new offer";
 
   const fetchJson = async (path, options = {}) => {
-    const response = await fetch(path, { ...options, cache: "no-store" });
+    const token = localStorage.getItem("token");
+    const response = await fetch(path, {
+      ...options,
+      cache: "no-store",
+      headers: {
+        ...options.headers,
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (!response.ok) {
       throw new Error((await response.json()).error || "Request failed");
     }
@@ -58,7 +221,10 @@ const AdminDashboardClient = () => {
     setLoading(true);
     setError("");
     try {
-      const [postsData, offersData] = await Promise.all([fetchJson("/api/posts"), fetchJson("/api/offers")]);
+      const [postsData, offersData] = await Promise.all([
+        fetchJson("/api/posts"),
+        fetchJson("/api/offers"),
+      ]);
       setPosts(postsData);
       setOffers(offersData);
     } catch (loadError) {
@@ -70,11 +236,27 @@ const AdminDashboardClient = () => {
 
   useEffect(() => {
     const init = async () => {
-      const response = await fetch("/api/admin/session", { cache: "no-store" });
-      if (!response.ok) {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
         router.push("/admin");
         return;
       }
+
+      const response = await fetch("/api/admin/verify", {
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        router.push("/admin");
+        return;
+      }
+
       await loadData();
     };
 
@@ -86,32 +268,15 @@ const AdminDashboardClient = () => {
     setter((current) => ({ ...current, [formKey]: value }));
   };
 
-  const parseTags = (tagsValue) => tagsValue.split(",").map((tag) => tag.trim()).filter(Boolean);
-
-  const uploadFile = async (file) => {
-    if (!file) {
-      return "";
-    }
-    const dataUrl = await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-
-    const result = await fetchJson("/api/uploads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ dataUrl, folder: "admin-assets" }),
-    });
-
-    return result.url;
-  };
+  const parseTags = (tagsValue) =>
+    tagsValue
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
 
   const submitPost = async () => {
     setWorking(true);
     setError("");
-
     try {
       const content = JSON.parse(postForm.contentJson);
       const postPayload = {
@@ -121,8 +286,7 @@ const AdminDashboardClient = () => {
       };
 
       if (selectedPost) {
-        const slugToUpdate = selectedPost.slug;
-        await fetchJson(`/api/posts/${slugToUpdate}`, {
+        await fetchJson(`/api/posts/${selectedPost.slug}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(postPayload),
@@ -147,7 +311,6 @@ const AdminDashboardClient = () => {
   const submitOffer = async () => {
     setWorking(true);
     setError("");
-
     try {
       const offerPayload = { ...offerForm };
       if (selectedOffer) {
@@ -199,7 +362,11 @@ const AdminDashboardClient = () => {
       tags: Array.isArray(post.tags) ? post.tags.join(", ") : post.tags || "",
       heroImage: post.heroImage || "",
       thumbnail: post.thumbnail || "",
-      contentJson: JSON.stringify(post.content || [{ heading: "Introduction", body: "" }], null, 2),
+      contentJson: JSON.stringify(
+        post.content || [{ heading: "Introduction", body: "" }],
+        null,
+        2,
+      ),
     });
   };
 
@@ -217,9 +384,7 @@ const AdminDashboardClient = () => {
   };
 
   const deletePost = async (post) => {
-    if (!confirm(`Delete post “${post.title}”? This cannot be undone.`)) {
-      return;
-    }
+    if (!confirm(`Delete post "${post.title}"? This cannot be undone.`)) return;
     setWorking(true);
     try {
       await fetchJson(`/api/posts/${post.slug}`, { method: "DELETE" });
@@ -233,9 +398,7 @@ const AdminDashboardClient = () => {
   };
 
   const deleteOffer = async (offer) => {
-    if (!confirm(`Delete offer “${offer.title}”?`)) {
-      return;
-    }
+    if (!confirm(`Delete offer "${offer.title}"?`)) return;
     setWorking(true);
     try {
       await fetchJson(`/api/offers/${offer.slug}`, { method: "DELETE" });
@@ -248,26 +411,9 @@ const AdminDashboardClient = () => {
     }
   };
 
-  const handleFileChange = async (event, formType, field) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setWorking(true);
-    setError("");
-    try {
-      const url = await uploadFile(file);
-      if (formType === "post") {
-        setPostForm((current) => ({ ...current, [field]: url }));
-      } else {
-        setOfferForm((current) => ({ ...current, [field]: url }));
-      }
-    } catch (uploadError) {
-      setError(uploadError.message);
-    } finally {
-      setWorking(false);
-    }
-  };
-
   const handleLogout = async () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin");
   };
@@ -279,78 +425,151 @@ const AdminDashboardClient = () => {
           <div className="rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/30">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-white">{selectedPostLabel}</h2>
-                <p className="text-sm text-slate-400">Create, update, or delete blog content that appears on the blog page.</p>
+                <h2 className="text-2xl font-semibold text-white">
+                  {selectedPostLabel}
+                </h2>
+                <p className="text-sm text-slate-400">
+                  Create, update, or delete blog content that appears on the blog page.
+                </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <button onClick={resetPostForm} className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700">Reset</button>
-                <button onClick={submitPost} disabled={working} className="rounded-2xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-70">{selectedPost ? "Update post" : "Create post"}</button>
+                <button
+                  onClick={resetPostForm}
+                  className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
+                >
+                  Reset
+                </button>
+                <button
+                  onClick={submitPost}
+                  disabled={working}
+                  className="rounded-2xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-70"
+                >
+                  {selectedPost ? "Update post" : "Create post"}
+                </button>
               </div>
             </div>
+
             <div className="mt-6 grid gap-4 lg:grid-cols-2">
               <label className="block text-sm text-slate-200">
                 Title
-                <input value={postForm.title} onChange={(event) => handleInputChange(event, "title", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+                <input
+                  value={postForm.title}
+                  onChange={(e) => handleInputChange(e, "title", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Slug
-                <input value={postForm.slug} onChange={(event) => handleInputChange(event, "slug", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+                <input
+                  value={postForm.slug}
+                  onChange={(e) => handleInputChange(e, "slug", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Category
-                <input value={postForm.category} onChange={(event) => handleInputChange(event, "category", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+                <input
+                  value={postForm.category}
+                  onChange={(e) => handleInputChange(e, "category", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Author
-                <input value={postForm.author} onChange={(event) => handleInputChange(event, "author", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+                <input
+                  value={postForm.author}
+                  onChange={(e) => handleInputChange(e, "author", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Date
-                <input value={postForm.date} onChange={(event) => handleInputChange(event, "date", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="May 12, 2026" />
+                <input
+                  value={postForm.date}
+                  onChange={(e) => handleInputChange(e, "date", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  placeholder="May 12, 2026"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Read time
-                <input value={postForm.readTime} onChange={(event) => handleInputChange(event, "readTime", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="6 mins" />
+                <input
+                  value={postForm.readTime}
+                  onChange={(e) => handleInputChange(e, "readTime", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  placeholder="6 mins"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Views
-                <input value={postForm.views} onChange={(event) => handleInputChange(event, "views", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="1,200" />
+                <input
+                  value={postForm.views}
+                  onChange={(e) => handleInputChange(e, "views", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  placeholder="1,200"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Likes
-                <input value={postForm.likes} onChange={(event) => handleInputChange(event, "likes", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="310" />
+                <input
+                  value={postForm.likes}
+                  onChange={(e) => handleInputChange(e, "likes", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  placeholder="310"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Comments
-                <input value={postForm.comments} onChange={(event) => handleInputChange(event, "comments", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="32" />
+                <input
+                  value={postForm.comments}
+                  onChange={(e) => handleInputChange(e, "comments", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  placeholder="32"
+                />
               </label>
               <label className="block text-sm text-slate-200">
                 Tags (comma separated)
-                <input value={postForm.tags} onChange={(event) => handleInputChange(event, "tags", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="AI, Health" />
+                <input
+                  value={postForm.tags}
+                  onChange={(e) => handleInputChange(e, "tags", setPostForm)}
+                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  placeholder="AI, Health"
+                />
               </label>
               <label className="block text-sm text-slate-200 lg:col-span-2">
                 Excerpt
-                <textarea value={postForm.excerpt} onChange={(event) => handleInputChange(event, "excerpt", setPostForm)} className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" rows="3" />
+                <textarea
+                  value={postForm.excerpt}
+                  onChange={(e) => handleInputChange(e, "excerpt", setPostForm)}
+                  className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                  rows="3"
+                />
               </label>
-              <label className="block text-sm text-slate-200 lg:col-span-2">
-                Hero image URL
-                <input value={postForm.heroImage} onChange={(event) => handleInputChange(event, "heroImage", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="https://..." />
-              </label>
-              <label className="block text-sm text-slate-200 lg:col-span-2">
-                Thumbnail URL
-                <input value={postForm.thumbnail} onChange={(event) => handleInputChange(event, "thumbnail", setPostForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="https://..." />
-              </label>
-              <label className="block text-sm text-slate-200 lg:col-span-2">
-                Upload hero image
-                <input type="file" accept="image/*" onChange={(event) => handleFileChange(event, "post", "heroImage")} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
-              </label>
-              <label className="block text-sm text-slate-200 lg:col-span-2">
-                Upload thumbnail
-                <input type="file" accept="image/*" onChange={(event) => handleFileChange(event, "post", "thumbnail")} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
-              </label>
+
+              {/* ── Hero Image ── */}
+              <ImageField
+                label="Hero Image"
+                value={postForm.heroImage}
+                onChange={(val) => setPostForm((c) => ({ ...c, heroImage: val }))}
+                fieldId="heroImage"
+              />
+
+              {/* ── Thumbnail ── */}
+              <ImageField
+                label="Thumbnail"
+                value={postForm.thumbnail}
+                onChange={(val) => setPostForm((c) => ({ ...c, thumbnail: val }))}
+                fieldId="thumbnail"
+              />
+
               <label className="block text-sm text-slate-200 lg:col-span-2">
                 Content JSON
-                <textarea value={postForm.contentJson} onChange={(event) => handleInputChange(event, "contentJson", setPostForm)} className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none font-mono" rows="8" />
+                <textarea
+                  value={postForm.contentJson}
+                  onChange={(e) => handleInputChange(e, "contentJson", setPostForm)}
+                  className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none font-mono"
+                  rows="8"
+                />
                 <p className="mt-2 text-xs text-slate-500">{`Use an array of objects: [{"heading":"...","body":"..."}]`}</p>
               </label>
             </div>
@@ -359,13 +578,19 @@ const AdminDashboardClient = () => {
           <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
             <div className="space-y-4 rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/20">
               <h3 className="text-lg font-semibold text-white">Blog Posts</h3>
-              <p className="text-sm text-slate-400">Select a post to edit or delete it, or use the form to add a new entry.</p>
+              <p className="text-sm text-slate-400">
+                Select a post to edit or delete it, or use the form to add a new entry.
+              </p>
               <div className="space-y-3">
                 {posts.length === 0 ? (
                   <p className="text-sm text-slate-500">No blog posts found.</p>
                 ) : (
                   posts.map((post) => (
-                    <button key={post.slug} onClick={() => handlePostSelect(post)} className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-left text-sm text-slate-200 transition hover:border-cyan-500 hover:bg-slate-800">
+                    <button
+                      key={post.slug}
+                      onClick={() => handlePostSelect(post)}
+                      className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-left text-sm text-slate-200 transition hover:border-cyan-500 hover:bg-slate-800"
+                    >
                       <div className="flex items-center justify-between gap-4">
                         <span>{post.title}</span>
                         <span className="text-xs text-slate-500">{post.slug}</span>
@@ -379,9 +604,16 @@ const AdminDashboardClient = () => {
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <h3 className="text-lg font-semibold text-white">Live preview</h3>
-                  <p className="text-sm text-slate-400">Latest post data from the active content source.</p>
+                  <p className="text-sm text-slate-400">
+                    Latest post data from the active content source.
+                  </p>
                 </div>
-                <button onClick={loadData} className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700">Refresh</button>
+                <button
+                  onClick={loadData}
+                  className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
+                >
+                  Refresh
+                </button>
               </div>
               <div className="rounded-3xl border border-slate-800 bg-slate-900 p-5 text-sm text-slate-300">
                 {selectedPost ? (
@@ -389,15 +621,27 @@ const AdminDashboardClient = () => {
                     <p><strong>Selected:</strong> {selectedPost.title}</p>
                     <p><strong>Slug:</strong> {selectedPost.slug}</p>
                     <p><strong>Category:</strong> {selectedPost.category}</p>
-                    <p><strong>Audience:</strong> {selectedPost.author}</p>
+                    <p><strong>Author:</strong> {selectedPost.author}</p>
+                    {selectedPost.heroImage && (
+                      <img
+                        src={selectedPost.heroImage}
+                        alt="Hero"
+                        className="mt-2 h-24 w-full rounded-2xl object-cover border border-slate-700"
+                      />
+                    )}
                   </div>
                 ) : (
                   <p>Select a post to preview quick metadata.</p>
                 )}
               </div>
-              {selectedPost ? (
-                <button onClick={() => deletePost(selectedPost)} className="w-full rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-400">Delete selected post</button>
-              ) : null}
+              {selectedPost && (
+                <button
+                  onClick={() => deletePost(selectedPost)}
+                  className="w-full rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-400"
+                >
+                  Delete selected post
+                </button>
+              )}
             </div>
           </div>
         </section>
@@ -413,43 +657,81 @@ const AdminDashboardClient = () => {
               <p className="text-sm text-slate-400">Manage active offers and campaign content.</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <button onClick={resetOfferForm} className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700">Reset</button>
-              <button onClick={submitOffer} disabled={working} className="rounded-2xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-70">{selectedOffer ? "Update offer" : "Create offer"}</button>
+              <button
+                onClick={resetOfferForm}
+                className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
+              >
+                Reset
+              </button>
+              <button
+                onClick={submitOffer}
+                disabled={working}
+                className="rounded-2xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-70"
+              >
+                {selectedOffer ? "Update offer" : "Create offer"}
+              </button>
             </div>
           </div>
+
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <label className="block text-sm text-slate-200">
               Title
-              <input value={offerForm.title} onChange={(event) => handleInputChange(event, "title", setOfferForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+              <input
+                value={offerForm.title}
+                onChange={(e) => handleInputChange(e, "title", setOfferForm)}
+                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+              />
             </label>
             <label className="block text-sm text-slate-200">
               Slug
-              <input value={offerForm.slug} onChange={(event) => handleInputChange(event, "slug", setOfferForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+              <input
+                value={offerForm.slug}
+                onChange={(e) => handleInputChange(e, "slug", setOfferForm)}
+                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+              />
             </label>
             <label className="block text-sm text-slate-200">
               Discount
-              <input value={offerForm.discount} onChange={(event) => handleInputChange(event, "discount", setOfferForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="15% OFF" />
+              <input
+                value={offerForm.discount}
+                onChange={(e) => handleInputChange(e, "discount", setOfferForm)}
+                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                placeholder="15% OFF"
+              />
             </label>
             <label className="block text-sm text-slate-200">
               End date
-              <input type="date" value={offerForm.endDate} onChange={(event) => handleInputChange(event, "endDate", setOfferForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
+              <input
+                type="date"
+                value={offerForm.endDate}
+                onChange={(e) => handleInputChange(e, "endDate", setOfferForm)}
+                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+              />
             </label>
             <label className="block text-sm text-slate-200 lg:col-span-2">
               Audience
-              <input value={offerForm.audience} onChange={(event) => handleInputChange(event, "audience", setOfferForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" placeholder="General Public" />
+              <input
+                value={offerForm.audience}
+                onChange={(e) => handleInputChange(e, "audience", setOfferForm)}
+                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                placeholder="General Public"
+              />
             </label>
             <label className="block text-sm text-slate-200 lg:col-span-2">
               Description
-              <textarea value={offerForm.description} onChange={(event) => handleInputChange(event, "description", setOfferForm)} className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" rows="4" />
+              <textarea
+                value={offerForm.description}
+                onChange={(e) => handleInputChange(e, "description", setOfferForm)}
+                className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
+                rows="4"
+              />
             </label>
-            <label className="block text-sm text-slate-200 lg:col-span-2">
-              Image URL
-              <input value={offerForm.image} onChange={(event) => handleInputChange(event, "image", setOfferForm)} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
-            </label>
-            <label className="block text-sm text-slate-200 lg:col-span-2">
-              Upload image/video
-              <input type="file" accept="image/*,video/*" onChange={(event) => handleFileChange(event, "offer", "image")} className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none" />
-            </label>
+
+            {/* ── Offer Image ── */}
+            <OfferImageField
+              value={offerForm.image}
+              onChange={(val) => setOfferForm((c) => ({ ...c, image: val }))}
+            />
           </div>
         </div>
 
@@ -461,7 +743,11 @@ const AdminDashboardClient = () => {
                 <p className="text-sm text-slate-500">No active offers found.</p>
               ) : (
                 offers.map((offer) => (
-                  <button key={offer.slug} onClick={() => handleOfferSelect(offer)} className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-left text-sm text-slate-200 transition hover:border-cyan-500 hover:bg-slate-800">
+                  <button
+                    key={offer.slug}
+                    onClick={() => handleOfferSelect(offer)}
+                    className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-left text-sm text-slate-200 transition hover:border-cyan-500 hover:bg-slate-800"
+                  >
                     <div className="flex items-center justify-between gap-4">
                       <span>{offer.title}</span>
                       <span className="text-xs text-slate-500">{offer.slug}</span>
@@ -475,14 +761,28 @@ const AdminDashboardClient = () => {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">Dashboard actions</h3>
-                <p className="text-sm text-slate-400">Save, refresh, or remove content for offers and posts.</p>
+                <p className="text-sm text-slate-400">
+                  Save, refresh, or remove content for offers and posts.
+                </p>
               </div>
-              <button onClick={loadData} className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700">Refresh</button>
+              <button
+                onClick={loadData}
+                className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
+              >
+                Refresh
+              </button>
             </div>
             {selectedOffer ? (
-              <button onClick={() => deleteOffer(selectedOffer)} className="w-full rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-400">Delete selected offer</button>
+              <button
+                onClick={() => deleteOffer(selectedOffer)}
+                className="w-full rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-400"
+              >
+                Delete selected offer
+              </button>
             ) : (
-              <p className="text-sm text-slate-500">Select an offer from the list to edit or delete it.</p>
+              <p className="text-sm text-slate-500">
+                Select an offer from the list to edit or delete it.
+              </p>
             )}
           </div>
         </div>
@@ -496,17 +796,44 @@ const AdminDashboardClient = () => {
         <div className="mb-8 flex flex-col gap-3 rounded-3xl border border-slate-700 bg-slate-950/70 p-6 shadow-2xl shadow-slate-900/30 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-4xl font-semibold tracking-tight">Admin Dashboard</h1>
-            <p className="mt-2 text-slate-400">Manage blog posts, campaign offers, and Cloudinary uploads from one admin interface.</p>
+            <p className="mt-2 text-slate-400">
+              Manage blog posts, campaign offers, and uploads from one admin interface.
+            </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <button onClick={() => setActiveTab("posts")} className={`rounded-2xl px-4 py-2 text-sm font-semibold ${activeTab === "posts" ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"}`}>Posts</button>
-            <button onClick={() => setActiveTab("offers")} className={`rounded-2xl px-4 py-2 text-sm font-semibold ${activeTab === "offers" ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"}`}>Offers</button>
-            <button onClick={handleLogout} className="rounded-2xl bg-rose-500 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-400">Logout</button>
+            <button
+              onClick={() => setActiveTab("posts")}
+              className={`rounded-2xl px-4 py-2 text-sm font-semibold ${activeTab === "posts" ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"}`}
+            >
+              Posts
+            </button>
+            <button
+              onClick={() => setActiveTab("offers")}
+              className={`rounded-2xl px-4 py-2 text-sm font-semibold ${activeTab === "offers" ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"}`}
+            >
+              Offers
+            </button>
+            <button
+              onClick={handleLogout}
+              className="rounded-2xl bg-rose-500 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-400"
+            >
+              Logout
+            </button>
           </div>
         </div>
 
-        {error ? <div className="mb-6 rounded-3xl border border-rose-500 bg-rose-950/40 p-4 text-sm text-rose-100">{error}</div> : null}
-        {loading ? <div className="rounded-3xl border border-slate-700 bg-slate-950/80 p-10 text-center text-slate-400">Loading admin data…</div> : activeSection}
+        {error && (
+          <div className="mb-6 rounded-3xl border border-rose-500 bg-rose-950/40 p-4 text-sm text-rose-100">
+            {error}
+          </div>
+        )}
+        {loading ? (
+          <div className="rounded-3xl border border-slate-700 bg-slate-950/80 p-10 text-center text-slate-400">
+            Loading admin data…
+          </div>
+        ) : (
+          activeSection
+        )}
       </div>
     </main>
   );
