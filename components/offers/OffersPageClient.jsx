@@ -123,7 +123,7 @@ const OffersPageClient = ({ offers }) => {
                 </span>
               </div>
 
-              <p className="text-gray-100 mt-4 leading-relaxed">
+              <p className="text-gray-100 mt-4 leading-relaxed line-clamp-2">
                 {offer.description}
               </p>
 
@@ -156,10 +156,10 @@ const OffersPageClient = ({ offers }) => {
                   </p>
                 ) : (
                   [
-                    { label: "D", value: timer.days },
-                    { label: "H", value: timer.hours },
-                    { label: "M", value: timer.minutes },
-                    { label: "S", value: timer.seconds },
+                    { label: "Days", value: timer.days },
+                    { label: "Hours", value: timer.hours },
+                    { label: "Minutes", value: timer.minutes },
+                    { label: "Seconds", value: timer.seconds },
                   ].map((item) => (
                     <div
                       key={item.label}

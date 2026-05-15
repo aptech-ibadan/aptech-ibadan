@@ -145,10 +145,10 @@ const CampaignPopup = () => {
             {countdown && !countdown.expired && (
               <div className="mt-4 grid grid-cols-4 gap-2">
                 {[
-                  { label: "D", value: countdown.days },
-                  { label: "H", value: countdown.hours },
-                  { label: "M", value: countdown.minutes },
-                  { label: "S", value: countdown.seconds },
+                  { label: "Days", value: countdown.days },
+                  { label: "Hours", value: countdown.hours },
+                  { label: "Minutes", value: countdown.minutes },
+                  { label: "Seconds", value: countdown.seconds },
                 ].map((item) => (
                   <div
                     key={item.label}

@@ -34,9 +34,27 @@ const BlogLibrary = ({ items }) => {
       </div>
 
       <div className="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {filteredItems.map((item) => (
-          <NewsCard key={item.slug} item={item} />
-        ))}
+        {filteredItems.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+            <p className="text-4xl mb-4">📭</p>
+            <h3 className="text-white text-xl font-semibold">No posts found</h3>
+            <p className="text-gray-400 text-sm mt-2">
+              There are no posts in the{" "}
+              <span className="text-[#FFC107] font-medium">{activeCategory}</span>{" "}
+              category yet.
+            </p>
+            <button
+              onClick={() => setActiveCategory("All")}
+              className="mt-5 px-5 py-2 rounded-full bg-[#FFC107] text-black text-sm font-semibold hover:bg-yellow-300 transition"
+            >
+              View all posts
+            </button>
+          </div>
+        ) : (
+          filteredItems.map((item) => (
+            <NewsCard key={item.slug} item={item} />
+          ))
+        )}
       </div>
     </section>
   );
