@@ -5,9 +5,10 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { campaignOffers } from "@/data/campaignOffers";
 
 const getCountdown = (endDate) => {
+  if (!endDate) return { expired: false, days: 0, hours: 0, minutes: 0, seconds: 0 };
+
   const target = new Date(endDate).getTime();
   const now = Date.now();
   const diff = target - now;
@@ -25,40 +26,50 @@ const getCountdown = (endDate) => {
   };
 };
 
+const confettiPieces = [
+  { left: "8%", delay: 0.1, duration: 2.8, color: "#FFC107" },
+  { left: "18%", delay: 0.5, duration: 3.2, color: "#ffffff" },
+  { left: "30%", delay: 0.2, duration: 2.9, color: "#FFD54F" },
+  { left: "45%", delay: 0.7, duration: 3.4, color: "#ffffff" },
+  { left: "60%", delay: 0.3, duration: 2.7, color: "#FFC107" },
+  { left: "75%", delay: 0.9, duration: 3.1, color: "#ffffff" },
+  { left: "88%", delay: 0.4, duration: 2.6, color: "#FFD54F" },
+];
+
 const CampaignPopup = () => {
   const [open, setOpen] = useState(false);
-  const campaign = campaignOffers.find((item) => item.slug === "kopa-in-tech");
-  const [countdown, setCountdown] = useState(() =>
-    getCountdown(campaign?.endDate),
-  );
+  const [campaign, setCampaign] = useState(null);
+  // ✅ Initialize as null — only set after campaign loads
+  const [countdown, setCountdown] = useState(null);
 
+  // ── Fetch latest offer ────────────────────────────────────
+  useEffect(() => {
+    fetch("/api/offers?latest=true")
+      .then((res) => res.json())
+      .then((data) => {
+        setCampaign(data);
+        // ✅ Set initial countdown only after data arrives
+        setCountdown(getCountdown(data?.endDate));
+      })
+      .catch(() => null);
+  }, []);
+
+  // ── Show popup after delay ────────────────────────────────
   useEffect(() => {
     const timer = setTimeout(() => setOpen(true), 900);
     return () => clearTimeout(timer);
   }, []);
 
+  // ── Tick countdown every second ──────────────────────────
   useEffect(() => {
     if (!campaign?.endDate) return;
     const intervalId = setInterval(() => {
       setCountdown(getCountdown(campaign.endDate));
     }, 1000);
-
     return () => clearInterval(intervalId);
   }, [campaign?.endDate]);
 
-  const closePopup = () => {
-    setOpen(false);
-  };
-
-  const confettiPieces = [
-    { left: "8%", delay: 0.1, duration: 2.8, color: "#FFC107" },
-    { left: "18%", delay: 0.5, duration: 3.2, color: "#ffffff" },
-    { left: "30%", delay: 0.2, duration: 2.9, color: "#FFD54F" },
-    { left: "45%", delay: 0.7, duration: 3.4, color: "#ffffff" },
-    { left: "60%", delay: 0.3, duration: 2.7, color: "#FFC107" },
-    { left: "75%", delay: 0.9, duration: 3.1, color: "#ffffff" },
-    { left: "88%", delay: 0.4, duration: 2.6, color: "#FFD54F" },
-  ];
+  const closePopup = () => setOpen(false);
 
   return (
     <AnimatePresence>
@@ -105,6 +116,7 @@ const CampaignPopup = () => {
             <p className="text-xs tracking-[0.2em] text-[#FFC107] uppercase font-semibold">
               Latest Campaign
             </p>
+
             <div className="mt-3 rounded-xl overflow-hidden border border-white/20">
               <div className="relative h-40">
                 <Image
@@ -118,37 +130,55 @@ const CampaignPopup = () => {
             </div>
 
             <h3 className="text-2xl font-bold text-white mt-4">
-              {campaign?.title || "Campaign"}
+              {campaign?.title || "Loading..."}
             </h3>
             <p className="text-gray-100 mt-3 leading-relaxed">
               Enjoy{" "}
               <span className="text-[#FFC107] font-bold">
-                {campaign?.discount || "15% OFF"}
+                {campaign?.discount || "—"}
               </span>{" "}
               on all courses for {campaign?.audience || "qualified students"}.
               Limited campaign period.
             </p>
 
-            {!countdown.expired && (
+            {/* ✅ Only render countdown after it's loaded */}
+            {countdown && !countdown.expired && (
               <div className="mt-4 grid grid-cols-4 gap-2">
                 {[
-                  { label: "D", value: countdown.days },
-                  { label: "H", value: countdown.hours },
-                  { label: "M", value: countdown.minutes },
-                  { label: "S", value: countdown.seconds },
+                  { label: "Days", value: countdown.days },
+                  { label: "Hours", value: countdown.hours },
+                  { label: "Minutes", value: countdown.minutes },
+                  { label: "Seconds", value: countdown.seconds },
                 ].map((item) => (
                   <div
                     key={item.label}
                     className="rounded-lg border border-white/20 bg-[#08133f] py-2 text-center"
                   >
-                    <p className="text-lg font-bold text-[#FFC107]">{item.value}</p>
+                    <p className="text-lg font-bold text-[#FFC107]">
+                      {item.value}
+                    </p>
                     <p className="text-[11px] text-gray-300">{item.label}</p>
                   </div>
                 ))}
               </div>
             )}
 
-            {countdown.expired && (
+            {/* ✅ Skeleton while loading */}
+            {!countdown && (
+              <div className="mt-4 grid grid-cols-4 gap-2">
+                {["D", "H", "M", "S"].map((label) => (
+                  <div
+                    key={label}
+                    className="rounded-lg border border-white/20 bg-[#08133f] py-2 text-center animate-pulse"
+                  >
+                    <p className="text-lg font-bold text-[#FFC107]">—</p>
+                    <p className="text-[11px] text-gray-300">{label}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {countdown?.expired && (
               <p className="mt-4 text-sm text-red-300 bg-red-500/10 border border-red-400/30 rounded-lg py-2 px-3 text-center">
                 This campaign has ended.
               </p>

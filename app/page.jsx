@@ -1,3 +1,5 @@
+"use client";
+
 import Campus from "@/components/Campus";
 import CampaignPopup from "@/components/offers/CampaignPopup";
 import Enroll from "@/components/Enroll";
@@ -9,11 +11,13 @@ import Partners from "@/components/Partners";
 import Programs from "@/components/Programs";
 import Question from "@/components/Question";
 import Work from "@/components/Work";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div>
-      <CampaignPopup />
+      <CampaignPopup open={open} setOpen={setOpen} />
       <Hero />
       <GlobalAlliance />
       {/* <Partners /> */}
@@ -23,7 +27,7 @@ const HomePage = () => {
       <Campus />
       <Enroll />
       <Question />
-        {/* <Footer /> */}
+      {/* <Footer /> */}
     </div>
   );
 };

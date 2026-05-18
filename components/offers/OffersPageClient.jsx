@@ -23,24 +23,36 @@ const getCountdown = (endDate) => {
   };
 };
 
-const OffersPageClient = ({ offers }) => {
-  const confettiPieces = [
-    { left: "5%", delay: 0.2, duration: 3.1, color: "#FFC107" },
-    { left: "14%", delay: 0.5, duration: 2.8, color: "#ffffff" },
-    { left: "24%", delay: 0.1, duration: 3.3, color: "#FFD54F" },
-    { left: "35%", delay: 0.7, duration: 2.9, color: "#ffffff" },
-    { left: "48%", delay: 0.4, duration: 3.4, color: "#FFC107" },
-    { left: "60%", delay: 0.8, duration: 2.7, color: "#ffffff" },
-    { left: "74%", delay: 0.3, duration: 3.2, color: "#FFD54F" },
-    { left: "86%", delay: 0.6, duration: 2.9, color: "#ffffff" },
-    { left: "94%", delay: 0.9, duration: 3.0, color: "#FFC107" },
-  ];
+const formatEndDate = (endDate) => {
+  return new Date(endDate).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
 
-  const [timers, setTimers] = useState(() =>
-    offers.map((offer) => getCountdown(offer.endDate)),
-  );
+const confettiPieces = [
+  { left: "5%", delay: 0.2, duration: 3.1, color: "#FFC107" },
+  { left: "14%", delay: 0.5, duration: 2.8, color: "#ffffff" },
+  { left: "24%", delay: 0.1, duration: 3.3, color: "#FFD54F" },
+  { left: "35%", delay: 0.7, duration: 2.9, color: "#ffffff" },
+  { left: "48%", delay: 0.4, duration: 3.4, color: "#FFC107" },
+  { left: "60%", delay: 0.8, duration: 2.7, color: "#ffffff" },
+  { left: "74%", delay: 0.3, duration: 3.2, color: "#FFD54F" },
+  { left: "86%", delay: 0.6, duration: 2.9, color: "#ffffff" },
+  { left: "94%", delay: 0.9, duration: 3.0, color: "#FFC107" },
+];
+
+const OffersPageClient = ({ offers }) => {
+  // ✅ Initialize as null — only set timers on the client after mount
+  const [timers, setTimers] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // ✅ First mount — set timers and mark as mounted
+    setMounted(true);
+    setTimers(offers.map((offer) => getCountdown(offer.endDate)));
+
     const intervalId = setInterval(() => {
       setTimers(offers.map((offer) => getCountdown(offer.endDate)));
     }, 1000);
@@ -82,7 +94,7 @@ const OffersPageClient = ({ offers }) => {
 
       <section className="relative z-10 max-w-7xl mx-auto px-6 lg:px-6 pb-16 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {offers.map((offer, index) => {
-          const timer = timers[index];
+          const timer = timers?.[index];
           return (
             <motion.article
               key={offer.slug}
@@ -111,35 +123,51 @@ const OffersPageClient = ({ offers }) => {
                 </span>
               </div>
 
-              <p className="text-gray-100 mt-4 leading-relaxed">{offer.description}</p>
+              <p className="text-gray-100 mt-4 leading-relaxed line-clamp-2">
+                {offer.description}
+              </p>
 
               <p className="text-sm text-gray-300 mt-4">
                 <span className="text-white font-semibold">Target:</span>{" "}
                 {offer.audience}
               </p>
 
+              {/* ✅ Only render date on client to avoid hydration mismatch */}
               <p className="text-sm text-gray-300 mt-1">
                 <span className="text-white font-semibold">Ends:</span>{" "}
-                {new Date(offer.endDate).toLocaleDateString()}
+                {mounted ? formatEndDate(offer.endDate) : "—"}
               </p>
 
               <div className="mt-5 grid grid-cols-4 gap-2">
-                {timer.expired ? (
+                {/* ✅ Show skeleton until client timers are ready */}
+                {!mounted || !timer ? (
+                  [..."DHMS"].map((label) => (
+                    <div
+                      key={label}
+                      className="rounded-lg border border-white/15 bg-[#08133f] py-2 text-center"
+                    >
+                      <p className="text-lg font-bold text-[#FFC107]">—</p>
+                      <p className="text-[11px] text-gray-300">{label}</p>
+                    </div>
+                  ))
+                ) : timer.expired ? (
                   <p className="col-span-4 text-center text-sm text-red-300 bg-red-500/10 border border-red-400/30 rounded-lg py-2">
                     Offer Ended
                   </p>
                 ) : (
                   [
-                    { label: "D", value: timer.days },
-                    { label: "H", value: timer.hours },
-                    { label: "M", value: timer.minutes },
-                    { label: "S", value: timer.seconds },
+                    { label: "Days", value: timer.days },
+                    { label: "Hours", value: timer.hours },
+                    { label: "Minutes", value: timer.minutes },
+                    { label: "Seconds", value: timer.seconds },
                   ].map((item) => (
                     <div
                       key={item.label}
                       className="rounded-lg border border-white/15 bg-[#08133f] py-2 text-center"
                     >
-                      <p className="text-lg font-bold text-[#FFC107]">{item.value}</p>
+                      <p className="text-lg font-bold text-[#FFC107]">
+                        {item.value}
+                      </p>
                       <p className="text-[11px] text-gray-300">{item.label}</p>
                     </div>
                   ))
