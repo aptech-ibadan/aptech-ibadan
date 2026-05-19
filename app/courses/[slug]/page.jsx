@@ -420,10 +420,30 @@ const courseData = {
     description:
       "A career-focused multimedia program that trains students in 3D animation, UI/UX design, motion graphics, and visual storytelling using industry-standard tools and workflows.",
 
-    media: {
+    media: [{
       type: "video",
       src: "/amsp.mp4",
+    },{
+      type: "image",
+      src: "https://res.cloudinary.com/ddldviftf/image/upload/v1778836099/arena2_t21ptk.jpg"
     },
+    {
+      type: "image",
+      src: "https://res.cloudinary.com/ddldviftf/image/upload/v1778836098/arena4_kyazav.jpg"
+    },
+    {
+      type: "image",
+      src: "https://res.cloudinary.com/ddldviftf/image/upload/v1778836102/arena3_jmo9ab.jpg"
+    },
+  {
+      type: "image",
+      src: "https://res.cloudinary.com/ddldviftf/image/upload/v1778836108/arena5_wn4xx7.jpg"
+  },
+  {
+      type: "image",
+      src: "https://res.cloudinary.com/ddldviftf/image/upload/v1778836113/arena1_klzlkj.jpg"
+  }
+  ],
 
     terms: [
       {

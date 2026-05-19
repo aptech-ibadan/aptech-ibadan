@@ -10,6 +10,7 @@ const BlogPage = async () => {
     <main>
       <BlogHero />
       <BlogLibrary items={posts} />
+      
       <NewsletterCTA />
     </main>
   );
