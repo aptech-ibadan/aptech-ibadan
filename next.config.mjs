@@ -22,6 +22,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "images.pexels.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "static.vecteezy.com",
         pathname: "/**",
       },
