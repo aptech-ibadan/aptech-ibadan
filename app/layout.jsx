@@ -1,13 +1,11 @@
 import "@/assets/styles/globals.css";
 
-import Navbar from "@/components/Navbar";
-
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import Script from "next/script";
-import Footer from "@/components/Footer";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata = {
   title: "Aptech Ibadan",
@@ -21,9 +19,9 @@ const MainLayout = ({ children }) => {
   return (
     <html lang="en">
       <body className="bg-page-bg">
-        <Navbar />
-
-        <div>{children}</div>
+        <LayoutWrapper>
+          <div>{children}</div>
+        </LayoutWrapper>
 
         <ToastContainer position="top-right" autoClose={3000} theme="colored" />
 
@@ -93,8 +91,6 @@ const MainLayout = ({ children }) => {
 
           `}
         </Script>
-
-        <Footer/>
       </body>
     </html>
   );

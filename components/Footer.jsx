@@ -8,7 +8,7 @@ import {
   FaLinkedinIn,
   FaInstagram,
 } from "react-icons/fa";
-import AptechLogo from "@/assets/APTECHLOGO.png";
+const APTECH_LOGO = "/images/branding/aptech-logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,7 +22,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
-                src={AptechLogo}
+                src={APTECH_LOGO}
                 alt="Aptech Logo"
                 width={150}
                 height={100}
@@ -55,6 +55,12 @@ const Footer = () => {
                 className="text-gray-400 hover:text-white transition"
               >
                 Programs
+              </Link>
+              <Link
+                href="/blog"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Blog
               </Link>
               <Link
                 href="/about"
