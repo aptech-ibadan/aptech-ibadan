@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import NewsCard from "@/components/news/NewsCard";
-import { blogCategories } from "@/data/newsData";
+import { blogCategories } from "@/data/blogCategories";
 
 const BlogLibrary = ({ items }) => {
   const [activeCategory, setActiveCategory] = useState("All");

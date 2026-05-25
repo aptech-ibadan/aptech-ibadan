@@ -6,14 +6,14 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { ChevronDown } from "lucide-react";
-import AptechLogo from "@/assets/APTECHLOGO.png";
-
 import middlesex from "@/assets/middlesex.png";
 import lincoln from "@/assets/lincoln.png";
 import ncc from "@/assets/ncc.png";
 import sgsu from "@/assets/sgsu.png";
 import bolton from "@/assets/bolton.png";
 import ism from "@/assets/ism-img.png";
+
+const APTECH_LOGO = "/images/branding/aptech-logo.png";
 
 const partners = [
   {
@@ -101,7 +101,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
               <Image
-                src={AptechLogo}
+                src={APTECH_LOGO}
                 alt="Aptech Logo"
                 width={100}
                 height={100}

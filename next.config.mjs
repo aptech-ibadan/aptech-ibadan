@@ -36,13 +36,48 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "images.pexels.com",
-        port: "",
-        pathname: "/**",
-      },
     ],
+  },
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "react-icons",
+      "framer-motion",
+    ],
+    serverComponentsExternalPackages: [
+      "mongoose",
+      "bcryptjs",
+      "jsonwebtoken",
+      "sharp",
+    ],
+  },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 300,
+        ignored: [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/public/**",
+          "**/public/**/*.mov",
+          "**/public/**/*.mp4",
+          "**/public/**/*.MOV",
+          "**/public/**/*.HEIC",
+          "**/public/**/*.heic",
+          "**/public/**/*.pptx",
+          "**/public/**/*.bin",
+          "**/public/**/Arena_*",
+          "**/public/**/Screenshot*",
+          "**/assets/aptech*.jpeg",
+          "**/assets/APTECHLOGO.png",
+          "**/assets/home-pageBg.png",
+          "**/assets/**/*.MOV",
+          "**/assets/**/*.mov",
+        ],
+      };
+    }
+    return config;
   },
 };
 

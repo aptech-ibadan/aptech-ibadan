@@ -270,12 +270,4 @@ export const newsItems = [
 export const getNewsBySlug = (slug) =>
   newsItems.find((item) => item.slug === slug);
 
-export const blogCategories = [
-  "All",
-  "Software",
-  "AI",
-  "Cybersecurity",
-  "Data",
-  "Design",
-  "Health",
-];
+export { blogCategories } from "./blogCategories";
