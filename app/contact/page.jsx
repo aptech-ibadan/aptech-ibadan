@@ -652,6 +652,7 @@ const ContactPage = () => {
 
           <motion.div
             className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+           // className="flex flex-wrap justify-center gap-8 lg:gap-10"
             variants={containerVariants}
             initial="hidden"
             animate={mapInView ? "visible" : "hidden"}

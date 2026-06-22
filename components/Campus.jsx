@@ -365,13 +365,13 @@ const Campus = () => {
           />
 
           <p className="mt-5 text-gray-600 max-w-2xl mx-auto text-lg">
-            Two strategic locations in Ibadan designed for excellence in tech
+            Three strategic locations in Ibadan designed for excellence in tech
             education
           </p>
         </AnimatedSection>
 
         {/* ── Cards Grid ── */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+        <div className="grid md:grid-cols-2 gap-8 justify-items-center lg:gap-10">
           {campuses.map((campus, index) => (
             <CampusCard key={campus.id} campus={campus} index={index} />
           ))}
