@@ -71,6 +71,17 @@ const ContactPage = () => {
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5301.706136977626!2d3.8718979999999994!3d7.358547100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10398db6429effff%3A0x4bb79d52316cb4cf!2s93%20MKO%20Abiola%20Way%2C%20Ibadan%20200221%2C%20Oyo!5e1!3m2!1sen!2sng!4v1777970539395!5m2!1sen!2sng",
       color: "from-amber-600 to-orange-600",
     },
+    {
+      id: 2,
+      name: "Aptech Bodija",
+      address: "93 M.K.O Abiola Way, Adjacent Sunrise Mall, Ibadan",
+      phone: "08064634830",
+      email: "info@aptechibadan.com",
+      mapSrc:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5301.706136977626!2d3.8718979999999994!3d7.358547100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10398db6429effff%3A0x4bb79d52316cb4cf!2s93%20MKO%20Abiola%20Way%2C%20Ibadan%20200221%2C%20Oyo!5e1!3m2!1sen!2sng!4v1777970539395!5m2!1sen!2sng",
+      color: "from-amber-600 to-orange-600",
+    },
+
   ];
 
   const campuses = [
@@ -96,6 +107,26 @@ const ContactPage = () => {
     },
     {
       name: "Ringroad",
+      socials: [
+        {
+          name: "Instagram",
+          icon: <FaInstagram />,
+          link: "https://instagram.com/aptechringroad",
+        },
+        {
+          name: "WhatsApp",
+          icon: <FaWhatsapp />,
+          link: "http://wa.me/2348064634830",
+        },
+        {
+          name: "Facebook",
+          icon: <FaFacebook />,
+          link: "https://www.facebook.com/aptechringroad",
+        },
+      ],
+    },
+      {
+      name: "Bodija",
       socials: [
         {
           name: "Instagram",
@@ -742,20 +773,20 @@ const ContactPage = () => {
                   <motion.div
                     key={index}
                     variants={itemVariants}
-                    className="border border-gray-200 p-5 rounded-xl hover:shadow-lg transition-shadow"
+                    className="border border-gray-200 p-5 py-3 rounded-xl hover:shadow-lg transition-shadow"
                   >
                     <p className="font-semibold mb-3 text-[#020B2D] text-lg">
                       {campus.name}
                     </p>
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       {campus.socials.map((social, i) => (
                         <motion.a
                           key={i}
                           href={social.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FFC107] text-[#020B2D] font-medium hover:bg-[#020B2D] hover:text-white transition-all duration-300"
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FFC107] text-[#020B2D] font-medium hover:bg-[#020B2D] hover:text-white transition-all duration-300 text-sm"
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -767,7 +798,7 @@ const ContactPage = () => {
                   </motion.div>
                 ))}
               </motion.div>
-
+{/* 
               <motion.div
                 className="mt-6 text-center"
                 initial={{ opacity: 0 }}
@@ -780,7 +811,7 @@ const ContactPage = () => {
                 >
                   Follow us for updates and tech news
                 </motion.p>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           </motion.div>
         )}
