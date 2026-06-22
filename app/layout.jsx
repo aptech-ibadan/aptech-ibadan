@@ -12,7 +12,7 @@ export const metadata = {
 
   description: "Become An IT Pro",
 
-  keywords: "IT, Training, Aptech, ITSS, T24, Infinity, WebDevelopment",
+  keywords: "IT, Training, Aptech, ITSS, T24, Infinity, Web Development",
 };
 
 const MainLayout = ({ children }) => {
