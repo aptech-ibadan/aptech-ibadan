@@ -11,6 +11,8 @@ import {
 } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
 /* ── Floating particle (identical to ProgramsHero) ── */
 const Particle = ({ x, y, size, duration, delay, color }) => (
@@ -86,10 +88,315 @@ const fadeRight = {
   },
 };
 
+/* ── Carousel Component for AMSP ── */
+const MediaCarousel = ({ mediaItems, title }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Filter only images for carousel (videos handled separately or as first item)
+  const imageItems = mediaItems.filter(item => item.type === "image");
+  const hasVideo = mediaItems.some(item => item.type === "video");
+  const videoItem = mediaItems.find(item => item.type === "video");
+
+  // If there's a video, prepend it as first slide
+  const carouselItems = hasVideo 
+    ? [{ type: "video", src: videoItem.src }, ...imageItems]
+    : imageItems;
+
+  useEffect(() => {
+    if (!isAutoPlaying || carouselItems.length <= 1) return;
+    const interval = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((i) => (i + 1) % carouselItems.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, carouselItems.length]);
+
+  const goToPrevious = () => {
+    setDirection(-1);
+    setCurrentIndex((i) => (i === 0 ? carouselItems.length - 1 : i - 1));
+    setIsAutoPlaying(false);
+  };
+
+  const goToNext = () => {
+    setDirection(1);
+    setCurrentIndex((i) => (i + 1) % carouselItems.length);
+    setIsAutoPlaying(false);
+  };
+
+  const goToSlide = (index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+    setIsAutoPlaying(false);
+  };
+
+  const slideVariants = {
+    enter: (dir) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0, scale: 0.96 }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
+    exit: (dir) => ({
+      x: dir < 0 ? "100%" : "-100%",
+      opacity: 0,
+      scale: 0.96,
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    }),
+  };
+
+  if (carouselItems.length === 0) return null;
+
+  return (
+    <div className="relative group">
+      {/* Glow */}
+      <motion.div
+        className="absolute -inset-6 rounded-[3rem] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse, rgba(255,193,7,0.22) 0%, transparent 70%)",
+        }}
+        animate={{ opacity: [0.5, 1, 0.5] }}
+        transition={{ duration: 4, repeat: Infinity }}
+      />
+
+      {/* Corner accents */}
+      {[
+        "top-0 left-0",
+        "top-0 right-0",
+        "bottom-0 left-0",
+        "bottom-0 right-0",
+      ].map((pos, i) => (
+        <motion.div
+          key={i}
+          className={`absolute ${pos} w-5 h-5 border-[#FFC107] pointer-events-none z-20`}
+          style={{
+            borderTopWidth: i < 2 ? 2 : 0,
+            borderBottomWidth: i >= 2 ? 2 : 0,
+            borderLeftWidth: i % 2 === 0 ? 2 : 0,
+            borderRightWidth: i % 2 !== 0 ? 2 : 0,
+          }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.2 + i * 0.1 }}
+        />
+      ))}
+
+      <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#020B2D]/80 to-transparent border border-white/10">
+        {/* Carousel */}
+        <div className="relative h-[300px] sm:h-[360px] overflow-hidden">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="absolute inset-0"
+            >
+              {carouselItems[currentIndex].type === "video" ? (
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                >
+                  <source src={carouselItems[currentIndex].src} type="video/mp4" />
+                </video>
+              ) : (
+                <img
+                  src={carouselItems[currentIndex].src}
+                  alt={`${title} - slide ${currentIndex + 1}`}
+                  className="w-full h-full object-cover object-center"
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Shimmer sweep */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background:
+                "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
+              backgroundSize: "200% 100%",
+            }}
+            animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
+            transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5 }}
+          />
+
+          {/* Bottom fade */}
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#020B2D] to-transparent z-10" />
+        </div>
+
+        {/* Prev / Next arrows */}
+        {carouselItems.length > 1 && (
+          <>
+            <motion.button
+              onClick={goToPrevious}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-[#FFC107]/80 text-white hover:text-black rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={20} />
+            </motion.button>
+
+            <motion.button
+              onClick={goToNext}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-[#FFC107]/80 text-white hover:text-black rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
+              aria-label="Next image"
+            >
+              <ChevronRight size={20} />
+            </motion.button>
+
+            {/* Auto-play toggle */}
+            <motion.button
+              onClick={() => setIsAutoPlaying((p) => !p)}
+              whileHover={{ scale: 1.1 }}
+              className="absolute bottom-4 right-4 z-20 bg-black/50 hover:bg-[#FFC107]/80 text-white hover:text-black rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
+              aria-label={isAutoPlaying ? "Pause slideshow" : "Play slideshow"}
+            >
+              {isAutoPlaying ? <Pause size={16} /> : <Play size={16} />}
+            </motion.button>
+
+            {/* Dots */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+              {carouselItems.map((_, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  whileHover={{ scale: 1.3 }}
+                  animate={{
+                    width: index === currentIndex ? 32 : 8,
+                    background:
+                      index === currentIndex
+                        ? "#FFC107"
+                        : "rgba(255,255,255,0.45)",
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="h-2 rounded-full"
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Slide counter badge */}
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-sm border border-white/10 text-white/70 rounded-full px-3 py-1 text-xs"
+            >
+              {currentIndex + 1} / {carouselItems.length}
+            </motion.div>
+          </>
+        )}
+
+        {/* Card footer */}
+        <div className="p-5">
+          <p className="text-gray-500 uppercase tracking-widest text-xs">
+            Preview
+          </p>
+          <p className="font-semibold text-base text-white mt-1">
+            {carouselItems[currentIndex]?.type === "video" 
+              ? "Program Overview Video" 
+              : "Visual Showcase"}
+          </p>
+        </div>
+
+        {/* Floating badge */}
+        <motion.div
+          className="absolute bottom-14 left-4 z-20 bg-[#020B2D]/90 backdrop-blur-sm border border-[#FFC107]/30 rounded-xl px-4 py-2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          whileHover={{ scale: 1.04 }}
+        >
+          <p className="text-gray-400 text-xs">Enrollment</p>
+          <p className="text-sm font-semibold text-[#FFC107]">Open Now</p>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+/* ── Static Media Component (for non-AMSP courses) ── */
+const StaticMedia = ({ media, title }) => {
+  if (!media) return null;
+
+  return (
+    <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#020B2D]/80 to-transparent border border-white/10">
+      <div className="relative h-[300px] sm:h-[360px] overflow-hidden">
+        {media.type === "video" ? (
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src={media.src} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={media.src}
+            alt={title}
+            className="w-full h-full object-cover object-center"
+          />
+        )}
+
+        {/* Shimmer sweep */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-10"
+          style={{
+            background:
+              "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
+            backgroundSize: "200% 100%",
+          }}
+          animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
+          transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5 }}
+        />
+
+        {/* Bottom fade */}
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#020B2D] to-transparent z-10" />
+      </div>
+
+      {/* Card footer */}
+      <div className="p-5">
+        <p className="text-gray-500 uppercase tracking-widest text-xs">
+          Preview
+        </p>
+        <p className="font-semibold text-base text-white mt-1">
+          Structured, guided, industry-ready path
+        </p>
+      </div>
+
+      {/* Floating badge */}
+      <motion.div
+        className="absolute bottom-14 left-4 z-20 bg-[#020B2D]/90 backdrop-blur-sm border border-[#FFC107]/30 rounded-xl px-4 py-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        whileHover={{ scale: 1.04 }}
+      >
+        <p className="text-gray-400 text-xs">Enrollment</p>
+        <p className="text-sm font-semibold text-[#FFC107]">Open Now</p>
+      </motion.div>
+    </div>
+  );
+};
+
 export default function CourseClient({ course, slug }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [slug]); // fires every time slug changes
+  }, [slug]);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const activeTerm = course.terms[activeIndex];
@@ -101,18 +408,13 @@ export default function CourseClient({ course, slug }) {
   const mouseY = useMotionValue(0);
   const rotateX = useTransform(mouseY, [-300, 300], [3, -3]);
   const rotateY = useTransform(mouseX, [-300, 300], [-3, 3]);
-  console.log("course", course);
+
+  // Check if this is the AMSP course (slug === "amsp") and if media is an array
+  const isAMSP = slug === "amsp" && Array.isArray(course.media);
 
   useEffect(() => {
     controls.start(inView ? "visible" : "hidden");
   }, [controls, inView]);
-
-  // useEffect(() => {
-  //   const el = contentRef.current;
-  //   if (!el) return;
-  //   const y = el.getBoundingClientRect().top + window. - 100;
-  //   window.scrollTo({ top: y, behavior: "smooth" });
-  // }, [activeIndex]);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -306,7 +608,7 @@ export default function CourseClient({ course, slug }) {
           )}
         </div>
 
-        {/* RIGHT: media card */}
+        {/* RIGHT: media card - Conditional rendering based on slug */}
         <motion.div
           variants={fadeRight}
           style={{
@@ -317,98 +619,11 @@ export default function CourseClient({ course, slug }) {
           }}
           className="relative group"
         >
-          {/* Gold glow */}
-          <motion.div
-            className="absolute -inset-6 rounded-[3rem] pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse, rgba(255,193,7,0.18) 0%, transparent 70%)",
-            }}
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          />
-
-          {/* Corner accents */}
-          {[
-            "top-0 left-0",
-            "top-0 right-0",
-            "bottom-0 left-0",
-            "bottom-0 right-0",
-          ].map((pos, i) => (
-            <motion.div
-              key={i}
-              className={`absolute ${pos} w-5 h-5 border-[#FFC107] pointer-events-none z-20`}
-              style={{
-                borderTopWidth: i < 2 ? 2 : 0,
-                borderBottomWidth: i >= 2 ? 2 : 0,
-                borderLeftWidth: i % 2 === 0 ? 2 : 0,
-                borderRightWidth: i % 2 !== 0 ? 2 : 0,
-              }}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.0 + i * 0.1 }}
-            />
-          ))}
-
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-b from-[#020B2D]/80 to-transparent border border-white/10">
-            {/* Media */}
-            <div className="relative h-[300px] sm:h-[360px] overflow-hidden">
-              {course.media?.type === "video" ? (
-                <video
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                >
-                  <source src={course.media.src} type="video/mp4" />
-                </video>
-              ) : (
-                <img
-                  src={course.media?.src}
-                  alt={course.title}
-                  className="w-full h-full object-cover object-center"
-                />
-              )}
-
-              {/* Shimmer sweep */}
-              <motion.div
-                className="absolute inset-0 pointer-events-none z-10"
-                style={{
-                  background:
-                    "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%)",
-                  backgroundSize: "200% 100%",
-                }}
-                animate={{ backgroundPosition: ["200% 0", "-200% 0"] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 2.5 }}
-              />
-
-              {/* Bottom fade */}
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#020B2D] to-transparent z-10" />
-            </div>
-
-            {/* Card footer */}
-            <div className="p-5">
-              <p className=" text-gray-500 uppercase tracking-widest">
-                Preview
-              </p>
-              <p className="font-semibold text-base text-white mt-1">
-                Structured, guided, industry-ready path
-              </p>
-            </div>
-
-            {/* Floating badge */}
-            <motion.div
-              className="absolute bottom-14 left-4 z-20 bg-[#020B2D]/90 backdrop-blur-sm border border-[#FFC107]/30 rounded-xl px-4 py-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.6 }}
-              whileHover={{ scale: 1.04 }}
-            >
-              <p className=" text-gray-400">Enrollment</p>
-              <p className="text-sm font-semibold text-[#FFC107]">Open Now</p>
-            </motion.div>
-          </div>
+          {isAMSP ? (
+            <MediaCarousel mediaItems={course.media} title={course.title} />
+          ) : (
+            <StaticMedia media={course.media} title={course.title} />
+          )}
         </motion.div>
       </motion.section>
 
@@ -667,7 +882,7 @@ export default function CourseClient({ course, slug }) {
                         scale: 1.08,
                         borderColor: "rgba(255,193,7,0.6)",
                       }}
-                      className="px-3 py-1.5  rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-[#FFC107] transition-colors duration-300 cursor-default"
+                      className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-[#FFC107] transition-colors duration-300 cursor-default"
                     >
                       {s}
                     </motion.span>
@@ -708,7 +923,6 @@ export default function CourseClient({ course, slug }) {
           Enroll Now
         </motion.a>
       </motion.section>
-      {/* <Footer/> */}
     </div>
   );
 }

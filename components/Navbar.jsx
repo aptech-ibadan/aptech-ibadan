@@ -6,14 +6,14 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { ChevronDown } from "lucide-react";
-import AptechLogo from "@/assets/APTECHLOGO.png";
-
 import middlesex from "@/assets/middlesex.png";
 import lincoln from "@/assets/lincoln.png";
 import ncc from "@/assets/ncc.png";
 import sgsu from "@/assets/sgsu.png";
 import bolton from "@/assets/bolton.png";
 import ism from "@/assets/ism-img.png";
+
+const APTECH_LOGO = "/images/branding/aptech-logo.png";
 
 const partners = [
   {
@@ -46,26 +46,37 @@ const partners = [
     external: true,
     logo: bolton,
   },
-{
-  name: "ISM",
-  href: "https://en.ism.de/",
-  external: true,
-  logo: ism,
-}
+  {
+    name: "ISM",
+    href: "https://en.ism.de/",
+    external: true,
+    logo: ism,
+  },
 ];
 
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [partnersOpen, setPartnersOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const partnersRef = useRef(null);
+  const aboutRef = useRef(null);
   const pathname = usePathname();
 
-  // Close dropdown when clicking outside
+  const aboutLinks = [
+    { name: "About Us", href: "/about" },
+    { name: "Blog", href: "/blog" },
+    { name: "Discount Offers", href: "/offers", isHot: true },
+  ];
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (partnersRef.current && !partnersRef.current.contains(e.target)) {
         setPartnersOpen(false);
+      }
+      if (aboutRef.current && !aboutRef.current.contains(e.target)) {
+        setAboutOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -75,12 +86,12 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Programs", href: "/program" },
-    { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Gallery", href: "/gallery" },
     { name: "Arena", href: "/courses/amsp", isNew: true },
     { name: "Accommodation", href: "/accomodation", isNew: true },
   ];
+  const aboutActive = ["/about", "/blog", "/offers"].includes(pathname);
 
   return (
     <nav className="sticky top-0 z-50 bg-[#020B2D]/95 backdrop-blur-xl border-b border-white/10">
@@ -90,7 +101,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
               <Image
-                src={AptechLogo}
+                src={APTECH_LOGO}
                 alt="Aptech Logo"
                 width={100}
                 height={100}
@@ -101,8 +112,62 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation - Hidden on tablets and below */}
-          <div className="hidden lg:flex items-center gap-10">
-            {navLinks.map((link) => (
+          <div className="hidden lg:flex items-center gap-8">
+            <Link
+              href="/"
+              className={`relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1 ${
+                pathname === "/" ? "text-white" : "text-gray-400 hover:text-white"
+              }`}
+            >
+              Home
+              {pathname === "/" && (
+                <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#FFC107] rounded-full" />
+              )}
+            </Link>
+
+            <div className="relative" ref={aboutRef}>
+              <button
+                onClick={() => setAboutOpen((prev) => !prev)}
+                className={`relative text-sm font-medium tracking-wide transition-all cursor-pointer duration-300 pb-1 flex items-center gap-1.5 ${
+                  aboutActive ? "text-white" : "text-gray-400 hover:text-white"
+                }`}
+              >
+                About
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${aboutOpen ? "rotate-180" : ""}`}
+                />
+                {aboutActive && (
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#FFC107] rounded-full" />
+                )}
+              </button>
+
+              {aboutOpen && (
+                <div className="absolute top-full left-0 mt-3 w-48 bg-[#020B2D] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+                  <div className="py-2">
+                    {aboutLinks.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setAboutOpen(false)}
+                        className="flex items-center justify-between gap-2 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer"
+                      >
+                        <span>{item.name}</span>
+                        {item.isHot && (
+                          <span className="inline-flex items-center rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white leading-none">
+                            HOT
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {navLinks
+              .filter((link) => link.name !== "Home")
+              .map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
@@ -123,7 +188,7 @@ const Navbar = () => {
                   <span className="absolute left-0 bottom-0 w-full h-0.5 bg-[#FFC107] rounded-full" />
                 )}
               </Link>
-            ))}
+              ))}
 
             {/* Partners Dropdown */}
             <div className="relative" ref={partnersRef}>
@@ -184,7 +249,54 @@ const Navbar = () => {
       {mobileMenu && (
         <div className="lg:hidden bg-[#020B2D] border-t border-white/10 py-6">
           <div className="flex flex-col px-6 space-y-6 text-lg">
-            {navLinks.map((link) => (
+            <Link
+              href="/"
+              onClick={() => setMobileMenu(false)}
+              className={`font-medium transition-colors cursor-pointer ${
+                pathname === "/" ? "text-[#FFC107]" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Home
+            </Link>
+
+            <div>
+              <button
+                onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                className={`w-full flex items-center justify-between font-medium transition-colors cursor-pointer ${
+                  aboutActive ? "text-[#FFC107]" : "text-gray-300 hover:text-white"
+                }`}
+              >
+                About
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${mobileAboutOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {mobileAboutOpen && (
+                <div className="mt-3 ml-3 flex flex-col space-y-4 border-l border-white/10 pl-4">
+                  {aboutLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setMobileMenu(false)}
+                      className="text-sm text-gray-300 hover:text-white transition-colors cursor-pointer inline-flex items-center gap-2"
+                    >
+                      <span>{item.name}</span>
+                      {item.isHot && (
+                        <span className="inline-flex items-center rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white leading-none">
+                          HOT
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {navLinks
+              .filter((link) => link.name !== "Home")
+              .map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
@@ -202,13 +314,13 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-            ))}
+              ))}
 
             {/* Mobile Partners Accordion */}
             <div>
               <button
                 onClick={() => setMobilePartnersOpen(!mobilePartnersOpen)}
-                className="w-full flex items-center justify-between font-medium text-gray-300 hover:text-white transition-colors"
+                className="w-full flex items-center justify-between font-medium text-gray-300 hover:text-white transition-colors cursor-pointer"
               >
                 Partners
                 <ChevronDown
@@ -226,7 +338,7 @@ const Navbar = () => {
                       target={partner.external ? "_blank" : undefined}
                       rel={partner.external ? "noopener noreferrer" : undefined}
                       onClick={() => setMobileMenu(false)}
-                      className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-3"
+                      className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-3 cursor-pointer"
                     >
                       <div className="w-7 h-7 relative flex-shrink-0 bg-white rounded-md p-1">
                         <Image

@@ -1,29 +1,42 @@
 import "@/assets/styles/globals.css";
 
-import Navbar from "@/components/Navbar";
-
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import Script from "next/script";
-import Footer from "@/components/Footer";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata = {
   title: "Aptech Ibadan",
 
   description: "Become An IT Pro",
 
-  keywords: "IT, Training, Aptech, ITSS, T24, Infinity, WebDevelopment",
+  keywords: "IT, Training, Aptech, ITSS, T24, Infinity, Web Development",
 };
 
 const MainLayout = ({ children }) => {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
   return (
     <html lang="en">
+      <head>
+          <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+      </head>
       <body className="bg-page-bg">
-        <Navbar />
-
-        <div>{children}</div>
+        <LayoutWrapper>
+          <div>{children}</div>
+        </LayoutWrapper>
 
         <ToastContainer position="top-right" autoClose={3000} theme="colored" />
 
@@ -93,8 +106,6 @@ const MainLayout = ({ children }) => {
 
           `}
         </Script>
-
-        <Footer/>
       </body>
     </html>
   );

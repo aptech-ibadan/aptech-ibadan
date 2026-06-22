@@ -1,9 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Oleo+Script&family=Poppins&family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Oleo+Script&family=Poppins:ital,wght@0,100..900;1,100..900&family=Inter&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* make all font poppins from the google font */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 html a {
   color: white;
@@ -16,7 +14,7 @@ html {
 }
 
 .bg-page-bg {
-  background-image: url("../home-pageBg.png");
+  background-image: url("/images/branding/home-page-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -24,4 +22,18 @@ html {
 
 a {
   all: unset;
+}
+
+a,
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
 }
