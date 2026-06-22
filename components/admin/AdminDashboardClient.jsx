@@ -30,14 +30,426 @@ const emptyOfferForm = {
   image: "",
 };
 
-// ── Image Field Component ─────────────────────────────────────
-const ImageField = ({ label, value, onChange, fieldId }) => {
-  const [mode, setMode] = useState("url"); // "url" | "upload"
-  const [preview, setPreview] = useState("");
+const css = `
+  @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --navy: #0d1b3e;
+    --navy-2: #162348;
+    --navy-3: #1e2f5a;
+    --navy-4: #253870;
+    --gold: #f5a800;
+    --gold-2: #ffc72c;
+    --gold-dim: rgba(245,168,0,0.14);
+    --gold-border: rgba(245,168,0,0.28);
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.45);
+    --muted-2: rgba(255,255,255,0.22);
+    --border: rgba(255,255,255,0.07);
+    --border-strong: rgba(255,255,255,0.13);
+    --danger: #f87171;
+    --danger-bg: rgba(248,113,113,0.1);
+    --danger-border: rgba(248,113,113,0.28);
+    --success: #4ade80;
+    --success-bg: rgba(74,222,128,0.1);
+    --radius: 6px;
+    --radius-lg: 12px;
+    --radius-xl: 18px;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Nunito Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--navy);
+    color: var(--white);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .admin-root { min-height: 100vh; background: var(--navy); }
+
+  .topbar {
+    position: sticky;
+    top: 80px;
+    z-index: 50;
+    background: var(--navy-2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .topbar-brand { display: flex; align-items: center; gap: 8px; }
+
+  .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+
+  .brand-name {
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+
+  .brand-sep { color: var(--muted-2); }
+
+  .brand-section {
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
+  }
+
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+
+  .tab-nav {
+    display: flex; align-items: center; gap: 2px;
+    background: var(--navy-3);
+    border-radius: var(--radius);
+    padding: 3px;
+    border: 1px solid var(--border);
+  }
+
+  .tab-btn {
+    font-family: var(--sans);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: calc(var(--radius) - 2px);
+    border: none; cursor: pointer; transition: all 0.15s;
+    color: var(--muted); background: transparent;
+  }
+
+  .tab-btn.active { background: var(--gold); color: var(--navy); }
+  .tab-btn:not(.active):hover { color: var(--white); }
+
+  .btn {
+    font-family: var(--sans);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-strong);
+    cursor: pointer; transition: all 0.15s;
+    background: var(--navy-3); color: var(--muted);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  .btn:hover { background: var(--navy-4); color: var(--white); }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .btn-primary:hover { background: var(--gold-2); border-color: var(--gold-2); color: var(--navy); }
+
+  .btn-ghost { background: transparent; border-color: transparent; color: var(--muted); }
+  .btn-ghost:hover { background: var(--navy-3); color: var(--white); border-color: transparent; }
+
+  .btn-danger { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
+  .btn-danger:hover { background: rgba(248,113,113,0.18); }
+
+  .btn-outline { background: transparent; border-color: var(--gold-border); color: var(--gold); }
+  .btn-outline:hover { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-2); }
+
+  .btn-sm { padding: 4px 12px; font-size: 10px; }
+
+  .page-content { max-width: 1300px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+  .page-header {
+    margin-bottom: 2rem; padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-end;
+    justify-content: space-between; gap: 1rem;
+  }
+
+  .page-eyebrow {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+  .page-title {
+    font-size: 30px; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.1; color: var(--white);
+  }
+
+  .page-title span { color: var(--gold); }
+  .page-sub { font-size: 13px; color: var(--muted); margin-top: 5px; }
+
+  .status-live {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--success); background: var(--success-bg);
+    border: 1px solid rgba(74,222,128,0.2);
+    padding: 4px 10px; border-radius: 20px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  .live-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--success);
+    animation: livepulse 2s ease-in-out infinite;
+  }
+
+  @keyframes livepulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  .split {
+    display: grid; grid-template-columns: 320px 1fr;
+    gap: 1.5rem; align-items: start;
+  }
+
+  @media (max-width: 960px) { .split { grid-template-columns: 1fr; } }
+
+  .sidebar-panel { position: sticky; top: 80px; }
+
+  .panel {
+    background: var(--navy-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl); overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--navy-3);
+  }
+
+  .panel-title {
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  }
+
+  .panel-count {
+    font-family: var(--mono); font-size: 11px; color: var(--gold);
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: 20px; padding: 1px 10px;
+  }
+
+  .panel-body { padding: 8px; }
+
+  .list-item {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 10px 12px;
+    border-radius: var(--radius-lg); cursor: pointer;
+    transition: all 0.12s; border: 1px solid transparent;
+    background: transparent; width: 100%; text-align: left;
+  }
+
+  .list-item:hover { background: var(--navy-3); border-color: var(--border); }
+  .list-item.selected { background: var(--gold-dim); border-color: var(--gold-border); }
+
+  .list-item-main { min-width: 0; flex: 1; }
+
+  .list-item-title {
+    font-size: 13px; font-weight: 600; color: var(--white);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3;
+  }
+
+  .list-item.selected .list-item-title { color: var(--gold); }
+
+  .list-item-slug { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .list-item-arrow {
+    color: var(--muted); font-size: 18px; flex-shrink: 0;
+    opacity: 0; transition: opacity 0.12s;
+  }
+
+  .list-item:hover .list-item-arrow,
+  .list-item.selected .list-item-arrow { opacity: 1; }
+  .list-item.selected .list-item-arrow { color: var(--gold); }
+
+  .list-empty { padding: 2.5rem 1rem; text-align: center; font-size: 13px; color: var(--muted); }
+
+  .list-scroll {
+    max-height: calc(100vh - 260px); overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: var(--navy-4) transparent;
+  }
+
+  .panel-delete-footer { padding: 8px; border-top: 1px solid var(--border); }
+
+  .form-panel {
+    background: var(--navy-2); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); overflow: hidden;
+  }
+
+  .form-header {
+    padding: 18px 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; background: var(--navy-3);
+  }
+
+  .form-badge {
+    font-family: var(--mono); font-size: 9px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  .form-badge.new { background: var(--success-bg); color: var(--success); border: 1px solid rgba(74,222,128,0.22); }
+  .form-badge.editing { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
+
+  .form-title { font-size: 15px; font-weight: 700; color: var(--white); }
+
+  .form-header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  .form-body { padding: 24px; }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 700px) { .field-grid, .field-grid-3 { grid-template-columns: 1fr; } }
+
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+
+  @media (max-width: 700px) { .span-2, .span-3 { grid-column: span 1; } }
+
+  .field-label {
+    display: block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+
+  .field-input {
+    font-family: var(--sans); font-size: 13px;
+    color: var(--white); background: var(--navy-3);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 9px 13px; width: 100%; outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .field-input:hover { border-color: rgba(255,255,255,0.22); }
+  .field-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+  .field-input::placeholder { color: var(--muted); opacity: 0.6; }
+
+  .field-textarea { font-family: var(--sans); resize: vertical; min-height: 80px; }
+  .field-mono { font-family: var(--mono); font-size: 12px; line-height: 1.5; }
+  .field-hint { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 5px; }
+
+  .form-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+
+  .form-section-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .form-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Image field ── */
+  .img-field-root {}
+
+  .img-field-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 8px;
+  }
+
+  .img-toggle-wrap {
+    display: flex; border: 1px solid var(--border-strong);
+    border-radius: var(--radius); overflow: hidden; width: fit-content;
+  }
+
+  .img-toggle-btn {
+    font-family: var(--sans); font-size: 10px; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 5px 13px; border: none; cursor: pointer;
+    transition: all 0.12s; background: transparent; color: var(--muted);
+  }
+
+  .img-toggle-btn.active { background: var(--gold); color: var(--navy); }
+  .img-toggle-btn:not(.active):hover { color: var(--white); }
+
+  .img-preview {
+    margin-top: 10px; border-radius: var(--radius-lg);
+    overflow: hidden; border: 1px solid var(--border); height: 120px;
+  }
+
+  .img-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── Preview card ── */
+  .preview-card {
+    margin-top: 12px; padding: 16px 18px;
+    background: var(--navy-3); border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  .preview-label {
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .preview-label::before {
+    content: ''; display: inline-block;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+  }
+
+  .preview-kv {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 13px;
+  }
+
+  .preview-kv:last-child { border-bottom: none; }
+
+  .preview-key {
+    font-family: var(--mono); font-size: 9px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    min-width: 64px; flex-shrink: 0;
+  }
+
+  .preview-val { color: var(--white); font-size: 12px; }
+
+  .error-banner {
+    background: var(--danger-bg); border: 1px solid var(--danger-border);
+    border-radius: var(--radius-lg); padding: 12px 16px;
+    color: var(--danger); font-size: 13px; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .loading-state { padding: 5rem 2rem; text-align: center; color: var(--muted); font-size: 13px; }
+
+  .loading-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 14px; }
+
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold); opacity: 0.3;
+    animation: dotpulse 1.2s ease-in-out infinite;
+  }
+
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes dotpulse {
+    0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+`;
+
+// ── ImageField ───────────────────────────────────────────────
+// Defined at module level so it never gets recreated on parent renders.
+// `value` is the controlled value from the parent form state.
+// `mode` and `previewUrl` are local UI concerns only.
+const ImageField = ({ label, value, onChange }) => {
+  const [mode, setMode] = useState("url");
+
+  // Keep a local preview URL. When the parent resets the form (value → ""),
+  // we clear the preview too. When mode is "url" the preview simply mirrors
+  // `value` so we don't need extra state for it.
+  const [filePreview, setFilePreview] = useState("");
+
+  // Sync: if the parent clears the value (e.g. form reset), also clear the
+  // file preview so the old thumbnail doesn't linger.
+  useEffect(() => {
+    if (!value) setFilePreview("");
+  }, [value]);
 
   const handleUrlChange = (e) => {
     onChange(e.target.value);
-    setPreview(e.target.value);
   };
 
   const handleFileChange = (e) => {
@@ -45,29 +457,38 @@ const ImageField = ({ label, value, onChange, fieldId }) => {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
-      const base64 = reader.result;
-      onChange(base64);
-      setPreview(base64);
+      onChange(reader.result);
+      setFilePreview(reader.result);
     };
     reader.readAsDataURL(file);
   };
 
+  const switchMode = (m) => {
+    setMode(m);
+    onChange("");
+    setFilePreview("");
+  };
+
+  // The preview to render: for URL mode use `value` directly; for upload mode
+  // use the local base64 string stored in `filePreview`.
+  const previewSrc = mode === "url" ? value : filePreview;
+
   return (
-    <div className="lg:col-span-2">
-      <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm text-slate-200">{label}</span>
-        <div className="flex rounded-xl overflow-hidden border border-slate-700 text-xs">
+    <div className="img-field-root">
+      <div className="img-field-header">
+        <label className="field-label" style={{ marginBottom: 0 }}>{label}</label>
+        <div className="img-toggle-wrap">
           <button
             type="button"
-            onClick={() => { setMode("url"); onChange(""); setPreview(""); }}
-            className={`px-3 py-1 transition ${mode === "url" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
+            className={`img-toggle-btn ${mode === "url" ? "active" : ""}`}
+            onClick={() => switchMode("url")}
           >
             URL
           </button>
           <button
             type="button"
-            onClick={() => { setMode("upload"); onChange(""); setPreview(""); }}
-            className={`px-3 py-1 transition ${mode === "upload" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
+            className={`img-toggle-btn ${mode === "upload" ? "active" : ""}`}
+            onClick={() => switchMode("upload")}
           >
             Upload
           </button>
@@ -76,29 +497,26 @@ const ImageField = ({ label, value, onChange, fieldId }) => {
 
       {mode === "url" ? (
         <input
-          id={fieldId}
+          className="field-input"
           value={value}
           onChange={handleUrlChange}
-          placeholder="https://..."
-          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
+          placeholder="https://example.com/image.jpg"
         />
       ) : (
         <input
-          id={fieldId}
+          className="field-input"
           type="file"
           accept="image/*"
           onChange={handleFileChange}
-          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
         />
       )}
 
-      {preview && (
-        <div className="mt-3">
+      {previewSrc && (
+        <div className="img-preview">
           <img
-            src={preview}
+            src={previewSrc}
             alt="Preview"
-            className="h-32 w-full rounded-2xl object-cover border border-slate-700"
-            onError={() => setPreview("")}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         </div>
       )}
@@ -106,81 +524,345 @@ const ImageField = ({ label, value, onChange, fieldId }) => {
   );
 };
 
-// ── Offer Image Field ─────────────────────────────────────────
-const OfferImageField = ({ value, onChange }) => {
-  const [mode, setMode] = useState("url");
-  const [preview, setPreview] = useState("");
+// ── PostsSection ─────────────────────────────────────────────
+// Lifted out of AdminDashboardClient so React never unmounts/remounts it
+// on parent state changes (which was resetting input focus on every keystroke).
+const PostsSection = ({
+  posts,
+  selectedPost,
+  postForm,
+  working,
+  onSelect,
+  onInputChange,
+  onSubmit,
+  onReset,
+  onDelete,
+  setPostForm,
+}) => (
+  <div className="split">
+    {/* Sidebar list */}
+    <div className="sidebar-panel">
+      <div className="panel">
+        <div className="panel-header">
+          <span className="panel-title">All Posts</span>
+          <span className="panel-count">{posts.length}</span>
+        </div>
+        <div className="panel-body list-scroll">
+          {posts.length === 0 ? (
+            <div className="list-empty">No posts yet</div>
+          ) : (
+            posts.map((post) => (
+              <button
+                key={post.slug}
+                className={`list-item ${selectedPost?.slug === post.slug ? "selected" : ""}`}
+                onClick={() => onSelect(post)}
+              >
+                <div className="list-item-main">
+                  <div className="list-item-title">{post.title}</div>
+                  <div className="list-item-slug">/{post.slug}</div>
+                </div>
+                <span className="list-item-arrow">›</span>
+              </button>
+            ))
+          )}
+        </div>
+        {selectedPost && (
+          <div className="panel-delete-footer">
+            <button
+              className="btn btn-danger"
+              style={{ width: "100%", justifyContent: "center" }}
+              onClick={() => onDelete(selectedPost)}
+              disabled={working}
+            >
+              Delete selected post
+            </button>
+          </div>
+        )}
+      </div>
 
-  const handleUrlChange = (e) => {
-    onChange(e.target.value);
-    setPreview(e.target.value);
-  };
+      {selectedPost && (
+        <div className="preview-card">
+          <div className="preview-label">Quick preview</div>
+          {selectedPost.heroImage && (
+            <div className="img-preview" style={{ marginBottom: 12 }}>
+              <img src={selectedPost.heroImage} alt="Hero" />
+            </div>
+          )}
+          <div className="preview-kv">
+            <span className="preview-key">Category</span>
+            <span className="preview-val">{selectedPost.category || "—"}</span>
+          </div>
+          <div className="preview-kv">
+            <span className="preview-key">Author</span>
+            <span className="preview-val">{selectedPost.author || "—"}</span>
+          </div>
+          <div className="preview-kv">
+            <span className="preview-key">Date</span>
+            <span className="preview-val">{selectedPost.date || "—"}</span>
+          </div>
+          <div className="preview-kv">
+            <span className="preview-key">Views</span>
+            <span className="preview-val">{selectedPost.views || "—"}</span>
+          </div>
+        </div>
+      )}
+    </div>
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result;
-      onChange(base64);
-      setPreview(base64);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  return (
-    <div className="lg:col-span-2">
-      <div className="mb-2 flex items-center justify-between">
-        <span className="text-sm text-slate-200">Image</span>
-        <div className="flex rounded-xl overflow-hidden border border-slate-700 text-xs">
-          <button
-            type="button"
-            onClick={() => { setMode("url"); onChange(""); setPreview(""); }}
-            className={`px-3 py-1 transition ${mode === "url" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
-          >
-            URL
-          </button>
-          <button
-            type="button"
-            onClick={() => { setMode("upload"); onChange(""); setPreview(""); }}
-            className={`px-3 py-1 transition ${mode === "upload" ? "bg-cyan-500 text-slate-950 font-semibold" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}
-          >
-            Upload
+    {/* Form */}
+    <div className="form-panel">
+      <div className="form-header">
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span className={`form-badge ${selectedPost ? "editing" : "new"}`}>
+            {selectedPost ? "editing" : "new post"}
+          </span>
+          <span className="form-title">
+            {selectedPost ? selectedPost.title : "Create blog post"}
+          </span>
+        </div>
+        <div className="form-header-right">
+          <button className="btn btn-ghost btn-sm" onClick={onReset}>Discard</button>
+          <button className="btn btn-primary" onClick={onSubmit} disabled={working}>
+            {working ? "Saving…" : selectedPost ? "Update post" : "Publish post"}
           </button>
         </div>
       </div>
 
-      {mode === "url" ? (
-        <input
-          value={value}
-          onChange={handleUrlChange}
-          placeholder="https://..."
-          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
-        />
-      ) : (
-        <input
-          type="file"
-          accept="image/*,video/*"
-          onChange={handleFileChange}
-          className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none text-sm"
-        />
-      )}
+      <div className="form-body">
+        <div className="form-section-label" style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}>
+          Meta
+        </div>
+        <div className="field-grid">
+          <label>
+            <span className="field-label">Title</span>
+            <input className="field-input" value={postForm.title} onChange={(e) => onInputChange(e, "title")} placeholder="Post title…" />
+          </label>
+          <label>
+            <span className="field-label">Slug</span>
+            <input className="field-input" value={postForm.slug} onChange={(e) => onInputChange(e, "slug")} placeholder="my-post-slug" />
+          </label>
+          <label>
+            <span className="field-label">Category</span>
+            <input className="field-input" value={postForm.category} onChange={(e) => onInputChange(e, "category")} placeholder="Technology" />
+          </label>
+          <label>
+            <span className="field-label">Author</span>
+            <input className="field-input" value={postForm.author} onChange={(e) => onInputChange(e, "author")} placeholder="Jane Smith" />
+          </label>
+          <label>
+            <span className="field-label">Date</span>
+            <input type="date" className="field-input" value={postForm.date} onChange={(e) => onInputChange(e, "date")} />
+          </label>
+          <label>
+            <span className="field-label">Read time</span>
+            <input className="field-input" value={postForm.readTime} onChange={(e) => onInputChange(e, "readTime")} placeholder="6 mins" />
+          </label>
+          <label className="span-2">
+            <span className="field-label">Tags (comma-separated)</span>
+            <input className="field-input" value={postForm.tags} onChange={(e) => onInputChange(e, "tags")} placeholder="Networking, Cybersecurity, IT" />
+          </label>
+          <label className="span-2">
+            <span className="field-label">Excerpt</span>
+            <textarea className="field-input field-textarea" value={postForm.excerpt} onChange={(e) => onInputChange(e, "excerpt")} rows={3} placeholder="Short summary shown in post listings…" />
+          </label>
+        </div>
 
-      {preview && (
-        <div className="mt-3">
-          <img
-            src={preview}
-            alt="Preview"
-            className="h-32 w-full rounded-2xl object-cover border border-slate-700"
-            onError={() => setPreview("")}
-          />
+        <div className="form-section">
+          <div className="form-section-label">Engagement stats</div>
+          <div className="field-grid-3">
+            <label>
+              <span className="field-label">Views</span>
+              <input className="field-input" value={postForm.views} onChange={(e) => onInputChange(e, "views")} placeholder="1,200" />
+            </label>
+            <label>
+              <span className="field-label">Likes</span>
+              <input className="field-input" value={postForm.likes} onChange={(e) => onInputChange(e, "likes")} placeholder="310" />
+            </label>
+            <label>
+              <span className="field-label">Comments</span>
+              <input className="field-input" value={postForm.comments} onChange={(e) => onInputChange(e, "comments")} placeholder="32" />
+            </label>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-label">Images</div>
+          <div className="field-grid">
+            <ImageField
+              label="Hero Image"
+              value={postForm.heroImage}
+              onChange={(val) => setPostForm((c) => ({ ...c, heroImage: val }))}
+            />
+            <ImageField
+              label="Thumbnail"
+              value={postForm.thumbnail}
+              onChange={(val) => setPostForm((c) => ({ ...c, thumbnail: val }))}
+            />
+          </div>
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-label">Content JSON</div>
+          <label>
+            <textarea
+              className="field-input field-textarea field-mono"
+              value={postForm.contentJson}
+              onChange={(e) => onInputChange(e, "contentJson")}
+              rows={10}
+            />
+            <p className="field-hint">[{`{"heading":"...","body":"..."}`}, …]</p>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ── OffersSection ────────────────────────────────────────────
+const OffersSection = ({
+  offers,
+  selectedOffer,
+  offerForm,
+  working,
+  onSelect,
+  onInputChange,
+  onSubmit,
+  onReset,
+  onDelete,
+  setOfferForm,
+}) => (
+  <div className="split">
+    {/* Sidebar list */}
+    <div className="sidebar-panel">
+      <div className="panel">
+        <div className="panel-header">
+          <span className="panel-title">Active Offers</span>
+          <span className="panel-count">{offers.length}</span>
+        </div>
+        <div className="panel-body list-scroll">
+          {offers.length === 0 ? (
+            <div className="list-empty">No offers yet</div>
+          ) : (
+            offers.map((offer) => (
+              <button
+                key={offer.slug}
+                className={`list-item ${selectedOffer?.slug === offer.slug ? "selected" : ""}`}
+                onClick={() => onSelect(offer)}
+              >
+                <div className="list-item-main">
+                  <div className="list-item-title">{offer.title}</div>
+                  <div className="list-item-slug">{offer.discount || offer.slug}</div>
+                </div>
+                <span className="list-item-arrow">›</span>
+              </button>
+            ))
+          )}
+        </div>
+        {selectedOffer && (
+          <div className="panel-delete-footer">
+            <button
+              className="btn btn-danger"
+              style={{ width: "100%", justifyContent: "center" }}
+              onClick={() => onDelete(selectedOffer)}
+              disabled={working}
+            >
+              Delete selected offer
+            </button>
+          </div>
+        )}
+      </div>
+
+      {selectedOffer && (
+        <div className="preview-card">
+          <div className="preview-label">Quick preview</div>
+          {selectedOffer.image && (
+            <div className="img-preview" style={{ marginBottom: 12 }}>
+              <img src={selectedOffer.image} alt={selectedOffer.title} />
+            </div>
+          )}
+          <div className="preview-kv">
+            <span className="preview-key">Discount</span>
+            <span className="preview-val" style={{ color: "var(--gold)", fontWeight: 700 }}>
+              {selectedOffer.discount || "—"}
+            </span>
+          </div>
+          <div className="preview-kv">
+            <span className="preview-key">Audience</span>
+            <span className="preview-val">{selectedOffer.audience || "—"}</span>
+          </div>
+          <div className="preview-kv">
+            <span className="preview-key">Ends</span>
+            <span className="preview-val">
+              {selectedOffer.endDate ? selectedOffer.endDate.slice(0, 10) : "—"}
+            </span>
+          </div>
         </div>
       )}
     </div>
-  );
-};
 
-// ── Main Dashboard ────────────────────────────────────────────
+    {/* Form */}
+    <div className="form-panel">
+      <div className="form-header">
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span className={`form-badge ${selectedOffer ? "editing" : "new"}`}>
+            {selectedOffer ? "editing" : "new offer"}
+          </span>
+          <span className="form-title">
+            {selectedOffer ? selectedOffer.title : "Create offer"}
+          </span>
+        </div>
+        <div className="form-header-right">
+          <button className="btn btn-ghost btn-sm" onClick={onReset}>Discard</button>
+          <button className="btn btn-primary" onClick={onSubmit} disabled={working}>
+            {working ? "Saving…" : selectedOffer ? "Update offer" : "Publish offer"}
+          </button>
+        </div>
+      </div>
+
+      <div className="form-body">
+        <div className="form-section-label" style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}>
+          Offer details
+        </div>
+        <div className="field-grid">
+          <label>
+            <span className="field-label">Title</span>
+            <input className="field-input" value={offerForm.title} onChange={(e) => onInputChange(e, "title")} placeholder="Offer title…" />
+          </label>
+          <label>
+            <span className="field-label">Slug</span>
+            <input className="field-input" value={offerForm.slug} onChange={(e) => onInputChange(e, "slug")} placeholder="summer-deal" />
+          </label>
+          <label>
+            <span className="field-label">Discount</span>
+            <input className="field-input" value={offerForm.discount} onChange={(e) => onInputChange(e, "discount")} placeholder="50% OFF" />
+          </label>
+          <label>
+            <span className="field-label">End date</span>
+            <input className="field-input" type="date" value={offerForm.endDate} onChange={(e) => onInputChange(e, "endDate")} />
+          </label>
+          <label className="span-2">
+            <span className="field-label">Audience</span>
+            <input className="field-input" value={offerForm.audience} onChange={(e) => onInputChange(e, "audience")} placeholder="General Public" />
+          </label>
+          <label className="span-2">
+            <span className="field-label">Description</span>
+            <textarea className="field-input field-textarea" value={offerForm.description} onChange={(e) => onInputChange(e, "description")} rows={4} placeholder="Describe the offer…" />
+          </label>
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-label">Media</div>
+          <ImageField
+            label="Offer Image"
+            value={offerForm.image}
+            onChange={(val) => setOfferForm((c) => ({ ...c, image: val }))}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ── Main Dashboard ───────────────────────────────────────────
 const AdminDashboardClient = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("posts");
@@ -194,157 +876,106 @@ const AdminDashboardClient = () => {
   const [postForm, setPostForm] = useState(emptyPostForm);
   const [offerForm, setOfferForm] = useState(emptyOfferForm);
 
-  const selectedPostLabel = selectedPost
-    ? `Editing ${selectedPost.title}`
-    : "Create new blog post";
-  const selectedOfferLabel = selectedOffer
-    ? `Editing ${selectedOffer.title}`
-    : "Create new offer";
-
   const fetchJson = async (path, options = {}) => {
     const token = localStorage.getItem("token");
     const response = await fetch(path, {
       ...options,
       cache: "no-store",
-      headers: {
-        ...options.headers,
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { ...options.headers, Authorization: `Bearer ${token}` },
     });
-    if (!response.ok) {
-      throw new Error((await response.json()).error || "Request failed");
-    }
+    if (!response.ok) throw new Error((await response.json()).error || "Request failed");
     return response.json();
   };
 
   const loadData = useCallback(async () => {
-    setLoading(true);
-    setError("");
+    setLoading(true); setError("");
     try {
       const [postsData, offersData] = await Promise.all([
         fetchJson("/api/posts"),
         fetchJson("/api/offers"),
       ]);
-      setPosts(postsData);
-      setOffers(offersData);
-    } catch (loadError) {
-      setError(loadError.message);
-    } finally {
-      setLoading(false);
-    }
+      setPosts(postsData); setOffers(offersData);
+    } catch (e) { setError(e.message); }
+    finally { setLoading(false); }
   }, []);
 
   useEffect(() => {
     const init = async () => {
       const token = localStorage.getItem("token");
-
-      if (!token) {
-        router.push("/admin");
-        return;
-      }
-
-      const response = await fetch("/api/admin/verify", {
+      if (!token) { router.push("/admin"); return; }
+      const res = await fetch("/api/admin/verify", {
         cache: "no-store",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (!response.ok) {
+      if (!res.ok) {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         router.push("/admin");
         return;
       }
-
       await loadData();
     };
-
     init();
   }, [router, loadData]);
 
-  const handleInputChange = (event, formKey, setter) => {
-    const value = event.target.value;
-    setter((current) => ({ ...current, [formKey]: value }));
-  };
+  // Stable change handlers — one per form so the section components don't
+  // need to know about the setter directly for text fields.
+  const handlePostInput = useCallback((e, key) => {
+    setPostForm((c) => ({ ...c, [key]: e.target.value }));
+  }, []);
 
-  const parseTags = (tagsValue) =>
-    tagsValue
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter(Boolean);
+  const handleOfferInput = useCallback((e, key) => {
+    setOfferForm((c) => ({ ...c, [key]: e.target.value }));
+  }, []);
+
+  const parseTags = (v) => v.split(",").map((t) => t.trim()).filter(Boolean);
 
   const submitPost = async () => {
-    setWorking(true);
-    setError("");
+    setWorking(true); setError("");
     try {
       const content = JSON.parse(postForm.contentJson);
-      const postPayload = {
-        ...postForm,
-        tags: parseTags(postForm.tags),
-        content,
-      };
-
+      const payload = { ...postForm, tags: parseTags(postForm.tags), content };
       if (selectedPost) {
         await fetchJson(`/api/posts/${selectedPost.slug}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postPayload),
+          body: JSON.stringify(payload),
         });
       } else {
         await fetchJson("/api/posts", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postPayload),
+          body: JSON.stringify(payload),
         });
       }
-
-      await loadData();
-      resetPostForm();
-    } catch (submitError) {
-      setError(submitError.message);
-    } finally {
-      setWorking(false);
-    }
+      await loadData(); resetPostForm();
+    } catch (e) { setError(e.message); }
+    finally { setWorking(false); }
   };
 
   const submitOffer = async () => {
-    setWorking(true);
-    setError("");
+    setWorking(true); setError("");
     try {
-      const offerPayload = { ...offerForm };
       if (selectedOffer) {
         await fetchJson(`/api/offers/${selectedOffer.slug}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(offerPayload),
+          body: JSON.stringify(offerForm),
         });
       } else {
         await fetchJson("/api/offers", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(offerPayload),
+          body: JSON.stringify(offerForm),
         });
       }
-
-      await loadData();
-      resetOfferForm();
-    } catch (submitError) {
-      setError(submitError.message);
-    } finally {
-      setWorking(false);
-    }
+      await loadData(); resetOfferForm();
+    } catch (e) { setError(e.message); }
+    finally { setWorking(false); }
   };
 
-  const resetPostForm = () => {
-    setPostForm(emptyPostForm);
-    setSelectedPost(null);
-  };
-
-  const resetOfferForm = () => {
-    setOfferForm(emptyOfferForm);
-    setSelectedOffer(null);
-  };
+  const resetPostForm = () => { setPostForm(emptyPostForm); setSelectedPost(null); };
+  const resetOfferForm = () => { setOfferForm(emptyOfferForm); setSelectedOffer(null); };
 
   const handlePostSelect = (post) => {
     setSelectedPost(post);
@@ -384,458 +1015,109 @@ const AdminDashboardClient = () => {
   };
 
   const deletePost = async (post) => {
-    if (!confirm(`Delete post "${post.title}"? This cannot be undone.`)) return;
+    if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) return;
     setWorking(true);
-    try {
-      await fetchJson(`/api/posts/${post.slug}`, { method: "DELETE" });
-      await loadData();
-      resetPostForm();
-    } catch (deleteError) {
-      setError(deleteError.message);
-    } finally {
-      setWorking(false);
-    }
+    try { await fetchJson(`/api/posts/${post.slug}`, { method: "DELETE" }); await loadData(); resetPostForm(); }
+    catch (e) { setError(e.message); }
+    finally { setWorking(false); }
   };
 
   const deleteOffer = async (offer) => {
     if (!confirm(`Delete offer "${offer.title}"?`)) return;
     setWorking(true);
-    try {
-      await fetchJson(`/api/offers/${offer.slug}`, { method: "DELETE" });
-      await loadData();
-      resetOfferForm();
-    } catch (deleteError) {
-      setError(deleteError.message);
-    } finally {
-      setWorking(false);
-    }
+    try { await fetchJson(`/api/offers/${offer.slug}`, { method: "DELETE" }); await loadData(); resetOfferForm(); }
+    catch (e) { setError(e.message); }
+    finally { setWorking(false); }
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("token"); localStorage.removeItem("user");
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin");
   };
 
-  const activeSection = (() => {
-    if (activeTab === "posts") {
-      return (
-        <section className="space-y-6">
-          <div className="rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/30">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-2xl font-semibold text-white">
-                  {selectedPostLabel}
-                </h2>
-                <p className="text-sm text-slate-400">
-                  Create, update, or delete blog content that appears on the blog page.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={resetPostForm}
-                  className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-                >
-                  Reset
-                </button>
-                <button
-                  onClick={submitPost}
-                  disabled={working}
-                  className="rounded-2xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-70"
-                >
-                  {selectedPost ? "Update post" : "Create post"}
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-4 lg:grid-cols-2">
-              <label className="block text-sm text-slate-200">
-                Title
-                <input
-                  value={postForm.title}
-                  onChange={(e) => handleInputChange(e, "title", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Slug
-                <input
-                  value={postForm.slug}
-                  onChange={(e) => handleInputChange(e, "slug", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Category
-                <input
-                  value={postForm.category}
-                  onChange={(e) => handleInputChange(e, "category", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Author
-                <input
-                  value={postForm.author}
-                  onChange={(e) => handleInputChange(e, "author", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Date
-                <input
-                  value={postForm.date}
-                  onChange={(e) => handleInputChange(e, "date", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  placeholder="May 12, 2026"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Read time
-                <input
-                  value={postForm.readTime}
-                  onChange={(e) => handleInputChange(e, "readTime", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  placeholder="6 mins"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Views
-                <input
-                  value={postForm.views}
-                  onChange={(e) => handleInputChange(e, "views", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  placeholder="1,200"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Likes
-                <input
-                  value={postForm.likes}
-                  onChange={(e) => handleInputChange(e, "likes", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  placeholder="310"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Comments
-                <input
-                  value={postForm.comments}
-                  onChange={(e) => handleInputChange(e, "comments", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  placeholder="32"
-                />
-              </label>
-              <label className="block text-sm text-slate-200">
-                Tags (comma separated)
-                <input
-                  value={postForm.tags}
-                  onChange={(e) => handleInputChange(e, "tags", setPostForm)}
-                  className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  placeholder="AI, Health"
-                />
-              </label>
-              <label className="block text-sm text-slate-200 lg:col-span-2">
-                Excerpt
-                <textarea
-                  value={postForm.excerpt}
-                  onChange={(e) => handleInputChange(e, "excerpt", setPostForm)}
-                  className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                  rows="3"
-                />
-              </label>
-
-              {/* ── Hero Image ── */}
-              <ImageField
-                label="Hero Image"
-                value={postForm.heroImage}
-                onChange={(val) => setPostForm((c) => ({ ...c, heroImage: val }))}
-                fieldId="heroImage"
-              />
-
-              {/* ── Thumbnail ── */}
-              <ImageField
-                label="Thumbnail"
-                value={postForm.thumbnail}
-                onChange={(val) => setPostForm((c) => ({ ...c, thumbnail: val }))}
-                fieldId="thumbnail"
-              />
-
-              <label className="block text-sm text-slate-200 lg:col-span-2">
-                Content JSON
-                <textarea
-                  value={postForm.contentJson}
-                  onChange={(e) => handleInputChange(e, "contentJson", setPostForm)}
-                  className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none font-mono"
-                  rows="8"
-                />
-                <p className="mt-2 text-xs text-slate-500">{`Use an array of objects: [{"heading":"...","body":"..."}]`}</p>
-              </label>
-            </div>
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
-            <div className="space-y-4 rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/20">
-              <h3 className="text-lg font-semibold text-white">Blog Posts</h3>
-              <p className="text-sm text-slate-400">
-                Select a post to edit or delete it, or use the form to add a new entry.
-              </p>
-              <div className="space-y-3">
-                {posts.length === 0 ? (
-                  <p className="text-sm text-slate-500">No blog posts found.</p>
-                ) : (
-                  posts.map((post) => (
-                    <button
-                      key={post.slug}
-                      onClick={() => handlePostSelect(post)}
-                      className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-left text-sm text-slate-200 transition hover:border-cyan-500 hover:bg-slate-800"
-                    >
-                      <div className="flex items-center justify-between gap-4">
-                        <span>{post.title}</span>
-                        <span className="text-xs text-slate-500">{post.slug}</span>
-                      </div>
-                    </button>
-                  ))
-                )}
-              </div>
-            </div>
-            <div className="space-y-4 rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/20">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Live preview</h3>
-                  <p className="text-sm text-slate-400">
-                    Latest post data from the active content source.
-                  </p>
-                </div>
-                <button
-                  onClick={loadData}
-                  className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-                >
-                  Refresh
-                </button>
-              </div>
-              <div className="rounded-3xl border border-slate-800 bg-slate-900 p-5 text-sm text-slate-300">
-                {selectedPost ? (
-                  <div className="space-y-3">
-                    <p><strong>Selected:</strong> {selectedPost.title}</p>
-                    <p><strong>Slug:</strong> {selectedPost.slug}</p>
-                    <p><strong>Category:</strong> {selectedPost.category}</p>
-                    <p><strong>Author:</strong> {selectedPost.author}</p>
-                    {selectedPost.heroImage && (
-                      <img
-                        src={selectedPost.heroImage}
-                        alt="Hero"
-                        className="mt-2 h-24 w-full rounded-2xl object-cover border border-slate-700"
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <p>Select a post to preview quick metadata.</p>
-                )}
-              </div>
-              {selectedPost && (
-                <button
-                  onClick={() => deletePost(selectedPost)}
-                  className="w-full rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-400"
-                >
-                  Delete selected post
-                </button>
-              )}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    return (
-      <section className="space-y-6">
-        <div className="rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/30">
-          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h2 className="text-2xl font-semibold text-white">{selectedOfferLabel}</h2>
-              <p className="text-sm text-slate-400">Manage active offers and campaign content.</p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={resetOfferForm}
-                className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-              >
-                Reset
-              </button>
-              <button
-                onClick={submitOffer}
-                disabled={working}
-                className="rounded-2xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400 disabled:opacity-70"
-              >
-                {selectedOffer ? "Update offer" : "Create offer"}
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-6 grid gap-4 lg:grid-cols-2">
-            <label className="block text-sm text-slate-200">
-              Title
-              <input
-                value={offerForm.title}
-                onChange={(e) => handleInputChange(e, "title", setOfferForm)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-              />
-            </label>
-            <label className="block text-sm text-slate-200">
-              Slug
-              <input
-                value={offerForm.slug}
-                onChange={(e) => handleInputChange(e, "slug", setOfferForm)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-              />
-            </label>
-            <label className="block text-sm text-slate-200">
-              Discount
-              <input
-                value={offerForm.discount}
-                onChange={(e) => handleInputChange(e, "discount", setOfferForm)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                placeholder="15% OFF"
-              />
-            </label>
-            <label className="block text-sm text-slate-200">
-              End date
-              <input
-                type="date"
-                value={offerForm.endDate}
-                onChange={(e) => handleInputChange(e, "endDate", setOfferForm)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-              />
-            </label>
-            <label className="block text-sm text-slate-200 lg:col-span-2">
-              Audience
-              <input
-                value={offerForm.audience}
-                onChange={(e) => handleInputChange(e, "audience", setOfferForm)}
-                className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                placeholder="General Public"
-              />
-            </label>
-            <label className="block text-sm text-slate-200 lg:col-span-2">
-              Description
-              <textarea
-                value={offerForm.description}
-                onChange={(e) => handleInputChange(e, "description", setOfferForm)}
-                className="mt-2 w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-white outline-none"
-                rows="4"
-              />
-            </label>
-
-            {/* ── Offer Image ── */}
-            <OfferImageField
-              value={offerForm.image}
-              onChange={(val) => setOfferForm((c) => ({ ...c, image: val }))}
-            />
-          </div>
-        </div>
-
-        <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="space-y-4 rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/20">
-            <h3 className="text-lg font-semibold text-white">Active offers</h3>
-            <div className="space-y-3">
-              {offers.length === 0 ? (
-                <p className="text-sm text-slate-500">No active offers found.</p>
-              ) : (
-                offers.map((offer) => (
-                  <button
-                    key={offer.slug}
-                    onClick={() => handleOfferSelect(offer)}
-                    className="w-full rounded-3xl border border-slate-700 bg-slate-900 px-4 py-3 text-left text-sm text-slate-200 transition hover:border-cyan-500 hover:bg-slate-800"
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <span>{offer.title}</span>
-                      <span className="text-xs text-slate-500">{offer.slug}</span>
-                    </div>
-                  </button>
-                ))
-              )}
-            </div>
-          </div>
-          <div className="space-y-4 rounded-3xl border border-slate-700 bg-slate-950/80 p-6 shadow-xl shadow-slate-950/20">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <h3 className="text-lg font-semibold text-white">Dashboard actions</h3>
-                <p className="text-sm text-slate-400">
-                  Save, refresh, or remove content for offers and posts.
-                </p>
-              </div>
-              <button
-                onClick={loadData}
-                className="rounded-2xl bg-slate-800 px-4 py-2 text-sm text-slate-200 hover:bg-slate-700"
-              >
-                Refresh
-              </button>
-            </div>
-            {selectedOffer ? (
-              <button
-                onClick={() => deleteOffer(selectedOffer)}
-                className="w-full rounded-2xl bg-rose-500 px-4 py-3 text-sm font-semibold text-white hover:bg-rose-400"
-              >
-                Delete selected offer
-              </button>
-            ) : (
-              <p className="text-sm text-slate-500">
-                Select an offer from the list to edit or delete it.
-              </p>
-            )}
-          </div>
-        </div>
-      </section>
-    );
-  })();
-
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex flex-col gap-3 rounded-3xl border border-slate-700 bg-slate-950/70 p-6 shadow-2xl shadow-slate-900/30 sm:flex-row sm:items-center sm:justify-between">
+    <div className="admin-root">
+      <style dangerouslySetInnerHTML={{ __html: css }} />
+
+      <header className="topbar max-w-7xl mx-auto ">
+        
+
+      
+        <div className="topbar-brand">
+          <span className="brand-dot" />
+          <span className="brand-name">Aptech</span>
+          <span className="brand-sep">·</span>
+          <span className="brand-section">Admin Portal</span>
+        </div>
+        <div className="topbar-actions">
+          <div className="tab-nav">
+            <button className={`tab-btn ${activeTab === "posts" ? "active" : ""}`} onClick={() => setActiveTab("posts")}>Posts</button>
+            <button className={`tab-btn ${activeTab === "offers" ? "active" : ""}`} onClick={() => setActiveTab("offers")}>Offers</button>
+          </div>
+          <button className="btn btn-sm" onClick={loadData} disabled={working}>Refresh</button>
+          <button className="btn btn-outline btn-sm" onClick={handleLogout}>Logout</button>
+        </div>
+      
+      </header>
+
+      <main className="page-content">
+        <div className="page-header">
           <div>
-            <h1 className="text-4xl font-semibold tracking-tight">Admin Dashboard</h1>
-            <p className="mt-2 text-slate-400">
-              Manage blog posts, campaign offers, and uploads from one admin interface.
+            <div className="page-eyebrow">
+              <span className="eyebrow-dot" />
+              Content Management
+            </div>
+            <h1 className="page-title">
+              {activeTab === "posts" ? <><span>Blog</span> Posts</> : <>Active <span>Offers</span></>}
+            </h1>
+            <p className="page-sub">
+              {activeTab === "posts"
+                ? `${posts.length} post${posts.length !== 1 ? "s" : ""} · Select from the list to edit, or fill the form to create new`
+                : `${offers.length} active offer${offers.length !== 1 ? "s" : ""} · Manage campaign content and promotions`}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setActiveTab("posts")}
-              className={`rounded-2xl px-4 py-2 text-sm font-semibold ${activeTab === "posts" ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"}`}
-            >
-              Posts
-            </button>
-            <button
-              onClick={() => setActiveTab("offers")}
-              className={`rounded-2xl px-4 py-2 text-sm font-semibold ${activeTab === "offers" ? "bg-cyan-500 text-slate-950" : "bg-slate-800 text-slate-200 hover:bg-slate-700"}`}
-            >
-              Offers
-            </button>
-            <button
-              onClick={handleLogout}
-              className="rounded-2xl bg-rose-500 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-400"
-            >
-              Logout
-            </button>
-          </div>
+          {/* <span className="status-live"><span className="live-dot" />Live</span> */}
         </div>
 
-        {error && (
-          <div className="mb-6 rounded-3xl border border-rose-500 bg-rose-950/40 p-4 text-sm text-rose-100">
-            {error}
-          </div>
-        )}
+        {error && <div className="error-banner"><span>⚠</span>{error}</div>}
+
         {loading ? (
-          <div className="rounded-3xl border border-slate-700 bg-slate-950/80 p-10 text-center text-slate-400">
-            Loading admin data…
+          <div className="loading-state">
+            <div className="loading-dots">
+              <div className="dot" /><div className="dot" /><div className="dot" />
+            </div>
+            Loading content…
           </div>
+        ) : activeTab === "posts" ? (
+          <PostsSection
+            posts={posts}
+            selectedPost={selectedPost}
+            postForm={postForm}
+            working={working}
+            onSelect={handlePostSelect}
+            onInputChange={handlePostInput}
+            onSubmit={submitPost}
+            onReset={resetPostForm}
+            onDelete={deletePost}
+            setPostForm={setPostForm}
+          />
         ) : (
-          activeSection
+          <OffersSection
+            offers={offers}
+            selectedOffer={selectedOffer}
+            offerForm={offerForm}
+            working={working}
+            onSelect={handleOfferSelect}
+            onInputChange={handleOfferInput}
+            onSubmit={submitOffer}
+            onReset={resetOfferForm}
+            onDelete={deleteOffer}
+            setOfferForm={setOfferForm}
+          />
         )}
-      </div>
-    </main>
+      </main>
+    </div>
   );
 };
 

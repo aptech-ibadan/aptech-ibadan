@@ -16,56 +16,46 @@ import {
   Images,
 } from "lucide-react";
 
-import aptech1 from "@/assets/aptech1.jpeg";
-import aptech2 from "@/assets/aptech2.jpeg";
-import aptech3 from "@/assets/aptech3.jpeg";
-import aptech4 from "@/assets/aptech4.jpeg";
-import aptech5 from "@/assets/aptech5.jpeg";
-import aptech6 from "@/assets/aptech6.jpeg";
-import aptech8 from "@/assets/aptech8.jpeg";
-import aptech9 from "@/assets/aptech9.jpeg";
-import aptech10 from "@/assets/aptech10.jpeg";
-import aptech11 from "@/assets/aptech11.jpeg";
-import aptech12 from "@/assets/aptech12.jpeg";
 import Footer from "@/components/Footer";
 
+const galleryImage = (file) => `/images/gallery/${file}`;
 const aptech7VideoPath = "/aptech7.mov";
 
 const galleryItems = [
   {
     title: "Aptech Center Moment",
     category: "Campus Life",
-    image: aptech1,
+    image: galleryImage("aptech1.jpeg"),
     height: "h-[330px]",
   },
   {
     title: "Student Achievement Highlight",
     category: "Achievement",
-    image: aptech2,
+    image: galleryImage("aptech2.jpeg"),
     height: "h-[430px]",
   },
   {
     title: "Learning in Action",
     category: "Training",
-    image: aptech3,
+    image: galleryImage("aptech3.jpeg"),
     height: "h-[560px]",
   },
   {
     title: "Center Showcase",
     category: "Community",
-    image: aptech4,
+    image: galleryImage("aptech4.jpeg"),
     height: "h-[340px]",
   },
   {
     title: "Student Moment",
     category: "Campus Life",
-    image: aptech5,
+    image: galleryImage("aptech5.jpeg"),
     height: "h-[360px]",
   },
   {
     title: "Aptech Experience",
     category: "Success",
-    image: aptech6,
+    image: galleryImage("aptech6.jpeg"),
     height: "h-[420px]",
   },
   {
@@ -78,31 +68,31 @@ const galleryItems = [
   {
     title: "Center Memory",
     category: "Campus Life",
-    image: aptech8,
+    image: galleryImage("aptech8.jpeg"),
     height: "h-[430px]",
   },
   {
     title: "Achievement Moment",
     category: "Achievement",
-    image: aptech9,
+    image: galleryImage("aptech9.jpeg"),
     height: "h-[360px]",
   },
   {
     title: "Learning Community",
     category: "Community",
-    image: aptech10,
+    image: galleryImage("aptech10.jpeg"),
     height: "h-[540px]",
   },
   {
     title: "Aptech Showcase",
     category: "Center Life",
-    image: aptech11,
+    image: galleryImage("aptech11.jpeg"),
     height: "h-[400px]",
   },
   {
     title: "Kopa in Tech",
     category: "Achievement",
-    image: aptech12,
+    image: galleryImage("aptech12.jpeg"),
     height: "h-[470px]",
   },
 ];
@@ -156,7 +146,7 @@ export default function GalleryClient() {
       <section className="relative min-h-[88vh] overflow-hidden bg-[#020B2D] pt-32 text-white">
         {/* Background image */}
         <Image
-          src={aptech12}
+          src={galleryImage("aptech12.jpeg")}
           alt="Aptech Ibadan student achievement moment"
           fill
           priority
@@ -241,7 +231,7 @@ export default function GalleryClient() {
           >
             <div className="relative h-[360px] overflow-hidden rounded-2xl border border-white/10">
               <Image
-                src={aptech3}
+                src={galleryImage("aptech3.jpeg")}
                 alt="Learning session"
                 fill
                 sizes="25vw"
@@ -252,7 +242,7 @@ export default function GalleryClient() {
             <div className="grid gap-4 pt-12">
               <div className="relative h-[165px] overflow-hidden rounded-2xl border border-white/10">
                 <Image
-                  src={aptech10}
+                  src={galleryImage("aptech10.jpeg")}
                   alt="Community"
                   fill
                   sizes="25vw"
