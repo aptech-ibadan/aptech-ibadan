@@ -18,6 +18,7 @@ export const metadata = {
 };
 
 const MainLayout = ({ children }) => {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
   return (
     <html lang="en">
       <head>
