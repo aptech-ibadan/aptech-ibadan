@@ -125,7 +125,7 @@ const ContactPage = () => {
         },
       ],
     },
-      {
+    {
       name: "Bodija",
       socials: [
         {
@@ -650,7 +650,7 @@ const ContactPage = () => {
             />
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
            // className="flex flex-wrap justify-center gap-8 lg:gap-10"
             variants={containerVariants}
@@ -663,6 +663,81 @@ const ContactPage = () => {
                 variants={cardVariants}
                 whileHover="hover"
                 className="group bg-white rounded-3xl overflow-hidden shadow-xl border"
+              >
+                <motion.div
+                  className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <iframe
+                    src={campus.mapSrc}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    className="w-full h-full"
+                    title={`${campus.name} map`}
+                  />
+                </motion.div>
+
+                <div className="p-6">
+                  <motion.h3
+                    className="text-xl font-bold mb-2"
+                    whileHover={{ x: 5, color: "#FFC107" }}
+                  >
+                    {campus.name}
+                  </motion.h3>
+
+                  <p className="text-gray-600 text-sm mb-4">{campus.address}</p>
+
+                  <div className="space-y-2 mb-4">
+                    <motion.a
+                      href={`tel:${campus.phone}`}
+                      className="block font-semibold text-[#020B2D] hover:text-[#FFC107] transition-colors"
+                      whileHover={{ x: 5 }}
+                    >
+                      <Phone size={14} className="inline mr-2" /> {campus.phone}
+                    </motion.a>
+                    <motion.a
+                      href={`mailto:${campus.email}`}
+                      className="block font-semibold text-[#020B2D] hover:text-[#FFC107] transition-colors"
+                      whileHover={{ x: 5 }}
+                    >
+                      <FaEnvelope size={14} className="inline mr-2" />{" "}
+                      {campus.email}
+                    </motion.a>
+                  </div>
+
+                  <motion.a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      campus.address,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#020B2D] text-white px-5 py-3 rounded-lg hover:bg-[#FFC107] hover:text-[#020B2D] transition-all duration-300"
+                    whileHover={{ scale: 1.05, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Get Directions
+                    <ArrowRight size={16} />
+                  </motion.a>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div> */}
+
+          <motion.div
+            className="flex flex-wrap justify-center gap-8 lg:gap-10 max-w-6xl mx-auto"
+            variants={containerVariants}
+            initial="hidden"
+            animate={mapInView ? "visible" : "hidden"}
+          >
+            {campusesMaps.map((campus, index) => (
+              <motion.div
+                key={campus.id}
+                variants={cardVariants}
+                whileHover="hover"
+                className="group bg-white rounded-3xl overflow-hidden shadow-xl border w-full sm:w-[calc(50%-1rem)] lg:w-[calc(40%-1rem)]"
               >
                 <motion.div
                   className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden"
@@ -799,7 +874,7 @@ const ContactPage = () => {
                   </motion.div>
                 ))}
               </motion.div>
-{/* 
+              {/* 
               <motion.div
                 className="mt-6 text-center"
                 initial={{ opacity: 0 }}
