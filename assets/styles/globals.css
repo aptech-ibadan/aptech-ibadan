@@ -37,3 +37,33 @@ button:disabled,
 input:disabled {
   cursor: not-allowed;
 }
+
+/* In your global.css */
+.rich-text-content {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #f3f4f6;
+}
+
+.rich-text-content b,
+.rich-text-content strong {
+  color: #ffc107;
+  font-weight: 700;
+}
+
+.rich-text-content a {
+  color: #ffc107;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.rich-text-content a:hover {
+  color: #ffd54f;
+}
+
+.rich-text-content br {
+  display: block;
+  content: "";
+  margin-top: 0.5rem;
+}
