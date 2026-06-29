@@ -10,7 +10,9 @@ const NewsDetailsPage = async ({ params }) => {
   }
 
   const allPosts = await getPosts();
-  const similarNews = allPosts.filter((item) => item.slug !== article.slug).slice(0, 3);
+  const similarNews = allPosts
+    .filter((item) => item.slug !== article.slug)
+    .slice(0, 3);
 
   return <BlogDetailsClient article={article} similarNews={similarNews} />;
 };

@@ -71,6 +71,17 @@ const ContactPage = () => {
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5301.706136977626!2d3.8718979999999994!3d7.358547100000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10398db6429effff%3A0x4bb79d52316cb4cf!2s93%20MKO%20Abiola%20Way%2C%20Ibadan%20200221%2C%20Oyo!5e1!3m2!1sen!2sng!4v1777970539395!5m2!1sen!2sng",
       color: "from-amber-600 to-orange-600",
     },
+    {
+      id: 3,
+      name: "Aptech Bodija",
+      address: "No. 38B, Ladoke Akintola Avenue, Bodija, Ibadan.",
+      phone: "08036518761",
+      email: "info@aptechibadan.com",
+      mapSrc:
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3580.364722054667!2d3.914534899999999!3d7.417369399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103992adb09e9ae5%3A0xaedd5c9ccf7774a4!2s38a%20Ladoke%20Akintola%20St%2C%20Old%20Bodija%2C%20Ibadan%20200285%2C%20Oyo!5e1!3m2!1sen!2sng!4v1782139892576!5m2!1sen!2sng",
+      color: "from-amber-600 to-orange-600",
+    },
+
   ];
 
   const campuses = [
@@ -111,6 +122,26 @@ const ContactPage = () => {
           name: "Facebook",
           icon: <FaFacebook />,
           link: "https://www.facebook.com/aptechringroad",
+        },
+      ],
+    },
+    {
+      name: "Bodija",
+      socials: [
+        {
+          name: "Instagram",
+          icon: <FaInstagram />,
+          link: "https://instagram.com/aptechbodija",
+        },
+        {
+          name: "WhatsApp",
+          icon: <FaWhatsapp />,
+          link: "http://wa.me/2348036518761",
+        },
+        {
+          name: "Facebook",
+          icon: <FaFacebook />,
+          link: "https://www.facebook.com/aptechbodija",
         },
       ],
     },
@@ -619,8 +650,9 @@ const ContactPage = () => {
             />
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+           // className="flex flex-wrap justify-center gap-8 lg:gap-10"
             variants={containerVariants}
             initial="hidden"
             animate={mapInView ? "visible" : "hidden"}
@@ -631,6 +663,81 @@ const ContactPage = () => {
                 variants={cardVariants}
                 whileHover="hover"
                 className="group bg-white rounded-3xl overflow-hidden shadow-xl border"
+              >
+                <motion.div
+                  className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <iframe
+                    src={campus.mapSrc}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    className="w-full h-full"
+                    title={`${campus.name} map`}
+                  />
+                </motion.div>
+
+                <div className="p-6">
+                  <motion.h3
+                    className="text-xl font-bold mb-2"
+                    whileHover={{ x: 5, color: "#FFC107" }}
+                  >
+                    {campus.name}
+                  </motion.h3>
+
+                  <p className="text-gray-600 text-sm mb-4">{campus.address}</p>
+
+                  <div className="space-y-2 mb-4">
+                    <motion.a
+                      href={`tel:${campus.phone}`}
+                      className="block font-semibold text-[#020B2D] hover:text-[#FFC107] transition-colors"
+                      whileHover={{ x: 5 }}
+                    >
+                      <Phone size={14} className="inline mr-2" /> {campus.phone}
+                    </motion.a>
+                    <motion.a
+                      href={`mailto:${campus.email}`}
+                      className="block font-semibold text-[#020B2D] hover:text-[#FFC107] transition-colors"
+                      whileHover={{ x: 5 }}
+                    >
+                      <FaEnvelope size={14} className="inline mr-2" />{" "}
+                      {campus.email}
+                    </motion.a>
+                  </div>
+
+                  <motion.a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      campus.address,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#020B2D] text-white px-5 py-3 rounded-lg hover:bg-[#FFC107] hover:text-[#020B2D] transition-all duration-300"
+                    whileHover={{ scale: 1.05, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Get Directions
+                    <ArrowRight size={16} />
+                  </motion.a>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div> */}
+
+          <motion.div
+            className="flex flex-wrap justify-center gap-8 lg:gap-10 max-w-6xl mx-auto"
+            variants={containerVariants}
+            initial="hidden"
+            animate={mapInView ? "visible" : "hidden"}
+          >
+            {campusesMaps.map((campus, index) => (
+              <motion.div
+                key={campus.id}
+                variants={cardVariants}
+                whileHover="hover"
+                className="group bg-white rounded-3xl overflow-hidden shadow-xl border w-full sm:w-[calc(50%-1rem)] lg:w-[calc(40%-1rem)]"
               >
                 <motion.div
                   className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden"
@@ -742,20 +849,20 @@ const ContactPage = () => {
                   <motion.div
                     key={index}
                     variants={itemVariants}
-                    className="border border-gray-200 p-5 rounded-xl hover:shadow-lg transition-shadow"
+                    className="border border-gray-200 p-5 py-3 rounded-xl hover:shadow-lg transition-shadow"
                   >
                     <p className="font-semibold mb-3 text-[#020B2D] text-lg">
                       {campus.name}
                     </p>
 
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       {campus.socials.map((social, i) => (
                         <motion.a
                           key={i}
                           href={social.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FFC107] text-[#020B2D] font-medium hover:bg-[#020B2D] hover:text-white transition-all duration-300"
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#FFC107] text-[#020B2D] font-medium hover:bg-[#020B2D] hover:text-white transition-all duration-300 text-sm"
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -767,7 +874,7 @@ const ContactPage = () => {
                   </motion.div>
                 ))}
               </motion.div>
-
+              {/* 
               <motion.div
                 className="mt-6 text-center"
                 initial={{ opacity: 0 }}
@@ -780,7 +887,7 @@ const ContactPage = () => {
                 >
                   Follow us for updates and tech news
                 </motion.p>
-              </motion.div>
+              </motion.div> */}
             </motion.div>
           </motion.div>
         )}

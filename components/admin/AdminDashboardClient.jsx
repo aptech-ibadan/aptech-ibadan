@@ -476,7 +476,9 @@ const ImageField = ({ label, value, onChange }) => {
   return (
     <div className="img-field-root">
       <div className="img-field-header">
-        <label className="field-label" style={{ marginBottom: 0 }}>{label}</label>
+        <label className="field-label" style={{ marginBottom: 0 }}>
+          {label}
+        </label>
         <div className="img-toggle-wrap">
           <button
             type="button"
@@ -516,7 +518,9 @@ const ImageField = ({ label, value, onChange }) => {
           <img
             src={previewSrc}
             alt="Preview"
-            onError={(e) => { e.currentTarget.style.display = "none"; }}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
           />
         </div>
       )}
@@ -536,6 +540,7 @@ const PostsSection = ({
   onInputChange,
   onSubmit,
   onReset,
+  handleGenerateSlug,
   onDelete,
   setPostForm,
 }) => (
@@ -620,49 +625,109 @@ const PostsSection = ({
           </span>
         </div>
         <div className="form-header-right">
-          <button className="btn btn-ghost btn-sm" onClick={onReset}>Discard</button>
-          <button className="btn btn-primary" onClick={onSubmit} disabled={working}>
-            {working ? "Saving…" : selectedPost ? "Update post" : "Publish post"}
+          <button className="btn btn-ghost btn-sm" onClick={onReset}>
+            Discard
+          </button>
+          <button
+            className="btn btn-primary"
+            onClick={onSubmit}
+            disabled={working}
+          >
+            {working
+              ? "Saving…"
+              : selectedPost
+                ? "Update post"
+                : "Publish post"}
           </button>
         </div>
       </div>
 
       <div className="form-body">
-        <div className="form-section-label" style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}>
+        <div
+          className="form-section-label"
+          style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}
+        >
           Meta
         </div>
         <div className="field-grid">
           <label>
             <span className="field-label">Title</span>
-            <input className="field-input" value={postForm.title} onChange={(e) => onInputChange(e, "title")} placeholder="Post title…" />
+            <input
+              className="field-input"
+              value={postForm.title}
+              onChange={(e) => onInputChange(e, "title")}
+              placeholder="Post title…"
+            />
           </label>
           <label>
             <span className="field-label">Slug</span>
-            <input className="field-input" value={postForm.slug} onChange={(e) => onInputChange(e, "slug")} placeholder="my-post-slug" />
+            <input
+              className="field-input"
+              value={postForm.slug}
+              onChange={(e) => onInputChange(e, "slug")}
+              placeholder="my-post-slug"
+            />
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={handleGenerateSlug}
+            >
+              Generate Slug
+            </button>
           </label>
           <label>
             <span className="field-label">Category</span>
-            <input className="field-input" value={postForm.category} onChange={(e) => onInputChange(e, "category")} placeholder="Technology" />
+            <input
+              className="field-input"
+              value={postForm.category}
+              onChange={(e) => onInputChange(e, "category")}
+              placeholder="Technology"
+            />
           </label>
           <label>
             <span className="field-label">Author</span>
-            <input className="field-input" value={postForm.author} onChange={(e) => onInputChange(e, "author")} placeholder="Jane Smith" />
+            <input
+              className="field-input"
+              value={postForm.author}
+              onChange={(e) => onInputChange(e, "author")}
+              placeholder="Jane Smith"
+            />
           </label>
           <label>
             <span className="field-label">Date</span>
-            <input type="date" className="field-input" value={postForm.date} onChange={(e) => onInputChange(e, "date")} />
+            <input
+              type="date"
+              className="field-input"
+              value={postForm.date}
+              onChange={(e) => onInputChange(e, "date")}
+            />
           </label>
           <label>
             <span className="field-label">Read time</span>
-            <input className="field-input" value={postForm.readTime} onChange={(e) => onInputChange(e, "readTime")} placeholder="6 mins" />
+            <input
+              className="field-input"
+              value={postForm.readTime}
+              onChange={(e) => onInputChange(e, "readTime")}
+              placeholder="6 mins"
+            />
           </label>
           <label className="span-2">
             <span className="field-label">Tags (comma-separated)</span>
-            <input className="field-input" value={postForm.tags} onChange={(e) => onInputChange(e, "tags")} placeholder="Networking, Cybersecurity, IT" />
+            <input
+              className="field-input"
+              value={postForm.tags}
+              onChange={(e) => onInputChange(e, "tags")}
+              placeholder="Networking, Cybersecurity, IT"
+            />
           </label>
           <label className="span-2">
             <span className="field-label">Excerpt</span>
-            <textarea className="field-input field-textarea" value={postForm.excerpt} onChange={(e) => onInputChange(e, "excerpt")} rows={3} placeholder="Short summary shown in post listings…" />
+            <textarea
+              className="field-input field-textarea"
+              value={postForm.excerpt}
+              onChange={(e) => onInputChange(e, "excerpt")}
+              rows={3}
+              placeholder="Short summary shown in post listings…"
+            />
           </label>
         </div>
 
@@ -671,15 +736,30 @@ const PostsSection = ({
           <div className="field-grid-3">
             <label>
               <span className="field-label">Views</span>
-              <input className="field-input" value={postForm.views} onChange={(e) => onInputChange(e, "views")} placeholder="1,200" />
+              <input
+                className="field-input"
+                value={postForm.views}
+                onChange={(e) => onInputChange(e, "views")}
+                placeholder="1,200"
+              />
             </label>
             <label>
               <span className="field-label">Likes</span>
-              <input className="field-input" value={postForm.likes} onChange={(e) => onInputChange(e, "likes")} placeholder="310" />
+              <input
+                className="field-input"
+                value={postForm.likes}
+                onChange={(e) => onInputChange(e, "likes")}
+                placeholder="310"
+              />
             </label>
             <label>
               <span className="field-label">Comments</span>
-              <input className="field-input" value={postForm.comments} onChange={(e) => onInputChange(e, "comments")} placeholder="32" />
+              <input
+                className="field-input"
+                value={postForm.comments}
+                onChange={(e) => onInputChange(e, "comments")}
+                placeholder="32"
+              />
             </label>
           </div>
         </div>
@@ -709,7 +789,9 @@ const PostsSection = ({
               onChange={(e) => onInputChange(e, "contentJson")}
               rows={10}
             />
-            <p className="field-hint">[{`{"heading":"...","body":"..."}`}, …]</p>
+            <p className="field-hint">
+              [{`{"heading":"...","body":"..."}`}, …]
+            </p>
           </label>
         </div>
       </div>
@@ -750,7 +832,9 @@ const OffersSection = ({
               >
                 <div className="list-item-main">
                   <div className="list-item-title">{offer.title}</div>
-                  <div className="list-item-slug">{offer.discount || offer.slug}</div>
+                  <div className="list-item-slug">
+                    {offer.discount || offer.slug}
+                  </div>
                 </div>
                 <span className="list-item-arrow">›</span>
               </button>
@@ -781,7 +865,10 @@ const OffersSection = ({
           )}
           <div className="preview-kv">
             <span className="preview-key">Discount</span>
-            <span className="preview-val" style={{ color: "var(--gold)", fontWeight: 700 }}>
+            <span
+              className="preview-val"
+              style={{ color: "var(--gold)", fontWeight: 700 }}
+            >
               {selectedOffer.discount || "—"}
             </span>
           </div>
@@ -811,41 +898,85 @@ const OffersSection = ({
           </span>
         </div>
         <div className="form-header-right">
-          <button className="btn btn-ghost btn-sm" onClick={onReset}>Discard</button>
-          <button className="btn btn-primary" onClick={onSubmit} disabled={working}>
-            {working ? "Saving…" : selectedOffer ? "Update offer" : "Publish offer"}
+          <button className="btn btn-ghost btn-sm" onClick={onReset}>
+            Discard
+          </button>
+          <button
+            className="btn btn-primary"
+            onClick={onSubmit}
+            disabled={working}
+          >
+            {working
+              ? "Saving…"
+              : selectedOffer
+                ? "Update offer"
+                : "Publish offer"}
           </button>
         </div>
       </div>
 
       <div className="form-body">
-        <div className="form-section-label" style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}>
+        <div
+          className="form-section-label"
+          style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}
+        >
           Offer details
         </div>
         <div className="field-grid">
           <label>
             <span className="field-label">Title</span>
-            <input className="field-input" value={offerForm.title} onChange={(e) => onInputChange(e, "title")} placeholder="Offer title…" />
+            <input
+              className="field-input"
+              value={offerForm.title}
+              onChange={(e) => onInputChange(e, "title")}
+              placeholder="Offer title…"
+            />
           </label>
           <label>
             <span className="field-label">Slug</span>
-            <input className="field-input" value={offerForm.slug} onChange={(e) => onInputChange(e, "slug")} placeholder="summer-deal" />
+            <input
+              className="field-input"
+              value={offerForm.slug}
+              onChange={(e) => onInputChange(e, "slug")}
+              placeholder="summer-deal"
+            />
           </label>
           <label>
             <span className="field-label">Discount</span>
-            <input className="field-input" value={offerForm.discount} onChange={(e) => onInputChange(e, "discount")} placeholder="50% OFF" />
+            <input
+              className="field-input"
+              value={offerForm.discount}
+              onChange={(e) => onInputChange(e, "discount")}
+              placeholder="50% OFF"
+            />
           </label>
           <label>
             <span className="field-label">End date</span>
-            <input className="field-input" type="date" value={offerForm.endDate} onChange={(e) => onInputChange(e, "endDate")} />
+            <input
+              className="field-input"
+              type="date"
+              value={offerForm.endDate}
+              onChange={(e) => onInputChange(e, "endDate")}
+            />
           </label>
           <label className="span-2">
             <span className="field-label">Audience</span>
-            <input className="field-input" value={offerForm.audience} onChange={(e) => onInputChange(e, "audience")} placeholder="General Public" />
+            <input
+              className="field-input"
+              value={offerForm.audience}
+              onChange={(e) => onInputChange(e, "audience")}
+              placeholder="General Public"
+            />
           </label>
           <label className="span-2">
             <span className="field-label">Description</span>
-            <textarea className="field-input field-textarea" value={offerForm.description} onChange={(e) => onInputChange(e, "description")} rows={4} placeholder="Describe the offer…" />
+            <textarea
+              className="field-input field-textarea"
+              value={offerForm.description}
+              onChange={(e) => onInputChange(e, "description")}
+              rows={4}
+              placeholder="Describe the offer…"
+            />
           </label>
         </div>
 
@@ -883,26 +1014,35 @@ const AdminDashboardClient = () => {
       cache: "no-store",
       headers: { ...options.headers, Authorization: `Bearer ${token}` },
     });
-    if (!response.ok) throw new Error((await response.json()).error || "Request failed");
+    if (!response.ok)
+      throw new Error((await response.json()).error || "Request failed");
     return response.json();
   };
 
   const loadData = useCallback(async () => {
-    setLoading(true); setError("");
+    setLoading(true);
+    setError("");
     try {
       const [postsData, offersData] = await Promise.all([
         fetchJson("/api/posts"),
         fetchJson("/api/offers"),
       ]);
-      setPosts(postsData); setOffers(offersData);
-    } catch (e) { setError(e.message); }
-    finally { setLoading(false); }
+      setPosts(postsData);
+      setOffers(offersData);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
     const init = async () => {
       const token = localStorage.getItem("token");
-      if (!token) { router.push("/admin"); return; }
+      if (!token) {
+        router.push("/admin");
+        return;
+      }
       const res = await fetch("/api/admin/verify", {
         cache: "no-store",
         headers: { Authorization: `Bearer ${token}` },
@@ -928,10 +1068,15 @@ const AdminDashboardClient = () => {
     setOfferForm((c) => ({ ...c, [key]: e.target.value }));
   }, []);
 
-  const parseTags = (v) => v.split(",").map((t) => t.trim()).filter(Boolean);
+  const parseTags = (v) =>
+    v
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
 
   const submitPost = async () => {
-    setWorking(true); setError("");
+    setWorking(true);
+    setError("");
     try {
       const content = JSON.parse(postForm.contentJson);
       const payload = { ...postForm, tags: parseTags(postForm.tags), content };
@@ -948,13 +1093,18 @@ const AdminDashboardClient = () => {
           body: JSON.stringify(payload),
         });
       }
-      await loadData(); resetPostForm();
-    } catch (e) { setError(e.message); }
-    finally { setWorking(false); }
+      await loadData();
+      resetPostForm();
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setWorking(false);
+    }
   };
 
   const submitOffer = async () => {
-    setWorking(true); setError("");
+    setWorking(true);
+    setError("");
     try {
       if (selectedOffer) {
         await fetchJson(`/api/offers/${selectedOffer.slug}`, {
@@ -969,13 +1119,23 @@ const AdminDashboardClient = () => {
           body: JSON.stringify(offerForm),
         });
       }
-      await loadData(); resetOfferForm();
-    } catch (e) { setError(e.message); }
-    finally { setWorking(false); }
+      await loadData();
+      resetOfferForm();
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setWorking(false);
+    }
   };
 
-  const resetPostForm = () => { setPostForm(emptyPostForm); setSelectedPost(null); };
-  const resetOfferForm = () => { setOfferForm(emptyOfferForm); setSelectedOffer(null); };
+  const resetPostForm = () => {
+    setPostForm(emptyPostForm);
+    setSelectedPost(null);
+  };
+  const resetOfferForm = () => {
+    setOfferForm(emptyOfferForm);
+    setSelectedOffer(null);
+  };
 
   const handlePostSelect = (post) => {
     setSelectedPost(post);
@@ -1017,23 +1177,44 @@ const AdminDashboardClient = () => {
   const deletePost = async (post) => {
     if (!confirm(`Delete "${post.title}"? This cannot be undone.`)) return;
     setWorking(true);
-    try { await fetchJson(`/api/posts/${post.slug}`, { method: "DELETE" }); await loadData(); resetPostForm(); }
-    catch (e) { setError(e.message); }
-    finally { setWorking(false); }
+    try {
+      await fetchJson(`/api/posts/${post.slug}`, { method: "DELETE" });
+      await loadData();
+      resetPostForm();
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setWorking(false);
+    }
   };
 
   const deleteOffer = async (offer) => {
     if (!confirm(`Delete offer "${offer.title}"?`)) return;
     setWorking(true);
-    try { await fetchJson(`/api/offers/${offer.slug}`, { method: "DELETE" }); await loadData(); resetOfferForm(); }
-    catch (e) { setError(e.message); }
-    finally { setWorking(false); }
+    try {
+      await fetchJson(`/api/offers/${offer.slug}`, { method: "DELETE" });
+      await loadData();
+      resetOfferForm();
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setWorking(false);
+    }
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("token"); localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin");
+  };
+
+  const handleGenerateSlug = () => {
+    const slug = postForm.title
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]+/g, "");
+    setPostForm({ ...postForm, slug });
   };
 
   return (
@@ -1041,9 +1222,6 @@ const AdminDashboardClient = () => {
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
       <header className="topbar max-w-7xl mx-auto ">
-        
-
-      
         <div className="topbar-brand">
           <span className="brand-dot" />
           <span className="brand-name">Aptech</span>
@@ -1052,13 +1230,26 @@ const AdminDashboardClient = () => {
         </div>
         <div className="topbar-actions">
           <div className="tab-nav">
-            <button className={`tab-btn ${activeTab === "posts" ? "active" : ""}`} onClick={() => setActiveTab("posts")}>Posts</button>
-            <button className={`tab-btn ${activeTab === "offers" ? "active" : ""}`} onClick={() => setActiveTab("offers")}>Offers</button>
+            <button
+              className={`tab-btn ${activeTab === "posts" ? "active" : ""}`}
+              onClick={() => setActiveTab("posts")}
+            >
+              Posts
+            </button>
+            <button
+              className={`tab-btn ${activeTab === "offers" ? "active" : ""}`}
+              onClick={() => setActiveTab("offers")}
+            >
+              Offers
+            </button>
           </div>
-          <button className="btn btn-sm" onClick={loadData} disabled={working}>Refresh</button>
-          <button className="btn btn-outline btn-sm" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-sm" onClick={loadData} disabled={working}>
+            Refresh
+          </button>
+          <button className="btn btn-outline btn-sm" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
-      
       </header>
 
       <main className="page-content">
@@ -1069,7 +1260,15 @@ const AdminDashboardClient = () => {
               Content Management
             </div>
             <h1 className="page-title">
-              {activeTab === "posts" ? <><span>Blog</span> Posts</> : <>Active <span>Offers</span></>}
+              {activeTab === "posts" ? (
+                <>
+                  <span>Blog</span> Posts
+                </>
+              ) : (
+                <>
+                  Active <span>Offers</span>
+                </>
+              )}
             </h1>
             <p className="page-sub">
               {activeTab === "posts"
@@ -1080,12 +1279,19 @@ const AdminDashboardClient = () => {
           {/* <span className="status-live"><span className="live-dot" />Live</span> */}
         </div>
 
-        {error && <div className="error-banner"><span>⚠</span>{error}</div>}
+        {error && (
+          <div className="error-banner">
+            <span>⚠</span>
+            {error}
+          </div>
+        )}
 
         {loading ? (
           <div className="loading-state">
             <div className="loading-dots">
-              <div className="dot" /><div className="dot" /><div className="dot" />
+              <div className="dot" />
+              <div className="dot" />
+              <div className="dot" />
             </div>
             Loading content…
           </div>
@@ -1099,6 +1305,7 @@ const AdminDashboardClient = () => {
             onInputChange={handlePostInput}
             onSubmit={submitPost}
             onReset={resetPostForm}
+            handleGenerateSlug={handleGenerateSlug}
             onDelete={deletePost}
             setPostForm={setPostForm}
           />

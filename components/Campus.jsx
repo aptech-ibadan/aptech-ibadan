@@ -29,6 +29,18 @@ const campuses = [
     gradientTo: "#EA580C",
     label: "City Campus",
   },
+    {
+    id: 3,
+    name: "Aptech Bodija",
+    address: "No. 38B, Ladoke Akintola Avenue, Bodija, Ibadan.",
+    phone: "08036518761",
+    mapSrc:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3580.364722054667!2d3.914534899999999!3d7.417369399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103992adb09e9ae5%3A0xaedd5c9ccf7774a4!2s38a%20Ladoke%20Akintola%20St%2C%20Old%20Bodija%2C%20Ibadan%20200285%2C%20Oyo!5e1!3m2!1sen!2sng!4v1782139892576!5m2!1sen!2sng",
+    accent: "#10B981", 
+  gradientFrom: "#059669",
+  gradientTo: "#047857", 
+    label: "City Campus",
+  }
 ];
 
 /* ── Reusable animated section wrapper ── */
@@ -353,13 +365,13 @@ const Campus = () => {
           />
 
           <p className="mt-5 text-gray-600 max-w-2xl mx-auto text-lg">
-            Two strategic locations in Ibadan designed for excellence in tech
+            Three strategic locations in Ibadan designed for excellence in tech
             education
           </p>
         </AnimatedSection>
 
         {/* ── Cards Grid ── */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+        <div className="grid md:grid-cols-2 gap-8 justify-items-center lg:gap-10">
           {campuses.map((campus, index) => (
             <CampusCard key={campus.id} campus={campus} index={index} />
           ))}

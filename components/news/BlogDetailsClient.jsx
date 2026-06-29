@@ -33,6 +33,39 @@ const CountUpNumber = ({ value, duration = 1.1 }) => {
   return <span ref={ref}>{displayValue.toLocaleString()}</span>;
 };
 
+const renderContentWithLinks = (text) => {
+  if (!text) return null;
+
+  let html = text;
+
+  // Handle bold tags with proper styling
+  html = html.replace(/<b>/gi, '<b class="font-bold text-[#FFC107]">');
+  html = html.replace(/<\/b>/gi, "</b>");
+
+  // Handle strong tags
+  html = html.replace(
+    /<strong>/gi,
+    '<strong class="font-bold text-[#FFC107]">',
+  );
+  html = html.replace(/<\/strong>/gi, "</strong>");
+
+  // Handle links
+  html = html.replace(
+    /<a\s+href=/gi,
+    '<a target="_blank" rel="noopener noreferrer" class="text-[#FFC107] hover:underline font-medium" href=',
+  );
+
+  // Handle line breaks
+  html = html.replace(/\n/g, "<br />");
+
+  return (
+    <div
+      className="rich-text-content"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+};
+
 const BlogDetailsClient = ({ article, similarNews }) => {
   const [isSharing, setIsSharing] = useState(false);
 
@@ -140,13 +173,28 @@ const BlogDetailsClient = ({ article, similarNews }) => {
               transition={{ duration: 0.5 }}
               className="rounded-2xl p-6 sm:p-8 bg-[#040d2e] border border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
             >
-              <div className="space-y-6 text-white leading-8">
+              <div className="space-y-8 text-white leading-8">
                 {article.content.map((section, index) => (
-                  <p key={`${section.heading}-${index}`}>{section.body}</p>
+                  <div key={`content-${index}`} className="space-y-4">
+                    {/* Render heading if it exists and is not empty */}
+                    {section.heading && section.heading.trim() !== "" && (
+                      <h2 className="text-2xl sm:text-3xl font-bold text-[#FFC107] mb-4">
+                        {section.heading}
+                      </h2>
+                    )}
+
+                    {/* Render body with hyperlink support */}
+                    {section.body && section.body.trim() !== "" && (
+                      <div className="text-base sm:text-lg leading-relaxed text-gray-100">
+                        {renderContentWithLinks(section.body)}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </motion.article>
 
+            {/* Article Snapshot - Uncomment if needed */}
             {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

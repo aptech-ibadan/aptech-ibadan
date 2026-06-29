@@ -12,12 +12,27 @@ export const metadata = {
 
   description: "Become An IT Pro",
 
-  keywords: "IT, Training, Aptech, ITSS, T24, Infinity, WebDevelopment",
+  keywords: "IT, Training, Aptech, ITSS, T24, Infinity, Web Development",
 };
 
 const MainLayout = ({ children }) => {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
   return (
     <html lang="en">
+      <head>
+          <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+      </head>
       <body className="bg-page-bg">
         <LayoutWrapper>
           <div>{children}</div>

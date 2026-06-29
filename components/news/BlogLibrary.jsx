@@ -1,21 +1,68 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import NewsCard from "@/components/news/NewsCard";
-import { blogCategories } from "@/data/blogCategories";
+// import { blogCategories } from "@/data/blogCategories";
 
 const BlogLibrary = ({ items }) => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [categories, setCategories] = useState([]);
+
+//  setCategories([
+//     "All",
+//     "APTECHNews",
+//     "CampusLife",
+//     "Events",
+//     "TechTrends",
+//     "CareerDevelopment",
+//     "StudentSuccess",
+//     "AlumniSpotlight",
+//   ]);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === "All") return items;
     return items.filter((item) => item.category === activeCategory);
   }, [activeCategory, items]);
 
+const getPostCategories = async function () {
+  try {
+    const res = await fetch("/api/posts");
+    const data = await res.json();
+    
+    // Get all categories from posts
+    const allPosts = data.map((item) => item.category);
+    
+    // Create a Set with both default and post categories
+    const allCategories = new Set([
+      "All",
+      "APTECHNews",
+      "CampusLife",
+      "Events",
+      "TechTrends",
+      "CareerDevelopment",
+      "StudentSuccess",
+      "AlumniSpotlight",
+      ...allPosts
+    ]);
+    
+    // Convert Set to array and set state
+    setCategories([...allCategories]);
+    
+    // console.log([...allCategories]);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    // Keep default categories if fetch fails
+  }
+};
+
+useEffect(() => {
+  getPostCategories();
+}, []);
+
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-0 py-14">
       <div className="flex flex-wrap gap-3 border-b border-white/10 pb-6">
-        {blogCategories.map((category) => {
+        {categories.map((category) => {
           const active = category === activeCategory;
           return (
             <button
@@ -40,7 +87,9 @@ const BlogLibrary = ({ items }) => {
             <h3 className="text-white text-xl font-semibold">No posts found</h3>
             <p className="text-gray-400 text-sm mt-2">
               There are no posts in the{" "}
-              <span className="text-[#FFC107] font-medium">{activeCategory}</span>{" "}
+              <span className="text-[#FFC107] font-medium">
+                {activeCategory}
+              </span>{" "}
               category yet.
             </p>
             <button
@@ -51,9 +100,7 @@ const BlogLibrary = ({ items }) => {
             </button>
           </div>
         ) : (
-          filteredItems.map((item) => (
-            <NewsCard key={item.slug} item={item} />
-          ))
+          filteredItems.map((item) => <NewsCard key={item.slug} item={item} />)
         )}
       </div>
     </section>
