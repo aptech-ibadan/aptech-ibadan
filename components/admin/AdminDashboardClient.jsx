@@ -536,6 +536,7 @@ const PostsSection = ({
   onInputChange,
   onSubmit,
   onReset,
+  handleGenerateSlug,
   onDelete,
   setPostForm,
 }) => (
@@ -639,6 +640,7 @@ const PostsSection = ({
           <label>
             <span className="field-label">Slug</span>
             <input className="field-input" value={postForm.slug} onChange={(e) => onInputChange(e, "slug")} placeholder="my-post-slug" />
+            <button className="btn btn-ghost btn-sm" onClick={handleGenerateSlug}>Generate Slug</button>
           </label>
           <label>
             <span className="field-label">Category</span>
@@ -1036,6 +1038,11 @@ const AdminDashboardClient = () => {
     router.push("/admin");
   };
 
+  const handleGenerateSlug = () => {
+    const slug = postForm.title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]+/g, "");
+    setPostForm({ ...postForm, slug });
+  };
+
   return (
     <div className="admin-root">
       <style dangerouslySetInnerHTML={{ __html: css }} />
@@ -1099,6 +1106,7 @@ const AdminDashboardClient = () => {
             onInputChange={handlePostInput}
             onSubmit={submitPost}
             onReset={resetPostForm}
+            handleGenerateSlug={handleGenerateSlug}
             onDelete={deletePost}
             setPostForm={setPostForm}
           />
