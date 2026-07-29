@@ -7,7 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 const getCountdown = (endDate) => {
-  if (!endDate) return { expired: false, days: 0, hours: 0, minutes: 0, seconds: 0 };
+  if (!endDate)
+    return { expired: false, days: 0, hours: 0, minutes: 0, seconds: 0 };
 
   const target = new Date(endDate).getTime();
   const now = Date.now();
@@ -86,7 +87,11 @@ const CampaignPopup = () => {
                 key={`modal-${piece.left}-${index}`}
                 className="absolute top-[-16px] block h-2 w-2 rounded-sm opacity-70"
                 style={{ left: piece.left, backgroundColor: piece.color }}
-                animate={{ y: [0, 900], rotate: [0, 220], opacity: [0, 0.85, 0] }}
+                animate={{
+                  y: [0, 900],
+                  rotate: [0, 220],
+                  opacity: [0, 0.85, 0],
+                }}
                 transition={{
                   duration: piece.duration,
                   delay: piece.delay,
@@ -120,7 +125,7 @@ const CampaignPopup = () => {
             <div className="mt-3 rounded-xl overflow-hidden border border-white/20">
               <div className="relative h-40">
                 <Image
-                  src={campaign?.image || "/aptech004.png"}
+                  src={campaign?.image || "/valencia-aptech.png"}
                   alt={campaign?.title || "Campaign"}
                   fill
                   className="object-cover"

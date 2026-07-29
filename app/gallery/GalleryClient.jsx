@@ -99,7 +99,7 @@ const galleryItems = [
 
 const stats = [
   { value: "12", label: "Featured moments" },
-  { value: "2", label: "Ibadan centers" },
+  { value: "3", label: "Ibadan centers" },
   { value: "2K+", label: "Students trained" },
 ];
 
