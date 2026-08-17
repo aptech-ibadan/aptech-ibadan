@@ -12,6 +12,7 @@ import InfoBox from "@/components/InfoBox";
 import Partners from "@/components/Partners";
 import Programs from "@/components/Programs";
 import Question from "@/components/Question";
+import VideoSpotlight from "@/components/VideoSpotlight";
 import Work from "@/components/Work";
 import { useState } from "react";
 
@@ -27,6 +28,7 @@ const HomePage = () => {
       <Work />
       <InfoBox />
       <Programs />
+      <VideoSpotlight />
       <Campus />
       <Enroll />
       <OpenDay />
