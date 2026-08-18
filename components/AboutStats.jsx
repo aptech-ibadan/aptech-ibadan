@@ -61,7 +61,7 @@ const AboutStats = () => {
       gradient: "from-[#FFC107]/20 to-transparent",
     },
     {
-      number: "2",
+      number: "3",
       label: "Campuses in Ibadan",
       icon: MapPin,
       gradient: "from-[#FFC107]/20 to-transparent",

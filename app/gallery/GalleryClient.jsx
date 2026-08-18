@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import {
   Award,
   Camera,
@@ -17,9 +18,27 @@ import {
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
+// Local dev fallback — the campus-tour export lives in /assets (assets/first-edit.mp4).
+// In production, set the NEXT_PUBLIC_CLOUDINARY_* env vars and the Cloudinary
+// URL is used instead so the 100MB+ file never gets bundled into the build.
+import campusTourVideo from "@/assets/first-edit.mp4";
 
 const galleryImage = (file) => `/images/gallery/${file}`;
 const aptech7VideoPath = "/aptech7.mov";
+
+// Same asset used in the homepage VideoSpotlight section — see
+// components/VideoSpotlight.jsx and public/videos/README.md for how the
+// source is resolved (Cloudinary in production, local file in dev).
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const CAMPUS_TOUR_PUBLIC_ID =
+  process.env.NEXT_PUBLIC_PROMO_VIDEO_PUBLIC_ID ||
+  "aptech/aptech-ibadan-campus-tour";
+const campusTourVideoPath = CLOUD_NAME
+  ? `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/f_auto,q_auto/${CAMPUS_TOUR_PUBLIC_ID}.mp4`
+  : campusTourVideo;
+const campusTourPosterPath = CLOUD_NAME
+  ? `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/f_jpg,q_auto,so_0/${CAMPUS_TOUR_PUBLIC_ID}.jpg`
+  : undefined;
 
 const galleryItems = [
   {
@@ -66,6 +85,14 @@ const galleryItems = [
     mediaType: "video",
   },
   {
+    title: "Campus Tour",
+    category: "Video",
+    image: campusTourVideoPath,
+    poster: campusTourPosterPath,
+    height: "h-[420px]",
+    mediaType: "video",
+  },
+  {
     title: "Center Memory",
     category: "Campus Life",
     image: galleryImage("aptech8.jpeg"),
@@ -97,9 +124,52 @@ const galleryItems = [
   },
 ];
 
+/**
+ * Masonry grid thumbnail for a video item. Only autoplays while the card is
+ * actually scrolled into view — with two videos now in the grid, having both
+ * decode + play simultaneously off-screen was wasted bandwidth/CPU on every
+ * page load, so playback is gated behind an IntersectionObserver instead of
+ * the previous unconditional `autoPlay`.
+ */
+const GalleryVideoThumb = ({ item }) => {
+  const videoRef = useRef(null);
+  const [ref, inView] = useInView({ threshold: 0.35 });
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (inView) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [inView]);
+
+  return (
+    <video
+      ref={(node) => {
+        videoRef.current = node;
+        ref(node);
+      }}
+      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      poster={item.poster}
+      aria-label={item.title}
+    >
+      {item.image.endsWith(".mov") && (
+        <source src={item.image} type="video/quicktime" />
+      )}
+      <source src={item.image} type="video/mp4" />
+    </video>
+  );
+};
+
 const stats = [
   { value: "12", label: "Featured moments" },
-  { value: "2", label: "Ibadan centers" },
+  { value: "3", label: "Ibadan centers" },
   { value: "2K+", label: "Students trained" },
 ];
 
@@ -324,18 +394,7 @@ export default function GalleryClient() {
               const cardContent = (
                 <div className={`relative ${item.height}`}>
                   {item.mediaType === "video" ? (
-                    <video
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                      muted
-                      loop
-                      playsInline
-                      autoPlay
-                      preload="metadata"
-                      aria-label={item.title}
-                    >
-                      <source src={item.image} type="video/quicktime" />
-                      <source src={item.image} type="video/mp4" />
-                    </video>
+                    <GalleryVideoThumb item={item} />
                   ) : (
                     <Image
                       src={item.image}
@@ -477,8 +536,11 @@ export default function GalleryClient() {
                     controls
                     autoPlay
                     playsInline
+                    poster={activeItem.poster}
                   >
-                    <source src={activeItem.image} type="video/quicktime" />
+                    {activeItem.image.endsWith(".mov") && (
+                      <source src={activeItem.image} type="video/quicktime" />
+                    )}
                     <source src={activeItem.image} type="video/mp4" />
                   </video>
                 ) : (

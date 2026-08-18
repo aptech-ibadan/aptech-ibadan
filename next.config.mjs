@@ -44,11 +44,7 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: [
-      "lucide-react",
-      "react-icons",
-      "framer-motion",
-    ],
+    optimizePackageImports: ["lucide-react", "react-icons", "framer-motion"],
     serverComponentsExternalPackages: [
       "mongoose",
       "bcryptjs",
@@ -57,6 +53,17 @@ const nextConfig = {
     ],
   },
   webpack: (config, { dev }) => {
+    // Allow importing video assets (e.g. `import v from "@/assets/first-edit.mp4"`)
+    // so Next.js emits them as static assets and the import resolves to a public
+    // URL instead of failing to parse the binary file.
+    config.module.rules.push({
+      test: /\.(mp4|webm|ogg|ogv|mov)$/i,
+      type: "asset/resource",
+      generator: {
+        filename: "static/media/[name].[hash][ext]",
+      },
+    });
+
     if (dev) {
       config.watchOptions = {
         poll: 1000,
