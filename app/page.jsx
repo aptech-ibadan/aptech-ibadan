@@ -2,7 +2,6 @@
 
 import Campus from "@/components/Campus";
 import CampaignPopup from "@/components/offers/CampaignPopup";
-import PublicityPopup from "@/components/offers/PublicityPopup";
 import Enroll from "@/components/Enroll";
 import OpenDay from "@/components/OpenDay";
 import Footer from "@/components/Footer";
@@ -20,7 +19,6 @@ const HomePage = () => {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <PublicityPopup />
       <CampaignPopup open={open} setOpen={setOpen} />
       <Hero />
       <GlobalAlliance />
