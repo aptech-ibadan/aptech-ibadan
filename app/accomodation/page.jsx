@@ -15,6 +15,20 @@ import {
   Volume2,
   VolumeX,
   Maximize2,
+  Bed,
+  Users,
+  UtensilsCrossed,
+  Bus,
+  Shirt,
+  Store,
+  HeartPulse,
+  Moon,
+  Star,
+  CheckCircle2,
+  Phone,
+  ArrowRight,
+  DoorOpen,
+  Sparkles,
 } from "lucide-react";
 import Footer from "@/components/Footer";
 // Campus-tour video lives in /assets (assets/first-edit.mp4) and is imported
@@ -26,13 +40,167 @@ const ACCOMMODATION_SCRIPT_URL =
   process.env.NEXT_PUBLIC_ACCOMMODATION_SCRIPT_URL;
 
 const features = [
-  { icon: Home, label: "Furnished Rooms" },
+  { icon: Bed, label: "Furnished Rooms" },
   { icon: Wifi, label: "High-Speed Wi-Fi" },
   { icon: Shield, label: "24/7 Security" },
   { icon: Coffee, label: "Common Areas" },
-  { icon: MapPin, label: "Near Campus" },
-  { icon: Clock, label: "Flexible Lease" },
+  { icon: MapPin, label: "3 Campus Locations" },
+  { icon: Clock, label: "Flexible 3–12 Month Plans" },
 ];
+
+// ── Document-backed data (from the APTECH Student Accommodation policy) ──
+
+const locations = [
+  {
+    name: "Agodi",
+    branch: "APTECH AGODI",
+    address:
+      "West One Building, Beside the Governor's Wife Office, Agodi GRA, Ibadan, Oyo State",
+  },
+  {
+    name: "Bodija",
+    branch: "APTECH BODIJA",
+    address:
+      "38A Ladoke Akintola Street, Old Bodija, Ibadan 200285, Oyo, Nigeria",
+  },
+  {
+    name: "Ring Road",
+    branch: "APTECH RINGROAD",
+    address: "93 MKO Abiola Way, Ibadan 200221, Oyo, Nigeria",
+  },
+];
+
+const roomTypes = [
+  {
+    name: "Standard",
+    tag: "10 residents per room",
+    icon: Users,
+    highlight: "Comfortable, value-focused shared living",
+    valueNote:
+      "Everything you need to live well and study — a bed, reading desk, air conditioning, internet and daily cleaning, all included.",
+    facilities: [
+      "Air conditioning",
+      "High-speed internet",
+      "Reading chair & table",
+      "Bed provided",
+      "Daily cleaning service",
+      "Basic accommodation facilities",
+    ],
+  },
+  {
+    name: "VIP",
+    tag: "4 residents per room",
+    icon: Star,
+    highlight: "Spacious premium rooms with extra conveniences",
+    valueNote:
+      "Premium space and home comforts — a more private room with a fridge, microwave and water heater so you can settle in properly.",
+    facilities: [
+      "Air conditioning",
+      "High-speed internet",
+      "Reading chair & table",
+      "Bed provided",
+      "Water heater",
+      "Small refrigerator",
+      "Spacious wardrobe",
+      "Microwave",
+    ],
+  },
+];
+
+const amenities = [
+  {
+    icon: UtensilsCrossed,
+    title: "Meal Plans",
+    desc: "Optional, flexible meal plans through an approved catering partner — choose Breakfast & Dinner or Dinner only, so good food is always sorted.",
+  },
+  {
+    icon: Bus,
+    title: "Campus Transport",
+    desc: "Dedicated pick-up and drop-off to and from campus on scheduled days, with schedules communicated in advance.",
+  },
+  {
+    icon: Shirt,
+    title: "Laundry Services",
+    desc: "Subscribe to a paid laundry provider or do your own laundry on-site.",
+  },
+  {
+    icon: Store,
+    title: "Tuck Shop",
+    desc: "A mini convenience store for drinking water, drinks, snacks, cereals, detergents, toiletries and first-aid supplies.",
+  },
+  {
+    icon: HeartPulse,
+    title: "First-Aid & Medical Support",
+    desc: "A basic first-aid box and emergency support procedures are available on site.",
+  },
+  {
+    icon: DoorOpen,
+    title: "House Management",
+    desc: "Dedicated House Managers and porters support resident welfare, complaints handling and daily operations.",
+  },
+];
+
+const safetyPolicies = [
+  {
+    icon: Moon,
+    title: "9:00 PM Curfew",
+    desc: "Students registered independently are expected within the premises by 9:00 PM unless prior approval is granted.",
+  },
+  {
+    icon: Clock,
+    title: "Quiet Hours",
+    desc: "Quiet hours run from 10:00 PM to 6:00 AM to protect study time and rest.",
+  },
+  {
+    icon: Shield,
+    title: "Secure Access",
+    desc: "Sign-in/out logs, registered visitors and controlled entry points keep the community safe.",
+  },
+  {
+    icon: Bed,
+    title: "Daily Cleaning",
+    desc: "Rooms and common areas are cleaned daily by designated accommodation staff.",
+  },
+  {
+    icon: Sparkles,
+    title: "Respectful Community",
+    desc: "No harassment, violence or disruptive behaviour — consideration for others is mandatory.",
+  },
+  {
+    icon: Phone,
+    title: "Emergency Support",
+    desc: "Emergency contacts for house management, security and medical support are available on site.",
+  },
+];
+
+const contactLines = [
+  { icon: Phone, value: "+234 707 049 1555" },
+  { icon: Phone, value: "+234 806 463 4830" },
+  { icon: Phone, value: "+234 803 651 8761" },
+];
+
+// ── Reusable animated section heading ──
+const SectionHeading = ({ eyebrow, title, accent, copy }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-80px" }}
+    transition={{ duration: 0.6 }}
+    className="mx-auto mb-12 max-w-2xl text-center md:mb-16"
+  >
+    <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FFC107]/30 bg-[#FFC107]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#FFC107]">
+      {eyebrow}
+    </span>
+    <h2 className="text-3xl font-bold leading-tight md:text-4xl">
+      {title} <span className="text-[#FFC107]">{accent}</span>
+    </h2>
+    {copy && (
+      <p className="mx-auto mt-3 max-w-xl leading-relaxed text-white/55">
+        {copy}
+      </p>
+    )}
+  </motion.div>
+);
 
 // Animated input wrapper
 const AnimatedField = ({ delay, children }) => (
@@ -44,6 +212,227 @@ const AnimatedField = ({ delay, children }) => (
   >
     {children}
   </motion.div>
+);
+
+// ── Campus locations ──
+const LocationsSection = () => (
+  <section className="relative py-20 md:py-28">
+    <div className="mx-auto max-w-7xl px-6 lg:px-0">
+      <SectionHeading
+        eyebrow="Where We Are"
+        title="Three convenient campuses,"
+        accent="one great community"
+        copy="Student accommodation is available across all three Aptech Ibadan locations, so you can live close to your classes."
+      />
+      <div className="grid gap-6 md:grid-cols-3">
+        {locations.map((loc, i) => (
+          <motion.div
+            key={loc.branch}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, delay: i * 0.12 }}
+            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFC107]/30 hover:bg-white/[0.05]"
+          >
+            <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#FFC107]/20 bg-[#FFC107]/10">
+              <MapPin className="h-5 w-5 text-[#FFC107]" />
+            </span>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#FFC107]">
+              {loc.branch}
+            </p>
+            <h3 className="mt-1 text-xl font-bold">{loc.name}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-white/55">
+              {loc.address}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// ── Room types & facilities ──
+const RoomTypesSection = () => (
+  <section className="relative py-20 md:py-28">
+    <div className="mx-auto max-w-6xl px-6 lg:px-0">
+      <SectionHeading
+        eyebrow="Rooms & Facilities"
+        title="Find the room"
+        accent="that fits you"
+        copy="Every room is air-conditioned, wired with high-speed internet and set up for focused study and rest."
+      />
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {roomTypes.map((room, i) => {
+          const Icon = room.icon;
+          return (
+            <motion.div
+              key={room.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: i * 0.12 }}
+              className={`relative overflow-hidden rounded-2xl border p-8 ${
+                room.name === "VIP"
+                  ? "border-[#FFC107]/40 bg-[#FFC107]/[0.04]"
+                  : "border-white/10 bg-white/[0.03]"
+              }`}
+            >
+              {room.name === "VIP" && (
+                <span className="absolute right-0 top-0 rounded-bl-xl bg-[#FFC107] px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#020B2D]">
+                  Most Popular
+                </span>
+              )}
+              <div className="mb-5 flex items-center gap-4">
+                <span
+                  className={`flex h-12 w-12 items-center justify-center rounded-xl ${
+                    room.name === "VIP"
+                      ? "bg-[#FFC107] text-[#020B2D]"
+                      : "border border-[#FFC107]/20 bg-[#FFC107]/10 text-[#FFC107]"
+                  }`}
+                >
+                  <Icon className="h-6 w-6" />
+                </span>
+                <div>
+                  <h3 className="text-2xl font-bold">{room.name}</h3>
+                  <p className="text-sm text-[#FFC107]">{room.tag}</p>
+                </div>
+              </div>
+
+              <p className="mb-6 text-sm text-white/55">{room.highlight}</p>
+
+              <ul className="mb-8 grid gap-3 sm:grid-cols-2">
+                {room.facilities.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2.5 text-sm text-white/75"
+                  >
+                    <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[#FFC107]" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-5">
+                <p className="text-sm leading-relaxed text-white/60">
+                  {room.valueNote}
+                </p>
+                <a
+                  href="#book"
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#FFC107] px-5 py-2.5 text-sm font-semibold text-[#020B2D] transition hover:bg-[#ffd23f]"
+                >
+                  Book now
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+// ── Amenities & services ──
+const AmenitiesSection = () => (
+  <section className="relative py-20 md:py-28">
+    <div className="pointer-events-none absolute left-[-10%] top-1/4 h-[420px] w-[420px] rounded-full bg-[#FFC107]/5 blur-[130px]" />
+    <div className="mx-auto max-w-6xl px-6 lg:px-0">
+      <SectionHeading
+        eyebrow="Life at the Hostel"
+        title="Everything you need"
+        accent="to focus on your studies"
+        copy="Beyond a comfortable room, residents enjoy transport, meals, laundry and dedicated support services."
+      />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {amenities.map(({ icon: Icon, title, desc }, i) => (
+          <motion.div
+            key={title}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+            className="rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFC107]/30"
+          >
+            <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#FFC107]/20 bg-[#FFC107]/10">
+              <Icon className="h-5 w-5 text-[#FFC107]" />
+            </span>
+            <h3 className="mb-2 text-lg font-bold">{title}</h3>
+            <p className="text-sm leading-relaxed text-white/55">{desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// ── Safety & community ──
+const SafetySection = () => (
+  <section className="relative py-20 md:py-28">
+    <div className="mx-auto max-w-6xl px-6 lg:px-0">
+      <SectionHeading
+        eyebrow="Safety & Community"
+        title="A safe, structured home"
+        accent="away from home"
+        copy="The accommodation is built around clear rules, strong safety measures and a respectful shared community."
+      />
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {safetyPolicies.map(({ icon: Icon, title, desc }, i) => (
+          <motion.div
+            key={title}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+            className="rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#FFC107]/30"
+          >
+            <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#FFC107]/20 bg-[#FFC107]/10">
+              <Icon className="h-5 w-5 text-[#FFC107]" />
+            </span>
+            <h3 className="mb-2 text-lg font-bold">{title}</h3>
+            <p className="text-sm leading-relaxed text-white/55">{desc}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Contact strip */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6 }}
+        className="mt-14 flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#FFC107]/20 bg-[#FFC107]/[0.04] p-8 text-center md:flex-row md:text-left"
+      >
+        <div>
+          <h3 className="text-xl font-bold">Questions about accommodation?</h3>
+          <p className="mt-1 text-sm text-white/55">
+            Talk to the accommodation team — we're happy to help you choose the
+            right room.
+          </p>
+        </div>
+        <div className="flex flex-col items-center gap-2 md:items-end">
+          <div className="flex flex-wrap justify-center gap-2">
+            {contactLines.map(({ icon: Icon, value }) => (
+              <a
+                key={value}
+                href={`tel:${value.replace(/\s/g, "")}`}
+                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                <Icon className="h-4 w-4 text-[#FFC107]" />
+                {value}
+              </a>
+            ))}
+          </div>
+          <a
+            href="mailto:info@itssng.com"
+            className="text-sm text-white/55 underline underline-offset-4 transition hover:text-white/80"
+          >
+            info@itssng.com · www.aptechibadan.com
+          </a>
+        </div>
+      </motion.div>
+    </div>
+  </section>
 );
 
 // Portrait campus-tour video player, matching the navy/amber design system.
@@ -112,7 +501,7 @@ const AccommodationVideo = () => {
           <h2 className="text-3xl font-bold leading-tight md:text-4xl">
             A look at <span className="text-[#FFC107]">student living</span>.
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-white/55 leading-relaxed">
+          <p className="mx-auto mt-3 max-w-xl leading-relaxed text-white/55">
             Step inside the furnished rooms, shared spaces, and 24/7-secure
             community now open for Aptech Ibadan students.
           </p>
@@ -367,9 +756,9 @@ export default function AccommodationPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#020B2D] text-white overflow-hidden">
+    <main className="min-h-screen overflow-hidden bg-[#020B2D] text-white">
       {/* Background */}
-      <div className="fixed inset-0 pointer-events-none">
+      <div className="pointer-events-none fixed inset-0">
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -378,21 +767,21 @@ export default function AccommodationPage() {
             backgroundSize: "60px 60px",
           }}
         />
-        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-[#FFC107]/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-[100px]" />
+        <div className="absolute left-1/2 top-[-20%] h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#FFC107]/10 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[100px]" />
       </div>
 
-      <div className="relative z-10 px-6 lg:px-0 py-40 max-w-7xl  mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-40 lg:px-0">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* LEFT — INFO with animations */}
           <div className="flex flex-col justify-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#FFC107]/30 bg-[#FFC107]/10 px-4 py-1.5 text-xs font-semibold text-[#FFC107] tracking-widest uppercase w-fit"
+              className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#FFC107]/30 bg-[#FFC107]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#FFC107]"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#FFC107] animate-pulse" />
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#FFC107]" />
               Now Available
             </motion.div>
 
@@ -400,7 +789,7 @@ export default function AccommodationPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl lg:text-6xl font-bold leading-tight mb-4"
+              className="mb-4 text-4xl font-bold leading-tight lg:text-6xl"
             >
               Student <span className="text-[#FFC107]">Accommodation</span>
               <br />
@@ -411,25 +800,27 @@ export default function AccommodationPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-md text-lg text-white/55 leading-relaxed mb-8"
+              className="mb-8 max-w-md text-lg leading-relaxed text-white/55"
             >
-              Our safe, comfortable, and connected living experience is designed
-              exclusively for Aptech Ibadan students — and it's ready for you
-              now. Reserve your room today.
+              A safe, comfortable and connected living experience designed
+              exclusively for Aptech Ibadan students — available across Agodi,
+              Bodija and Ring Road. Every room comes furnished with air
+              conditioning, high-speed internet and daily cleaning, so you can
+              focus on your studies. Reserve your room today.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-2 mb-8"
+              className="mb-8 flex flex-wrap gap-2"
             >
               {features.map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-white/65 transition-all duration-200 hover:bg-white/10 hover:scale-105"
+                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-white/65 transition-all duration-200 hover:scale-105 hover:bg-white/10"
                 >
-                  <Icon className="h-3 w-3 text-[#FFC107] flex-shrink-0" />
+                  <Icon className="h-3 w-3 flex-shrink-0 text-[#FFC107]" />
                   {label}
                 </div>
               ))}
@@ -442,7 +833,7 @@ export default function AccommodationPage() {
             >
               <Link
                 href="/"
-                className="text-sm text-white/35 hover:text-white/60 transition underline underline-offset-4"
+                className="text-sm text-white/35 underline underline-offset-4 transition hover:text-white/60"
               >
                 ← Back to Home
               </Link>
@@ -456,32 +847,32 @@ export default function AccommodationPage() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className="bg-white rounded-2xl shadow-2xl"
+              className="rounded-2xl bg-white shadow-2xl"
             >
-              <div className="bg-white p-8 md:p-10 rounded-2xl">
+              <div className="rounded-2xl bg-white p-8 md:p-10">
                 <motion.h2
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.15 }}
-                  className="text-2xl font-bold text-[#020B2D] mb-6"
+                  className="mb-6 text-2xl font-bold text-[#020B2D]"
                 >
                   Book Your Room
                 </motion.h2>
 
                 {success ? (
                   <div className="rounded-xl border border-green-200 bg-green-50 px-6 py-10 text-center">
-                    <div className="text-5xl mb-4">🎉</div>
-                    <p className="text-green-700 font-bold text-lg mb-1">
+                    <div className="mb-4 text-5xl">🎉</div>
+                    <p className="mb-1 text-lg font-bold text-green-700">
                       Request received!
                     </p>
-                    <p className="text-green-600 text-sm mb-4">
+                    <p className="mb-4 text-sm text-green-600">
                       Our team will reach out to confirm your room and arrange a
                       viewing.
                     </p>
                     <button
                       onClick={resetForm}
-                      className="text-xs text-green-600 hover:text-green-700 underline underline-offset-2"
+                      className="text-xs text-green-600 underline underline-offset-2 hover:text-green-700"
                     >
                       Submit another request →
                     </button>
@@ -562,11 +953,11 @@ export default function AccommodationPage() {
                         whileTap={{ scale: loading ? 1 : 0.97 }}
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-[#020B2D] text-white font-semibold py-3 rounded-full transition-colors duration-300 relative overflow-hidden disabled:opacity-70 disabled:cursor-not-allowed"
+                        className="relative w-full overflow-hidden rounded-full bg-[#020B2D] py-3 font-semibold text-white transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-70"
                       >
                         {!loading && (
                           <motion.span
-                            className="absolute inset-0 pointer-events-none"
+                            className="pointer-events-none absolute inset-0"
                             style={{
                               background:
                                 "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.1) 50%, transparent 65%)",
@@ -586,7 +977,7 @@ export default function AccommodationPage() {
                         {loading ? (
                           <span className="flex items-center justify-center gap-2">
                             <motion.span
-                              className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                              className="inline-block h-4 w-4 rounded-full border-2 border-white border-t-transparent"
                               animate={{ rotate: 360 }}
                               transition={{
                                 duration: 0.7,
@@ -602,7 +993,7 @@ export default function AccommodationPage() {
                       </motion.button>
                     </AnimatedField>
 
-                    <p className="text-center text-gray-300 text-xs pt-1">
+                    <p className="pt-1 text-center text-xs text-gray-300">
                       We'll reach out to arrange your viewing. No spam.
                     </p>
                   </form>
@@ -613,6 +1004,10 @@ export default function AccommodationPage() {
         </div>
       </div>
 
+      <LocationsSection />
+      <RoomTypesSection />
+      <AmenitiesSection />
+      <SafetySection />
       <AccommodationVideo />
 
       {/* <Footer/> */}
