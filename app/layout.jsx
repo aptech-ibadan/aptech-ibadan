@@ -74,7 +74,7 @@ export const metadata = {
 };
 
 const MainLayout = ({ children }) => {
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "hTFADsLnPwYQlAoiwaq1t";
 
   return (
     <html lang="en">
@@ -142,7 +142,7 @@ const MainLayout = ({ children }) => {
               const onLoad = function(){
                 const script = document.createElement("script");
                 script.src = "https://www.chatbase.co/embed.min.js";
-                script.id = "Ao92HkXmEIk-UB9PbgpA0";
+                script.id = "hTFADsLnPwYQlAoiwaq1t";
                 script.domain = "www.chatbase.co";
                 document.body.appendChild(script);
               };
