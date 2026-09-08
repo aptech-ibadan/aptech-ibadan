@@ -13,7 +13,7 @@ const smartProfessionalCourses = [
     title: "Mastering MIS & Cross-Platform App Development",
     subtitle: "Diploma in MIS and Cross-Platform App Development",
     category: "JAPA Course",
-    duration: "~6 months",
+    duration: "14 months",
     hours: 392,
     certification: "Aptech Diploma",
     image:
@@ -107,7 +107,7 @@ const smartProfessionalCourses = [
     title: "Complete Network Administration",
     subtitle: "Diploma in Network Administration",
     category: "JAPA Course",
-    duration: "~6 months",
+    duration: "14 months",
     hours: 408,
     certification: "Aptech Diploma",
     image:
@@ -145,7 +145,7 @@ const smartProfessionalCourses = [
     title: "Cybersecurity & Digital Forensics",
     subtitle: "Diploma in Cybersecurity and Digital Forensics",
     category: "JAPA Course",
-    duration: "~7 months",
+    duration: "14 months",
     hours: 450,
     certification: "Aptech Diploma",
     image:

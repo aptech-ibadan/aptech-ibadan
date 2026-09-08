@@ -2,73 +2,32 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { X, MapPin, TrendingUp, Cpu, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
-const getCountdown = (endDate) => {
-  if (!endDate)
-    return { expired: false, days: 0, hours: 0, minutes: 0, seconds: 0 };
-
-  const target = new Date(endDate).getTime();
-  const now = Date.now();
-  const diff = target - now;
-
-  if (diff <= 0) {
-    return { expired: true, days: 0, hours: 0, minutes: 0, seconds: 0 };
-  }
-
-  return {
-    expired: false,
-    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((diff / (1000 * 60)) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  };
-};
-
-const confettiPieces = [
-  { left: "8%", delay: 0.1, duration: 2.8, color: "#FFC107" },
-  { left: "18%", delay: 0.5, duration: 3.2, color: "#ffffff" },
-  { left: "30%", delay: 0.2, duration: 2.9, color: "#FFD54F" },
-  { left: "45%", delay: 0.7, duration: 3.4, color: "#ffffff" },
-  { left: "60%", delay: 0.3, duration: 2.7, color: "#FFC107" },
-  { left: "75%", delay: 0.9, duration: 3.1, color: "#ffffff" },
-  { left: "88%", delay: 0.4, duration: 2.6, color: "#FFD54F" },
+const tracks = [
+  {
+    icon: TrendingUp,
+    title: "Data Analysis",
+    subtitle: "Excel, SQL, Power BI & Dashboards",
+  },
+  {
+    icon: Cpu,
+    title: "Data Science",
+    subtitle: "Python, Machine Learning & AI",
+  },
 ];
+
+const centres = ["Agodi Centre", "Ring Road Centre"];
 
 const CampaignPopup = () => {
   const [open, setOpen] = useState(false);
-  const [campaign, setCampaign] = useState(null);
-  // ✅ Initialize as null — only set after campaign loads
-  const [countdown, setCountdown] = useState(null);
 
-  // ── Fetch latest offer ────────────────────────────────────
-  useEffect(() => {
-    fetch("/api/offers?latest=true")
-      .then((res) => res.json())
-      .then((data) => {
-        setCampaign(data);
-        // ✅ Set initial countdown only after data arrives
-        setCountdown(getCountdown(data?.endDate));
-      })
-      .catch(() => null);
-  }, []);
-
-  // ── Show popup after delay ────────────────────────────────
+  // Show the popup shortly after page load
   useEffect(() => {
     const timer = setTimeout(() => setOpen(true), 900);
     return () => clearTimeout(timer);
   }, []);
-
-  // ── Tick countdown every second ──────────────────────────
-  useEffect(() => {
-    if (!campaign?.endDate) return;
-    const intervalId = setInterval(() => {
-      setCountdown(getCountdown(campaign.endDate));
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [campaign?.endDate]);
 
   const closePopup = () => setOpen(false);
 
@@ -81,130 +40,106 @@ const CampaignPopup = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            {confettiPieces.map((piece, index) => (
-              <motion.span
-                key={`modal-${piece.left}-${index}`}
-                className="absolute top-[-16px] block h-2 w-2 rounded-sm opacity-70"
-                style={{ left: piece.left, backgroundColor: piece.color }}
-                animate={{
-                  y: [0, 900],
-                  rotate: [0, 220],
-                  opacity: [0, 0.85, 0],
-                }}
-                transition={{
-                  duration: piece.duration,
-                  delay: piece.delay,
-                  repeat: Infinity,
-                  repeatDelay: 1.3,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-          </div>
-
           <motion.div
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.25 }}
-            className="w-full max-w-lg rounded-2xl border border-white/20 bg-[#040d2e] p-6 shadow-2xl relative"
+            className="w-full max-w-lg rounded-2xl border border-white/20 bg-[#040d2e] p-6 shadow-2xl relative overflow-hidden"
           >
+            {/* Decorative top accents */}
+            <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-[#FFC107]/10 blur-2xl" />
+            <div className="pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-[#FFC107]/5 blur-2xl" />
+
             <button
               onClick={closePopup}
-              aria-label="Close campaign popup"
-              className="absolute top-3 right-3 p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer"
+              aria-label="Close popup"
+              className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer"
             >
               <X size={16} className="text-white" />
             </button>
 
-            <p className="text-xs tracking-[0.2em] text-[#FFC107] uppercase font-semibold">
-              Latest Campaign
+            {/* Badge */}
+            <div className="relative flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFC107] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-black">
+                New September Cohort
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full border border-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/70">
+                Limited Seats
+              </span>
+            </div>
+
+            {/* Heading */}
+            <h3 className="relative mt-4 text-3xl font-bold leading-tight text-white">
+              Join the <span className="text-[#FFC107]">September Cohort</span>
+            </h3>
+            <p className="relative mt-2 text-gray-100 leading-relaxed">
+              Start a high-demand data career. Choose either{" "}
+              <span className="font-semibold text-[#FFC107]">Data Science</span>{" "}
+              or{" "}
+              <span className="font-semibold text-[#FFC107]">
+                Data Analysis
+              </span>{" "}
+              and learn hands-on with industry experts.
             </p>
 
-            <div className="mt-3 rounded-xl overflow-hidden border border-white/20">
-              <div className="relative h-40">
-                <Image
-                  src={campaign?.image || "/valencia-aptech.png"}
-                  alt={campaign?.title || "Campaign"}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020B2D]/70 to-transparent" />
+            {/* Track options */}
+            <div className="relative mt-5 grid grid-cols-2 gap-3">
+              {tracks.map(({ icon: Icon, title, subtitle }) => (
+                <div
+                  key={title}
+                  className="rounded-xl border border-white/15 bg-white/5 p-4"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#FFC107]/15 text-[#FFC107]">
+                    <Icon size={20} />
+                  </div>
+                  <p className="mt-3 font-bold text-white">{title}</p>
+                  <p className="mt-1 text-[11px] leading-relaxed text-gray-300">
+                    {subtitle}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Centres */}
+            <div className="relative mt-4 rounded-xl border border-white/10 bg-[#08133f] px-4 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-300">
+                Now enrolling at
+              </p>
+              <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1">
+                {centres.map((centre) => (
+                  <span
+                    key={centre}
+                    className="flex items-center gap-1.5 text-sm font-medium text-white"
+                  >
+                    <MapPin size={14} className="text-[#FFC107]" /> {centre}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <h3 className="text-2xl font-bold text-white mt-4">
-              {campaign?.title || "Loading..."}
-            </h3>
-            <p className="text-gray-100 mt-3 leading-relaxed">
-              Enjoy{" "}
-              <span className="text-[#FFC107] font-bold">
-                {campaign?.discount || "—"}
-              </span>{" "}
-              on all courses for {campaign?.audience || "qualified students"}.
-              Limited campaign period.
-            </p>
-
-            {/* ✅ Only render countdown after it's loaded */}
-            {countdown && !countdown.expired && (
-              <div className="mt-4 grid grid-cols-4 gap-2">
-                {[
-                  { label: "Days", value: countdown.days },
-                  { label: "Hours", value: countdown.hours },
-                  { label: "Minutes", value: countdown.minutes },
-                  { label: "Seconds", value: countdown.seconds },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-lg border border-white/20 bg-[#08133f] py-2 text-center"
-                  >
-                    <p className="text-lg font-bold text-[#FFC107]">
-                      {item.value}
-                    </p>
-                    <p className="text-[11px] text-gray-300">{item.label}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* ✅ Skeleton while loading */}
-            {!countdown && (
-              <div className="mt-4 grid grid-cols-4 gap-2">
-                {["D", "H", "M", "S"].map((label) => (
-                  <div
-                    key={label}
-                    className="rounded-lg border border-white/20 bg-[#08133f] py-2 text-center animate-pulse"
-                  >
-                    <p className="text-lg font-bold text-[#FFC107]">—</p>
-                    <p className="text-[11px] text-gray-300">{label}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {countdown?.expired && (
-              <p className="mt-4 text-sm text-red-300 bg-red-500/10 border border-red-400/30 rounded-lg py-2 px-3 text-center">
-                This campaign has ended.
-              </p>
-            )}
-
-            <div className="mt-5 flex flex-wrap gap-3">
+            {/* CTA */}
+            <div className="relative mt-5 flex flex-col gap-2 sm:flex-row">
               <Link
-                href="/offers"
+                href="/contact"
                 onClick={closePopup}
-                className="rounded-full bg-[#FFC107] text-black font-semibold px-5 py-2.5 hover:bg-yellow-300 transition cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#FFC107] px-6 py-3 font-semibold text-black transition hover:bg-yellow-300 cursor-pointer"
               >
-                View Offer Details
+                Reserve Your Seat <ArrowRight size={16} />
               </Link>
               <Link
                 href="/contact"
                 onClick={closePopup}
-                className="rounded-full border border-white/30 text-white font-semibold px-5 py-2.5 hover:border-[#FFC107]/60 hover:text-[#FFC107] transition cursor-pointer"
+                className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 font-semibold text-white transition hover:border-[#FFC107]/60 hover:text-[#FFC107] cursor-pointer"
               >
-                Enroll Now
+                Talk to Admissions
               </Link>
             </div>
+
+            <p className="relative mt-3 text-center text-[11px] text-gray-400">
+              Beginner-friendly · Flexible schedules · No prior experience
+              needed
+            </p>
           </motion.div>
         </motion.div>
       )}

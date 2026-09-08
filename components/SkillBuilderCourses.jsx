@@ -43,11 +43,14 @@ const skillBuilderCourses = [
     title: "Digital Marketing",
     subtitle: "SEO, Social Media, Analytics",
     category: "Skill Builder",
-    duration: "3 months",
+    duration: "2 months",
     certification: "Certificate of Completion",
-    image: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=870&auto=format&fit=crop",
-    shortDescription: "Learn to grow brands online with SEO, social media, and analytics.",
-    longDescription: "This comprehensive course covers all aspects of digital marketing. Students learn SEO, social media marketing, email marketing, Google Analytics, and pay-per-click advertising.",
+    image:
+      "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=870&auto=format&fit=crop",
+    shortDescription:
+      "Learn to grow brands online with SEO, social media, and analytics.",
+    longDescription:
+      "This comprehensive course covers all aspects of digital marketing. Students learn SEO, social media marketing, email marketing, Google Analytics, and pay-per-click advertising.",
     keyFeatures: [
       "Search Engine Optimization (SEO)",
       "Social Media Marketing (Facebook, Instagram, LinkedIn)",
@@ -56,29 +59,42 @@ const skillBuilderCourses = [
       "Content Marketing Strategy",
       "Pay-Per-Click (Google Ads)",
       "E-commerce Marketing",
-      "Digital Marketing Certification Preparation"
+      "Digital Marketing Certification Preparation",
     ],
     technologies: [
-      "Google Analytics", "Google Ads", "Meta Business Suite",
-      "Mailchimp", "SEMrush", "Canva"
+      "Google Analytics",
+      "Google Ads",
+      "Meta Business Suite",
+      "Mailchimp",
+      "SEMrush",
+      "Canva",
     ],
     careerPaths: [
-      "Digital Marketing Specialist", "SEO Specialist", "Social Media Manager",
-      "Content Marketing Specialist", "Email Marketing Coordinator"
+      "Digital Marketing Specialist",
+      "SEO Specialist",
+      "Social Media Manager",
+      "Content Marketing Specialist",
+      "Email Marketing Coordinator",
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/digitalmarketing-1.jpg", "/images/digitalmarketing-2.jpg"]
+    gallery: [
+      "/images/digitalmarketing-1.jpg",
+      "/images/digitalmarketing-2.jpg",
+    ],
   },
   {
     id: "python-programming",
     title: "Python Programming",
     subtitle: "From Basics to Automation",
     category: "Skill Builder",
-    duration: "2 months",
+    duration: "3 months",
     certification: "Certificate of Completion",
-    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=869&auto=format&fit=crop",
-    shortDescription: "Learn Python fundamentals for automation, data analysis, or web development.",
-    longDescription: "Python is one of the most versatile and in-demand programming languages. This course covers Python fundamentals, data structures, file handling, and automation scripts.",
+    image:
+      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=869&auto=format&fit=crop",
+    shortDescription:
+      "Learn Python fundamentals for automation, data analysis, or web development.",
+    longDescription:
+      "Python is one of the most versatile and in-demand programming languages. This course covers Python fundamentals, data structures, file handling, and automation scripts.",
     keyFeatures: [
       "Python Syntax & Basics",
       "Data Structures (Lists, Dictionaries, Tuples)",
@@ -87,30 +103,38 @@ const skillBuilderCourses = [
       "Error Handling & Debugging",
       "Web Scraping Basics",
       "Automation Scripts",
-      "Mini Projects"
+      "Mini Projects",
     ],
     technologies: [
-      "Python 3", "VS Code/PyCharm", "Jupyter Notebooks",
-      "BeautifulSoup", "Pandas Basics"
+      "Python 3",
+      "VS Code/PyCharm",
+      "Jupyter Notebooks",
+      "BeautifulSoup",
+      "Pandas Basics",
     ],
     careerPaths: [
-      "Junior Python Developer", "Automation Specialist", "Data Analyst Assistant",
-      "Technical Support Engineer"
+      "Junior Python Developer",
+      "Automation Specialist",
+      "Data Analyst Assistant",
+      "Technical Support Engineer",
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/python-1.jpg", "/images/python-2.jpg"]
+    gallery: ["/images/python-1.jpg", "/images/python-2.jpg"],
   },
   {
     id: "office-automation",
     title: "Office Automation",
     subtitle: "Excel, Word, PowerPoint Expert",
     category: "Skill Builder",
-    duration: "3 months",
+    duration: "5 weeks",
     certification: "MOS Certification",
-    image: "https://images.unsplash.com/photo-1649433391420-542fcd3835ea?q=80&w=870&auto=format&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1649433391420-542fcd3835ea?q=80&w=870&auto=format&fit=crop",
     badge: "Internationally Recognized",
-    shortDescription: "Earn globally recognized Microsoft Office Specialist certification and boost your career prospects.",
-    longDescription: "The Microsoft Office Specialist (MOS) certification is an internationally recognized credential that validates your expertise in Microsoft Office applications. This course prepares you for MOS exams in Word, Excel, PowerPoint, and Outlook. MOS certification can boost your earning potential by up to 20% and is recognized by employers worldwide.",
+    shortDescription:
+      "Earn globally recognized Microsoft Office Specialist certification and boost your career prospects.",
+    longDescription:
+      "The Microsoft Office Specialist (MOS) certification is an internationally recognized credential that validates your expertise in Microsoft Office applications. This course prepares you for MOS exams in Word, Excel, PowerPoint, and Outlook. MOS certification can boost your earning potential by up to 20% and is recognized by employers worldwide.",
     keyFeatures: [
       "MOS Word Expert (Associate & Expert Level)",
       "MOS Excel Expert (Associate & Expert Level)",
@@ -123,31 +147,44 @@ const skillBuilderCourses = [
       "Professional Report Generation",
       "Official MOS Exam Preparation",
       "Mock Tests & Practice Exams",
-      "Internationally Recognized Certification"
+      "Internationally Recognized Certification",
     ],
     technologies: [
-      "Microsoft Word (Advanced)", "Microsoft Excel (Advanced)",
-      "Microsoft PowerPoint (Advanced)", "Microsoft Outlook",
-      "VBA Basics", "Power Query", "Pivot Tables"
+      "Microsoft Word (Advanced)",
+      "Microsoft Excel (Advanced)",
+      "Microsoft PowerPoint (Advanced)",
+      "Microsoft Outlook",
+      "VBA Basics",
+      "Power Query",
+      "Pivot Tables",
     ],
     careerPaths: [
-      "Data Analyst", "Business Analyst", "Office Manager",
-      "Executive Assistant", "Project Coordinator", "Operations Manager",
-      "Administrative Professional", "Compliance Officer", "Finance Assistant"
+      "Data Analyst",
+      "Business Analyst",
+      "Office Manager",
+      "Executive Assistant",
+      "Project Coordinator",
+      "Operations Manager",
+      "Administrative Professional",
+      "Compliance Officer",
+      "Finance Assistant",
     ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/mos-1.jpg", "/images/mos-2.jpg", "/images/mos-3.jpg"]
+    gallery: ["/images/mos-1.jpg", "/images/mos-2.jpg", "/images/mos-3.jpg"],
   },
   {
     id: "graphic-designing",
     title: "Certificate in Graphic Designing",
     subtitle: "Photoshop, Illustrator, InDesign",
     category: "Skill Builder",
-    duration: "2 months",
-    image: "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?q=80&w=871&auto=format&fit=crop",
+    duration: "4 months",
+    image:
+      "https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?q=80&w=871&auto=format&fit=crop",
     certification: "Certificate of Accomplishment",
-    shortDescription: "Master the fundamentals of graphic design including illustrations, image editing, and page layout for print and digital media.",
-    longDescription: "Master the fundamentals of graphic design including illustrations, image editing, and page layout for print and digital media. Learn industry-standard tools and create professional designs for logos, brochures, social media, and marketing materials.",
+    shortDescription:
+      "Master the fundamentals of graphic design including illustrations, image editing, and page layout for print and digital media.",
+    longDescription:
+      "Master the fundamentals of graphic design including illustrations, image editing, and page layout for print and digital media. Learn industry-standard tools and create professional designs for logos, brochures, social media, and marketing materials.",
     keyFeatures: [
       "Design Principles (Typography, Color, Layout)",
       "Adobe Photoshop (Photo Editing, Manipulation)",
@@ -156,12 +193,22 @@ const skillBuilderCourses = [
       "Branding & Identity Design",
       "Social Media Graphics",
       "Print Production Basics",
-      "Professional Portfolio"
+      "Professional Portfolio",
     ],
-    technologies: ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign", "Adobe InCopy"],
-    careerPaths: ["Graphic Designer", "Illustrator", "Photo Editor", "Layout Designer"],
+    technologies: [
+      "Adobe Illustrator",
+      "Adobe Photoshop",
+      "Adobe InDesign",
+      "Adobe InCopy",
+    ],
+    careerPaths: [
+      "Graphic Designer",
+      "Illustrator",
+      "Photo Editor",
+      "Layout Designer",
+    ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: ["/images/graphicdesign-1.jpg", "/images/graphicdesign-2.jpg"]
+    gallery: ["/images/graphicdesign-1.jpg", "/images/graphicdesign-2.jpg"],
   },
   // {
   //   id: "audio-video-editing",
@@ -474,9 +521,12 @@ const smartProfessionalCourses = [
     category: "Smart Professional",
     duration: "6 months",
     certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=870&auto=format&fit=crop",
-    shortDescription: "Master data science techniques including Python, SQL, statistics, and machine learning fundamentals.",
-    longDescription: "Comprehensive data science program covering Python programming, data manipulation, visualization, statistics, and machine learning. Prepare for roles in data analytics and data science.",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=870&auto=format&fit=crop",
+    shortDescription:
+      "Master data science techniques including Python, SQL, statistics, and machine learning fundamentals.",
+    longDescription:
+      "Comprehensive data science program covering Python programming, data manipulation, visualization, statistics, and machine learning. Prepare for roles in data analytics and data science.",
     keyFeatures: [
       "Python for Data Science",
       "SQL & Database Management",
@@ -484,12 +534,23 @@ const smartProfessionalCourses = [
       "Statistical Analysis",
       "Machine Learning Basics",
       "Real-world Projects",
-      "Portfolio Development"
+      "Portfolio Development",
     ],
-    technologies: ["Python", "Pandas", "NumPy", "SQL", "Scikit-learn", "Tableau"],
-    careerPaths: ["Data Analyst", "Junior Data Scientist", "Business Intelligence Analyst"],
+    technologies: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "SQL",
+      "Scikit-learn",
+      "Tableau",
+    ],
+    careerPaths: [
+      "Data Analyst",
+      "Junior Data Scientist",
+      "Business Intelligence Analyst",
+    ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: []
+    gallery: [],
   },
   {
     id: "cybersecurity",
@@ -498,21 +559,28 @@ const smartProfessionalCourses = [
     category: "Smart Professional",
     duration: "6 months",
     certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=870&auto=format&fit=crop",
-    shortDescription: "Learn to protect organizations from cyber threats with hands-on security training.",
-    longDescription: "Essential cybersecurity skills including network security, ethical hacking, cryptography, and security management. Prepare for industry certifications.",
+    image:
+      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=870&auto=format&fit=crop",
+    shortDescription:
+      "Learn to protect organizations from cyber threats with hands-on security training.",
+    longDescription:
+      "Essential cybersecurity skills including network security, ethical hacking, cryptography, and security management. Prepare for industry certifications.",
     keyFeatures: [
       "Network Security",
       "Ethical Hacking Basics",
       "Cryptography",
       "Security Auditing",
       "Incident Response",
-      "Compliance & Governance"
+      "Compliance & Governance",
     ],
     technologies: ["Wireshark", "Nmap", "Metasploit", "Linux", "Firewalls"],
-    careerPaths: ["Security Analyst", "Network Security Specialist", "IT Security Officer"],
+    careerPaths: [
+      "Security Analyst",
+      "Network Security Specialist",
+      "IT Security Officer",
+    ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: []
+    gallery: [],
   },
   {
     id: "cloud-computing",
@@ -521,21 +589,28 @@ const smartProfessionalCourses = [
     category: "Smart Professional",
     duration: "4 months",
     certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=872&auto=format&fit=crop",
-    shortDescription: "Master cloud platforms and services for modern infrastructure deployment.",
-    longDescription: "Comprehensive cloud computing training covering AWS, Azure, cloud architecture, and DevOps fundamentals.",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=872&auto=format&fit=crop",
+    shortDescription:
+      "Master cloud platforms and services for modern infrastructure deployment.",
+    longDescription:
+      "Comprehensive cloud computing training covering AWS, Azure, cloud architecture, and DevOps fundamentals.",
     keyFeatures: [
       "AWS Fundamentals",
       "Azure Basics",
       "Cloud Architecture Design",
       "Serverless Computing",
       "Cloud Security",
-      "Cost Optimization"
+      "Cost Optimization",
     ],
     technologies: ["AWS", "Azure", "Docker", "Kubernetes", "Terraform"],
-    careerPaths: ["Cloud Associate", "DevOps Engineer", "Cloud Support Specialist"],
+    careerPaths: [
+      "Cloud Associate",
+      "DevOps Engineer",
+      "Cloud Support Specialist",
+    ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: []
+    gallery: [],
   },
   {
     id: "full-stack-web",
@@ -544,9 +619,12 @@ const smartProfessionalCourses = [
     category: "Smart Professional",
     duration: "6 months",
     certification: "Professional Certificate",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=872&auto=format&fit=crop",
-    shortDescription: "Build complete web applications with MongoDB, Express, React, and Node.js.",
-    longDescription: "Master full-stack web development using the MERN stack. Learn frontend and backend development, APIs, database design, and deployment.",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=872&auto=format&fit=crop",
+    shortDescription:
+      "Build complete web applications with MongoDB, Express, React, and Node.js.",
+    longDescription:
+      "Master full-stack web development using the MERN stack. Learn frontend and backend development, APIs, database design, and deployment.",
     keyFeatures: [
       "MongoDB Database Design",
       "Express.js Backend",
@@ -554,13 +632,24 @@ const smartProfessionalCourses = [
       "Node.js Runtime",
       "RESTful APIs",
       "Authentication & Authorization",
-      "Deployment & DevOps"
+      "Deployment & DevOps",
     ],
-    technologies: ["MongoDB", "Express.js", "React", "Node.js", "Git", "Docker"],
-    careerPaths: ["Full Stack Developer", "MERN Stack Developer", "Web Application Developer"],
+    technologies: [
+      "MongoDB",
+      "Express.js",
+      "React",
+      "Node.js",
+      "Git",
+      "Docker",
+    ],
+    careerPaths: [
+      "Full Stack Developer",
+      "MERN Stack Developer",
+      "Web Application Developer",
+    ],
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    gallery: []
-  }
+    gallery: [],
+  },
 ];
 
 // Animation variants
@@ -577,14 +666,14 @@ const containerVariants = {
 
 const SkillBuilderCourses = ({ openModal }) => {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { 
-    once: false, 
+  const isInView = useInView(sectionRef, {
+    once: false,
     amount: 0.1,
-    margin: "-50px 0px -50px 0px"
+    margin: "-50px 0px -50px 0px",
   });
 
   return (
-    <motion.section 
+    <motion.section
       ref={sectionRef}
       className="py-16 bg-white px-6 md:px-16"
       initial="hidden"
@@ -599,7 +688,7 @@ const SkillBuilderCourses = ({ openModal }) => {
           description="Quick, focused programs to build essential skills for career advancement."
         />
 
-        <motion.div 
+        <motion.div
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
           variants={containerVariants}
         >
