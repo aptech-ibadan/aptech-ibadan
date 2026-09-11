@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ProgramsHero from "@/components/ProgramsHero";
 import CareerCourses from "@/components/CareerCourses";
+import JapaCourses from "@/components/JapaCourses";
 import SmartProfessionalCourses from "@/components/SmartProfessionalCourses";
 import SkillBuilderCourses from "@/components/SkillBuilderCourses";
 import CtaSection from "@/components/CtaSection";
@@ -28,6 +29,7 @@ const ProgramsPage = () => {
     <div className="">
       <ProgramsHero />
       <CareerCourses openModal={openModal} />
+      <JapaCourses openModal={openModal} />
       <SmartProfessionalCourses openModal={openModal} />
       <SkillBuilderCourses openModal={openModal} />
       <CtaSection />
