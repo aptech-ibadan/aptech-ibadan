@@ -1,6 +1,8 @@
 "use client";
 
 import Footer from "@/components/Footer";
+import Link from "next/link";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import {
   motion,
   useAnimation,
@@ -95,12 +97,12 @@ const MediaCarousel = ({ mediaItems, title }) => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Filter only images for carousel (videos handled separately or as first item)
-  const imageItems = mediaItems.filter(item => item.type === "image");
-  const hasVideo = mediaItems.some(item => item.type === "video");
-  const videoItem = mediaItems.find(item => item.type === "video");
+  const imageItems = mediaItems.filter((item) => item.type === "image");
+  const hasVideo = mediaItems.some((item) => item.type === "video");
+  const videoItem = mediaItems.find((item) => item.type === "video");
 
   // If there's a video, prepend it as first slide
-  const carouselItems = hasVideo 
+  const carouselItems = hasVideo
     ? [{ type: "video", src: videoItem.src }, ...imageItems]
     : imageItems;
 
@@ -132,7 +134,11 @@ const MediaCarousel = ({ mediaItems, title }) => {
   };
 
   const slideVariants = {
-    enter: (dir) => ({ x: dir > 0 ? "100%" : "-100%", opacity: 0, scale: 0.96 }),
+    enter: (dir) => ({
+      x: dir > 0 ? "100%" : "-100%",
+      opacity: 0,
+      scale: 0.96,
+    }),
     center: {
       x: 0,
       opacity: 1,
@@ -205,7 +211,10 @@ const MediaCarousel = ({ mediaItems, title }) => {
                   muted
                   playsInline
                 >
-                  <source src={carouselItems[currentIndex].src} type="video/mp4" />
+                  <source
+                    src={carouselItems[currentIndex].src}
+                    type="video/mp4"
+                  />
                 </video>
               ) : (
                 <img
@@ -305,8 +314,8 @@ const MediaCarousel = ({ mediaItems, title }) => {
             Preview
           </p>
           <p className="font-semibold text-base text-white mt-1">
-            {carouselItems[currentIndex]?.type === "video" 
-              ? "Program Overview Video" 
+            {carouselItems[currentIndex]?.type === "video"
+              ? "Program Overview Video"
               : "Visual Showcase"}
           </p>
         </div>
@@ -393,7 +402,12 @@ const StaticMedia = ({ media, title }) => {
   );
 };
 
-export default function CourseClient({ course, slug }) {
+export default function CourseClient({
+  course,
+  slug,
+  breadcrumbItems,
+  related,
+}) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [slug]);
@@ -479,6 +493,13 @@ export default function CourseClient({ course, slug }) {
           backgroundSize: "80px 80px",
         }}
       />
+
+      {/* ════════════════════ BREADCRUMBS ════════════════════ */}
+      {breadcrumbItems?.length ? (
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-6 pt-6">
+          <Breadcrumbs items={breadcrumbItems} />
+        </div>
+      ) : null}
 
       {/* ════════════════════ HERO ════════════════════ */}
       <motion.section
@@ -893,6 +914,50 @@ export default function CourseClient({ course, slug }) {
           </div>
         </div>
       </section>
+
+      {/* ════════════════════ RELATED PROGRAMMES ════════════════════ */}
+      {related?.length ? (
+        <section className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-6 py-16 border-t border-white/10">
+          <p className="text-[#FFC107] uppercase tracking-widest text-sm font-semibold mb-3">
+            Keep exploring
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+            Related programmes at Aptech Ibadan
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {related.map((link) => (
+              <Link
+                key={link.path}
+                href={link.path}
+                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-[#FFC107] hover:border-[#FFC107]/40 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/apply"
+              className="bg-[#FFC107] text-black px-8 py-3 rounded-full font-semibold hover:bg-[#FFD700] transition-colors duration-300 text-center"
+            >
+              Apply Now
+            </Link>
+            <Link
+              href="/contact"
+              className="border-2 border-white/30 hover:border-[#FFC107] px-8 py-3 rounded-full transition-all duration-300 text-center"
+            >
+              Contact Admissions
+            </Link>
+            <Link
+              href="/program"
+              className="border-2 border-white/30 hover:border-[#FFC107] px-8 py-3 rounded-full transition-all duration-300 text-center"
+            >
+              View All Programmes
+            </Link>
+          </div>
+        </section>
+      ) : null}
 
       {/* ── Bottom CTA strip ── */}
       <motion.section

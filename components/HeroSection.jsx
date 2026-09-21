@@ -297,7 +297,8 @@ const Hero = () => {
         {/* Background Image */}
         <Image
           src="/images/hero.jpg"
-          alt="background students"
+          alt=""
+          aria-hidden="true"
           fill
           className="object-cover opacity-20"
           priority
@@ -333,7 +334,7 @@ const Hero = () => {
                 Nigeria&apos;s Premier{" "}
                 <span className="relative inline-block mt-4">
                   <span className="text-[#FFC107]  leading-7">
-                    I.T Institute
+                    I.T Institute in Ibadan
                   </span>
                   <motion.span
                     className="absolute -bottom-1 left-0 h-1.5 bg-[#FFC107]/30 -z-10 rounded-full"

@@ -1,39 +1,44 @@
-"use client";
+import HomeClient from "./HomeClient";
+import { BASE_URL, absoluteUrl } from "@/lib/seo";
 
-import Campus from "@/components/Campus";
-import CampaignPopup from "@/components/offers/CampaignPopup";
-import Enroll from "@/components/Enroll";
-import OpenDay from "@/components/OpenDay";
+const OG_IMAGE = {
+  url: absoluteUrl("/og-image.jpg"),
+  width: 1200,
+  height: 630,
+  alt: "Aptech Ibadan - IT Training and Professional Courses",
+  type: "image/jpeg",
+};
 
-import GlobalAlliance from "@/components/GlobalAlliance";
-import Hero from "@/components/HeroSection";
-import InfoBox from "@/components/InfoBox";
-
-import Programs from "@/components/Programs";
-import Question from "@/components/Question";
-import VideoSpotlight from "@/components/VideoSpotlight";
-import Work from "@/components/Work";
-import { useState } from "react";
+export const metadata = {
+  title: {
+    absolute: "IT Training in Ibadan | Aptech Ibadan",
+  },
+  description:
+    "Looking for IT training in Ibadan? Aptech Ibadan offers career-focused courses in software development, cybersecurity, networking, multimedia and other technology skills.",
+  alternates: {
+    canonical: BASE_URL,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: BASE_URL,
+    siteName: "Aptech Ibadan",
+    title: "IT Training in Ibadan | Aptech Ibadan",
+    description:
+      "Aptech Ibadan offers career-focused IT training in Ibadan covering software development, cybersecurity, networking, multimedia and other technology skills.",
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IT Training in Ibadan | Aptech Ibadan",
+    description:
+      "Career-focused IT training in Ibadan covering software development, cybersecurity, networking, multimedia and more.",
+    images: [absoluteUrl("/og-image.jpg")],
+  },
+};
 
 const HomePage = () => {
-  const [open, setOpen] = useState(false);
-  return (
-    <div>
-      <CampaignPopup open={open} setOpen={setOpen} />
-      <Hero />
-      <GlobalAlliance />
-      {/* <Partners /> */}
-      <Work />
-      <InfoBox />
-      <Programs />
-      <VideoSpotlight />
-      <Campus />
-      <Enroll />
-      <OpenDay />
-      <Question />
-      {/* <Footer /> */}
-    </div>
-  );
+  return <HomeClient />;
 };
 
 export default HomePage;

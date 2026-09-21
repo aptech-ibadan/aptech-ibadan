@@ -1,5 +1,13 @@
 import AdminLoginForm from "@/components/admin/AdminLoginForm";
 
+export const metadata = {
+  title: "Admin",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const AdminLoginPage = () => {
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-20 text-slate-100 sm:px-6 lg:px-8">

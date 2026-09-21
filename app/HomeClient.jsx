@@ -1,0 +1,39 @@
+"use client";
+
+import Campus from "@/components/Campus";
+import CampaignPopup from "@/components/offers/CampaignPopup";
+import Enroll from "@/components/Enroll";
+import OpenDay from "@/components/OpenDay";
+
+import GlobalAlliance from "@/components/GlobalAlliance";
+import Hero from "@/components/HeroSection";
+import InfoBox from "@/components/InfoBox";
+
+import Programs from "@/components/Programs";
+import Question from "@/components/Question";
+import VideoSpotlight from "@/components/VideoSpotlight";
+import Work from "@/components/Work";
+import { useState } from "react";
+
+const HomeClient = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <CampaignPopup open={open} setOpen={setOpen} />
+      <Hero />
+      <GlobalAlliance />
+      {/* <Partners /> */}
+      <Work />
+      <InfoBox />
+      <Programs />
+      <VideoSpotlight />
+      <Campus />
+      <Enroll />
+      <OpenDay />
+      <Question />
+      {/* <Footer /> */}
+    </div>
+  );
+};
+
+export default HomeClient;

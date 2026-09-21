@@ -74,6 +74,45 @@ const Footer = () => {
               >
                 Contact
               </Link>
+              <Link
+                href="/apply"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Admissions
+              </Link>
+            </div>
+          </div>
+
+          {/* Popular Courses */}
+          <div>
+            <h3 className="font-semibold mb-4 text-[#FFC107]">
+              Popular Courses
+            </h3>
+            <div className="flex flex-col space-y-3 text-sm">
+              <Link
+                href="/courses/adse"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Software Development (ACCP)
+              </Link>
+              <Link
+                href="/courses/acns"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Cybersecurity & Networking (ACNS)
+              </Link>
+              <Link
+                href="/courses/amsp"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Arena Multimedia
+              </Link>
+              <Link
+                href="/courses/smartstack"
+                className="text-gray-400 hover:text-white transition"
+              >
+                Short IT Courses
+              </Link>
             </div>
           </div>
 
