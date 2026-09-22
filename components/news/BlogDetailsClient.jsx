@@ -7,6 +7,10 @@ import { motion, animate, useInView } from "framer-motion";
 import { Share2 } from "lucide-react";
 import { toast } from "react-toastify";
 
+// Used whenever a post has no image set — the DB stores empty strings for posts
+// saved before images were required, and next/image throws on an empty src.
+const FALLBACK_IMAGE = "/aptech004.png";
+
 const CountUpNumber = ({ value, duration = 1.1 }) => {
   const ref = useRef(null);
   const [displayValue, setDisplayValue] = useState(0);
@@ -153,7 +157,7 @@ const BlogDetailsClient = ({ article, similarNews }) => {
         >
           <div className="relative h-[280px] sm:h-[340px]">
             <Image
-              src={article.heroImage || "/aptech004.png"}
+              src={article.heroImage || FALLBACK_IMAGE}
               alt={article.title}
               fill
               className="object-cover"
@@ -188,6 +192,46 @@ const BlogDetailsClient = ({ article, similarNews }) => {
                       <div className="text-base sm:text-lg leading-relaxed text-gray-100">
                         {renderContentWithLinks(section.body)}
                       </div>
+                    )}
+
+                    {/* Render bullet list if provided */}
+                    {Array.isArray(section.bullets) &&
+                      section.bullets.length > 0 && (
+                        <ul className="space-y-2.5 pl-1">
+                          {section.bullets.map((bullet, bulletIndex) => (
+                            <li
+                              key={`bullet-${index}-${bulletIndex}`}
+                              className="flex items-start gap-3 text-base sm:text-lg leading-relaxed text-gray-100"
+                            >
+                              <span className="mt-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#FFC107]" />
+                              <span>{renderContentWithLinks(bullet)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                    {/* Render inline image if provided */}
+                    {section.image && (
+                      <figure className="overflow-hidden rounded-2xl border border-white/20 bg-[#08133f]">
+                        <div className="relative h-64 sm:h-80 w-full">
+                          <Image
+                            src={section.image}
+                            alt={
+                              section.imageAlt ||
+                              section.heading ||
+                              article.title
+                            }
+                            fill
+                            sizes="(max-width: 768px) 100vw, 760px"
+                            className="object-cover"
+                          />
+                        </div>
+                        {section.imageAlt && (
+                          <figcaption className="px-4 py-3 text-xs text-gray-300">
+                            {section.imageAlt}
+                          </figcaption>
+                        )}
+                      </figure>
                     )}
                   </div>
                 ))}
@@ -260,14 +304,20 @@ const BlogDetailsClient = ({ article, similarNews }) => {
                     href={`/news/${item.slug}`}
                     className="rounded-xl border border-white/20 bg-[#08133f] overflow-hidden block cursor-pointer"
                   >
-                    <div className="relative h-36">
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
+                    {/* Only render the image frame when the post actually has
+                        one, so posts without a thumbnail show a text-only card
+                        instead of an empty placeholder. */}
+                    {item.thumbnail ? (
+                      <div className="relative h-36">
+                        <Image
+                          src={item.thumbnail}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 300px"
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : null}
                     <div className="p-3.5">
                       <p className="text-[11px] text-[#FFC107] uppercase tracking-wide">
                         {item.category}

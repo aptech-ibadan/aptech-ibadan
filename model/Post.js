@@ -5,6 +5,11 @@ const ContentBlockSchema = new mongoose.Schema(
   {
     heading: { type: String },
     body: { type: String },
+    // Optional bullet list rendered under `body`.
+    bullets: { type: [String], default: [] },
+    // Optional inline image rendered after `body`/`bullets`.
+    image: { type: String },
+    imageAlt: { type: String },
   },
   { _id: false },
 );

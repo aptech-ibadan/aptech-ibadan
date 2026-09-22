@@ -4,60 +4,52 @@ import { useMemo, useState, useEffect } from "react";
 import NewsCard from "@/components/news/NewsCard";
 // import { blogCategories } from "@/data/blogCategories";
 
+const DEFAULT_CATEGORIES = [
+  "All",
+  "APTECHNews",
+  "CampusLife",
+  "Events",
+  "TechTrends",
+  "CareerDevelopment",
+  "StudentSuccess",
+  "AlumniSpotlight",
+];
+
 const BlogLibrary = ({ items }) => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [categories, setCategories] = useState([]);
-
-//  setCategories([
-//     "All",
-//     "APTECHNews",
-//     "CampusLife",
-//     "Events",
-//     "TechTrends",
-//     "CareerDevelopment",
-//     "StudentSuccess",
-//     "AlumniSpotlight",
-//   ]);
+  // Seeded with the defaults so the filter chips render on first paint, even
+  // before (or without) the /api/posts request that adds any custom categories.
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === "All") return items;
     return items.filter((item) => item.category === activeCategory);
   }, [activeCategory, items]);
 
-const getPostCategories = async function () {
-  try {
-    const res = await fetch("/api/posts");
-    const data = await res.json();
-    
-    // Get all categories from posts
-    const allPosts = data.map((item) => item.category);
-    
-    // Create a Set with both default and post categories
-    const allCategories = new Set([
-      "All",
-      "APTECHNews",
-      "CampusLife",
-      "Events",
-      "TechTrends",
-      "CareerDevelopment",
-      "StudentSuccess",
-      "AlumniSpotlight",
-      ...allPosts
-    ]);
-    
-    // Convert Set to array and set state
-    setCategories([...allCategories]);
-    
-    // console.log([...allCategories]);
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    // Keep default categories if fetch fails
-  }
-};
+  const getPostCategories = async function () {
+    try {
+      const res = await fetch("/api/posts");
+      const data = await res.json();
 
-useEffect(() => {
-  getPostCategories();
-}, []);
+      // Get all categories from posts
+      const allPosts = data.map((item) => item.category).filter(Boolean);
+
+      // Merge the default categories with any custom categories found on posts
+      const allCategories = new Set([...DEFAULT_CATEGORIES, ...allPosts]);
+
+      // Convert Set to array and set state
+      setCategories([...allCategories]);
+
+      // console.log([...allCategories]);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      // Keep default categories if fetch fails
+    }
+  };
+
+  useEffect(() => {
+    getPostCategories();
+  }, []);
 
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-0 py-14">

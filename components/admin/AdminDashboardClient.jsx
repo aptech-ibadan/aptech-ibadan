@@ -790,7 +790,10 @@ const PostsSection = ({
               rows={10}
             />
             <p className="field-hint">
-              [{`{"heading":"...","body":"..."}`}, …]
+              {`[{"heading":"...","body":"...","bullets":["..."],"image":"/images/x.png","imageAlt":"..."}, …]`}
+            </p>
+            <p className="field-hint">
+              {`bullets and image are optional · body supports <b>, <a href> and \\n line breaks`}
             </p>
           </label>
         </div>
