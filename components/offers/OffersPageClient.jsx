@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import EmberOfferBanner from "@/components/offers/EmberOfferBanner";
 
 const getCountdown = (endDate) => {
   const target = new Date(endDate).getTime();
@@ -91,6 +92,8 @@ const OffersPageClient = ({ offers }) => {
           countdown.
         </p>
       </section>
+
+      <EmberOfferBanner />
 
       <section className="relative z-10 max-w-7xl mx-auto px-6 lg:px-6 pb-16 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {offers.map((offer, index) => {

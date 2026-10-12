@@ -16,7 +16,7 @@ const AboutHero = () => {
 
   // Track when element enters/exits viewport
   const isInView = useInView(contentRef, {
-    once: false, // Allow re-animation when scrolling back
+    once: true, // Allow re-animation when scrolling back
     amount: 0.3, // Trigger when 30% is visible
     margin: "-100px 0px -100px 0px", // Adjust trigger zone
   });

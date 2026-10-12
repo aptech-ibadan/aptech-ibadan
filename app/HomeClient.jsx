@@ -2,6 +2,7 @@
 
 import Campus from "@/components/Campus";
 import CampaignPopup from "@/components/offers/CampaignPopup";
+import EmberOfferBanner from "@/components/offers/EmberOfferBanner";
 import Enroll from "@/components/Enroll";
 import OpenDay from "@/components/OpenDay";
 
@@ -21,6 +22,9 @@ const HomeClient = () => {
     <div>
       <CampaignPopup open={open} setOpen={setOpen} />
       <Hero />
+      <div className="bg-[#020B2D] pt-10">
+        <EmberOfferBanner />
+      </div>
       <GlobalAlliance />
       {/* <Partners /> */}
       <Work />

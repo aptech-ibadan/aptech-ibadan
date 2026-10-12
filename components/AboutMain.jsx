@@ -12,19 +12,19 @@ const AboutMain = () => {
 
   // Track when elements enter/exit viewport
   const isSectionInView = useInView(sectionRef, {
-    once: false,
+    once: true,
     amount: 0.2,
     margin: "-50px 0px -50px 0px",
   });
 
   const isTextInView = useInView(textRef, {
-    once: false,
+    once: true,
     amount: 0.3,
     margin: "-100px 0px -100px 0px",
   });
 
   const isImageInView = useInView(imageRef, {
-    once: false,
+    once: true,
     amount: 0.3,
     margin: "-100px 0px -100px 0px",
   });

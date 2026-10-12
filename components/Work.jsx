@@ -78,7 +78,7 @@ const Work = () => {
   const rotateX = useTransform(mouseY, [-300, 300], [4, -4]);
   const rotateY = useTransform(mouseX, [-300, 300], [-4, 4]);
 
-  const [ref, inView] = useInView({ threshold: 0.15 });
+  const [ref, inView] = useInView({ threshold: 0.15, triggerOnce: true });
 
   useEffect(() => {
     controls.start(inView ? "visible" : "hidden");

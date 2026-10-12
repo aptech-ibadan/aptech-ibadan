@@ -223,7 +223,7 @@ const AnimatedCard = ({ course, index, openModal }) => {
 const SmartProfessionalCourses = ({ openModal }) => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, {
-    once: false,
+    once: true,
     amount: 0.1,
     margin: "-50px 0px -50px 0px",
   });

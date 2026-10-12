@@ -37,10 +37,10 @@ const ContactPage = () => {
   const contactRef = useRef(null);
   const mapRef = useRef(null);
 
-  const heroInView = useInView(heroRef, { once: false, amount: 0.3 });
-  const campusInView = useInView(campusRef, { once: false, amount: 0.2 });
-  const contactInView = useInView(contactRef, { once: false, amount: 0.3 });
-  const mapInView = useInView(mapRef, { once: false, amount: 0.2 });
+  const heroInView = useInView(heroRef, { once: true, amount: 0.3 });
+  const campusInView = useInView(campusRef, { once: true, amount: 0.2 });
+  const contactInView = useInView(contactRef, { once: true, amount: 0.3 });
+  const mapInView = useInView(mapRef, { once: true, amount: 0.2 });
 
   const { scrollYProgress } = useScroll({
     target: heroRef,

@@ -8,13 +8,13 @@ const AboutValues = () => {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const isInView = useInView(sectionRef, { 
-    once: false, // Re-animate when scrolling back
+    once: true, // Re-animate when scrolling back
     amount: 0.2, // Trigger when 20% is visible
     margin: "-50px 0px -50px 0px"
   });
   
   const titleInView = useInView(titleRef, { 
-    once: false, 
+    once: true, 
     amount: 0.5,
     margin: "-100px 0px -100px 0px"
   });

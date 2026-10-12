@@ -417,7 +417,7 @@ export default function CourseClient({
   const contentRef = useRef(null);
 
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.1 });
+  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const rotateX = useTransform(mouseY, [-300, 300], [3, -3]);

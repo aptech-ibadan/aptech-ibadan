@@ -121,6 +121,7 @@ const NewsletterCTA = () => {
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className="text-xs text-[#FFC107] uppercase tracking-[0.2em] relative z-10"
         >
@@ -130,6 +131,7 @@ const NewsletterCTA = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.3 }}
           className="text-3xl lg:text-4xl text-white font-semibold mt-3 relative z-10"
         >
@@ -139,6 +141,7 @@ const NewsletterCTA = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.4 }}
           className="text-gray-100 mt-3 max-w-3xl relative z-10"
         >
@@ -151,6 +154,7 @@ const NewsletterCTA = () => {
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.5 }}
           className="mt-7 relative z-10"
         >

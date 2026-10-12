@@ -39,6 +39,7 @@ export default function GlobalAlliance() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="relative"
           >
@@ -62,6 +63,7 @@ export default function GlobalAlliance() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             <h3 className="text-2xl font-bold text-brand-primary mb-4">

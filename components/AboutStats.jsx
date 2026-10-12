@@ -15,13 +15,13 @@ const AboutStats = () => {
   const statsRef = useRef(null);
 
   const isInView = useInView(sectionRef, {
-    once: false,
+    once: true,
     amount: 0.2,
     margin: "-50px 0px -50px 0px",
   });
 
   const statsInView = useInView(statsRef, {
-    once: false,
+    once: true,
     amount: 0.3,
     margin: "-100px 0px -100px 0px",
   });

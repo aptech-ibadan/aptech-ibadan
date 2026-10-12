@@ -92,7 +92,7 @@ const BenefitCard = ({ icon: Icon, label, desc, index }) => {
 /* ── Main ── */
 const Enroll = () => {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.15 });
+  const [ref, inView] = useInView({ threshold: 0.15, triggerOnce: true });
 
   useEffect(() => {
     controls.start(inView ? "visible" : "hidden");

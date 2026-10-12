@@ -216,7 +216,7 @@ const ProgramCard = ({ prog, index }) => {
 /* ── Section ── */
 const Programs = () => {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.15 });
+  const [ref, inView] = useInView({ threshold: 0.15, triggerOnce: true });
 
   useEffect(() => {
     controls.start(inView ? "visible" : "hidden");

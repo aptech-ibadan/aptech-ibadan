@@ -63,7 +63,10 @@ const VideoSpotlight = () => {
   const [hasStarted, setHasStarted] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const [sectionRef, sectionInView] = useInView({ threshold: 0.2 });
+  const [sectionRef, sectionInView] = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
   const [frameRef, frameInView] = useInView({ threshold: 0.4 });
 
   // Pause playback automatically once the player scrolls out of view.
