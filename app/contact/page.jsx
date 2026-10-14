@@ -29,6 +29,13 @@ import {
 } from "lucide-react";
 import Footer from "@/components/Footer";
 
+// wa.me needs the number in international format with digits only (e.g. 2347070491555), never the local 0-prefixed form
+const toWhatsAppUrl = (phone) => {
+  const digits = String(phone).replace(/\D/g, "");
+  const intl = digits.startsWith("234") ? digits : `234${digits.replace(/^0/, "")}`;
+  return `https://wa.me/${intl}`;
+};
+
 const ContactPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [expandedContact, setExpandedContact] = useState(null);
@@ -96,7 +103,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "http://wa.me/2347070491555",
+          link: "https://wa.me/2347070491555",
         },
         {
           name: "Facebook",
@@ -116,7 +123,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "http://wa.me/2348064634830",
+          link: "https://wa.me/2348064634830",
         },
         {
           name: "Facebook",
@@ -136,7 +143,7 @@ const ContactPage = () => {
         {
           name: "WhatsApp",
           icon: <FaWhatsapp />,
-          link: "http://wa.me/2348036518761",
+          link: "https://wa.me/2348036518761",
         },
         {
           name: "Facebook",
@@ -428,7 +435,7 @@ const ContactPage = () => {
                     <FaWhatsappSquare size={14} /> {campus.phone}
                   </motion.a> */}
                   <motion.a
-                    href={`https://wa.me/${campus.phone}`}
+                    href={toWhatsAppUrl(campus.phone)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center gap-2 bg-[#020B2D] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#FFC107] transition-all duration-300"
