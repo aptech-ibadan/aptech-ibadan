@@ -96,57 +96,28 @@ const ShareButton = ({ title }) => {
   );
 };
 
-const AccountDetailsClient = ({ tabs }) => {
-  const [active, setActive] = useState(tabs[0].id);
-  const current = tabs.find((t) => t.id === active);
-
-  const allDetails = `${current.bank}\nAccount name: ${current.accountName}\nAccount number: ${current.accountNumber}`;
+// Details for a single centre: copy buttons for the account number, name and everything at once.
+const AccountDetailsClient = ({ centre }) => {
+  const allDetails = `${centre.bank}\nAccount name: ${centre.accountName}\nAccount number: ${centre.accountNumber}`;
 
   return (
-    <div>
-      <div role="tablist" aria-label="Centre" className="grid grid-cols-3 gap-2 rounded-full border border-white/10 bg-white/5 p-1.5">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            role="tab"
-            id={`tab-${t.id}`}
-            aria-selected={active === t.id}
-            aria-controls={`panel-${t.id}`}
-            onClick={() => setActive(t.id)}
-            className={`min-h-12 whitespace-nowrap rounded-full px-2 py-2.5 text-sm font-bold transition sm:px-3 sm:text-base ${
-              active === t.id
-                ? "bg-[#FFC107] text-black shadow"
-                : "text-white hover:bg-white/10"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
+    <div className="space-y-4 text-white">
+      <div className="flex items-center gap-3">
+        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FFC107]/15 text-[#FFC107]">
+          <Landmark size={22} />
+        </span>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-gray-300">Bank</p>
+          <p className="text-xl font-extrabold">{centre.bank}</p>
+        </div>
       </div>
 
-      <div
-        role="tabpanel"
-        id={`panel-${current.id}`}
-        aria-labelledby={`tab-${current.id}`}
-        className="mt-6 space-y-4 text-white"
-      >
-        <div className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FFC107]/15 text-[#FFC107]">
-            <Landmark size={22} />
-          </span>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-300">Bank</p>
-            <p className="text-xl font-extrabold">{current.bank}</p>
-          </div>
-        </div>
+      <Row label="Account number" value={centre.accountNumber} copyLabel="Copy account number" big primary />
+      <Row label="Account name" value={centre.accountName} copyLabel="Copy name" />
 
-        <Row label="Account number" value={current.accountNumber} copyLabel="Copy account number" big primary />
-        <Row label="Account name" value={current.accountName} copyLabel="Copy name" />
-
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <CopyButton text={allDetails} label="Copy all details" full />
-          <ShareButton title="Aptech Ibadan account details" />
-        </div>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <CopyButton text={allDetails} label="Copy all details" full />
+        <ShareButton title={`Aptech Ibadan ${centre.label} account details`} />
       </div>
     </div>
   );

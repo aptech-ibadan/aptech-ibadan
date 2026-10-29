@@ -1,5 +1,5 @@
 // Payment account details per centre. Bodija and Ring Road share one Zenith account.
-export const accountTabs = [
+export const accountCentres = [
   {
     id: "bodija",
     label: "Bodija",
@@ -22,3 +22,5 @@ export const accountTabs = [
     accountNumber: "1885800240",
   },
 ];
+
+export const getCentre = (slug) => accountCentres.find((c) => c.id === slug) || null;
